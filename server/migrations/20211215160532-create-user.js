@@ -18,16 +18,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       user_accepted_project: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.INTEGER
       },
       user_completed_porject: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.INTEGER
       },
       user_stack: {
-        type: Sequelize.STRING,
-        defaultValue: 0
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
