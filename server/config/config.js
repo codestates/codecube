@@ -8,7 +8,6 @@ module.exports = {
     host: process.env.RDS_DATABASE_HOST,
     dialect: 'mysql',
     port:process.env.RDS_DATABASE_PORT,
-    timeout:6000
   },
   test: {
     username: process.env.RDS_DATABASE_USERNAME,
@@ -28,3 +27,27 @@ module.exports = {
   }
 }
 
+// local환경에서 테스트 할때 사용할 DataBase용 config
+// module.exports = {
+//   development: {
+//     username: process.env.DATABASE_USERNAME,
+//     password: process.env.DATABASE_PASSWORD,
+//     database: process.env.DATABASE_NAME,
+//     host: '127.0.0.1',
+//     dialect: 'mysql',
+//   },
+//   test: {
+//     username: process.env.DATABASE_USERNAME,
+//     password: process.env.DATABASE_PASSWORD,
+//     database: process.env.DATABASE_NAME,
+//     host: process.env.DATABASE_HOST,
+//     dialect: 'mysql',
+//   },
+//   production: {
+//     username: process.env.DATABASE_USERNAME,
+//     password: process.env.DATABASE_PASSWORD,
+//     database: process.env.DATABASE_NAME,
+//     host: process.env.DATABASE_HOST,
+//     dialect: 'mysql',
+//   }
+// }
