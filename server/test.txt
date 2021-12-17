@@ -1,2 +1,0 @@
-oauth 생성
-commit 이제함s
