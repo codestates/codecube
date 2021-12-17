@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 import ProfileImage from '../../components/profileImage'
+import UserInfo from '../../components/userInfo'
 
 const logoStyle = {
   width: '30%',
   height: '3rem',
   alignSelf: 'center',
-  margin: '.5rem 0 1rem 0',
+  // margin: '.5rem 0 1rem 0',
 }
 
 const Profile = styled.div`
@@ -15,6 +16,7 @@ const Profile = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 `
 
 const AfterLogin = () => {
@@ -22,8 +24,7 @@ const AfterLogin = () => {
     <Profile>
       <img src="./dummy/codecubelogo.png" style={logoStyle} />
       <ProfileImage />
-      <div>Stacks</div>
-      <div>Description</div>
+      <UserInfo />
     </Profile>
   )
 }

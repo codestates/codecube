@@ -7,7 +7,7 @@ module.exports = {
     database: process.env.RDS_DATABASE_NAME,
     host: process.env.RDS_DATABASE_HOST,
     dialect: 'mysql',
-    port:process.env.RDS_DATABASE_PORT,
+    port: process.env.RDS_DATABASE_PORT,
   },
   test: {
     username: process.env.RDS_DATABASE_USERNAME,
@@ -15,7 +15,7 @@ module.exports = {
     database: process.env.RDS_DATABASE_NAME,
     host: process.env.RDS_DATABASE_HOST,
     dialect: 'mysql',
-    port:process.env.RDS_DATABASE_PORT
+    port: process.env.RDS_DATABASE_PORT,
   },
   production: {
     username: process.env.RDS_DATABASE_USERNAME,
@@ -23,8 +23,8 @@ module.exports = {
     database: process.env.RDS_DATABASE_NAME,
     host: process.env.RDS_DATABASE_HOST,
     dialect: 'mysql',
-    port:process.env.RDS_DATABASE_PORT
-  }
+    port: process.env.RDS_DATABASE_PORT,
+  },
 }
 
 // local환경에서 테스트 할때 사용할 DataBase용 config
