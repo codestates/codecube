@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('wait_users', {
+    await queryInterface.createTable('user_stacks', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,10 +11,7 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER
       },
-      post_id: {
-        type: Sequelize.INTEGER
-      },
-      comment_text: {
+      stack_id: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -28,6 +25,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('wait_users');
+    await queryInterface.dropTable('user_stacks');
   }
 };

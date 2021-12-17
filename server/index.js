@@ -4,11 +4,16 @@ const app = express()
 const cors = require('cors')
 const PORT = process.env.PORT || 4000
 const morgan = require('morgan')
+const sequelize = require('./models').sequelize
+
+sequelize.sync()
+
 
 app.use(express.json())
 
 app.use(morgan('dev'))
 app.use(cors({ origin: true }))
+
 
 app.get('/', (req, res) => {
   res.send('성공시 체크하기')
