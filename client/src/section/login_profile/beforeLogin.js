@@ -13,51 +13,60 @@ const BeforeLogin = () => {
     //   <div>로그인 화면이 있다고 가정.</div>
     // </Login>
     <div id="container">
-      <div class="col w30">
-        <div class="login">
-          <div class= "lo01 th50 login01">
-            <div class="zh20 codecubelogo">
-              <img class="codeimage" src="https://cdn.discordapp.com/attachments/919772630255534083/921018331471945778/unknown.png" alt=""/>
+      <div className="col w30">
+        <div className="login">
+          <div className="lo01 th50 login01">
+            <div className="zh20 codecubelogo">
+              <img
+                className="codeimage"
+                src="https://cdn.discordapp.com/attachments/919772630255534083/921018331471945778/unknown.png"
+                alt=""
+              />
             </div>
-            <div class="zh80">
-              <form class="loginform" action="">
+            <div className="zh80">
+              <form className="loginform" action="">
                 <input type="text" placeholder="id"></input>
                 <input type="password" placeholder="password"></input>
                 <input type="submit" value="login"></input>
               </form>
-
             </div>
-
           </div>
-          <div class="lo02 th50 login02">
-            <div class="zh40 snslogolist">
+          <div className="lo02 th50 login02">
+            <div className="zh40 snslogolist">
               <a href="https://www.google.com">
-                <img class="snslogo zw10" src="https://w7.pngwing.com/pngs/249/19/png-transparent-google-logo-g-suite-google-guava-google-plus-company-text-logo.png" alt="googlelogo"/>
+                <img
+                  className="snslogo zw10"
+                  src="https://w7.pngwing.com/pngs/249/19/png-transparent-google-logo-g-suite-google-guava-google-plus-company-text-logo.png"
+                  alt="googlelogo"
+                />
               </a>
               <a href="https://www.naver.com/">
-                <img class="snslogo zw10" src="https://i2.wp.com/bwithmag.com/wp-content/uploads/2018/06/2%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%87%E1%85%A5-N-%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9.jpg?fit=526%2C527" alt="naverlogo"/>
+                <img
+                  className="snslogo zw10"
+                  src="https://i2.wp.com/bwithmag.com/wp-content/uploads/2018/06/2%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%87%E1%85%A5-N-%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9.jpg?fit=526%2C527"
+                  alt="naverlogo"
+                />
               </a>
-
             </div>
-            <div class="zh40">소셜로그인</div>
+            <div className="zh40">소셜로그인</div>
 
-            <input class="zh20 signup " type="button" value="signup" ></input>
-
-
+            <input
+              className="zh20 signup "
+              type="button"
+              value="signup"
+            ></input>
           </div>
-        
         </div>
-        
       </div>
-      <div class="col w30">
-        <div class="row h50">
-          <div class="qh10">git contribution</div>
-          <div class="qh90">잔디</div>
+      <div className="col w30">
+        <div className="row h50">
+          <div className="qh10">git contribution</div>
+          <div className="qh90">잔디</div>
         </div>
-        <div class="row h50">
-          <div class="qh10">공지게시판</div>
-          <table class="table qh90">
-            <thead class="label">
+        <div className="row h50">
+          <div className="qh10">공지게시판</div>
+          <table className="table qh90">
+            <thead className="label">
               <tr>
                 <th>제목</th>
                 {/* <!-- <th>작성자</th> --> */}
@@ -89,8 +98,8 @@ const BeforeLogin = () => {
           </table>
         </div>
       </div>
-      <div class="col w40">
-        <div class="board">
+      <div className="col w40">
+        <div className="board">
           {/* <!-- 테이블에서 <tr> 태그는 한 줄을 뜻합니다. 
 
 
@@ -98,9 +107,9 @@ const BeforeLogin = () => {
             그래서  만약 <tr> 태그가 3개면 3줄이 표현이 되는 것이죠. 
              -->
              */}
-          <div class="board01 qh10">공개 게시판</div>
-          <table class="table qh90">
-            <thead class="label">
+          <div className="board01 qh10">공개 게시판</div>
+          <table className="table qh90">
+            <thead className="label">
               <tr>
                 <th>제목</th>
                 {/* <!-- <th>작성자</th> --> */}
@@ -130,9 +139,7 @@ const BeforeLogin = () => {
               </tr>
             </tbody>
           </table>
-
         </div>
-            
       </div>
     </div>
   )
