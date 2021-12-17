@@ -16,7 +16,8 @@ code {
 
 #container {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
+  justify-content: space-around;
   min-height: 100vh;
   background: whitesmoke;
   width: 100%;
@@ -27,7 +28,8 @@ code {
   display: flex;
   flex-direction: column;
   min-height: 40rem;
-  min-width: 300px;
+  /* min-width: 300px; */
+  min-width: 22rem;
 }
 .board {
   margin: 0.4rem;
@@ -45,6 +47,8 @@ code {
 }
 .w40 {
   flex: 3.5 0 0;
+  max-width: 30rem;
+  min-width: 22rem;
 }
 .w30 {
   flex: 4 0 0;
@@ -52,4 +56,5 @@ code {
 .h50 {
   flex: 1 0 0;
   margin: 0.4rem;
+  max-width: 30rem;
 }
