@@ -10,7 +10,7 @@ const logoStyle = {
   alignSelf: 'center',
   // margin: '.5rem 0 1rem 0',
 }
-
+// const 클래스이름 = styled.태그
 const Profile = styled.div`
   width: 100%;
   height: 100%;
