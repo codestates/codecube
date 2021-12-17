@@ -16,19 +16,16 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(cors({ origin: true }))
 
-
-
 // app.get('/', (req, res) => {
 //   res.send('성공시 체크하기')
 // })
-app.use('/',indexRouter.users)
-app.use('/members',indexRouter.members)
-app.use('projects',indexRouter.projects)
+app.use('/', indexRouter.users)
+app.use('/members', indexRouter.members)
+app.use('/projects', indexRouter.projects)
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
 })
-
 
 module.exports = app
 
