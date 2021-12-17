@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <style>
+        .container{
+           display: flex;
+           flex-direction: column;
+           flex-wrap: wrap;
+           padding: 0.4rem;
+           text-align: center; 
+        }
+        .h02{
+            flex: 2 0 0;
+        }
+        .h08{
+            flex: 8 0 0;
+        }
+        form{
+            display: flex;
+           flex-direction: column;
+           flex-wrap: wrap; 
+           width: 100%;
+           margin: 0.4rem;
+        }
+        .h01{
+            flex: 1 0 0;
+            margin: 0.4rem;
+        }
+        .h02{
+            flex: 2 0 0;
+            margin: 0.4rem;
+        }
+        .h03{
+            flex: 3 0 0;
+            margin: 0.4rem;
+        }
+
+        .stacks{
+            margin: 0.4rem;
+        }
+        .description{
+            margin: 0.4rem;
+        }
+        .image{
+            width: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="h02">회원가입</h1>
+        <form class="h08" action="">
+            <img class="h02 image"src="" alt="사용할이미지">
+            <input class="h01" type="text" placeholder="아이디로 사용하실 이메일">
+            <input class="h01" type="password" placeholder="사용하실 비밀번호">
+            <input class="h01" type="text" placeholder="username">
+            <!-- <input class="h01" type="text" placeholder="stacks"> -->
+            <label for="stacks">Stacks:</label>
+            <textarea id="stacks" name="stacks" rows="4" cols="50" value="ddd">
+            </textarea>
+            <!-- <input class="h03" type="text" placeholder="description"> -->
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" cols="50" placeholder="description">
+                </textarea>
+            <input class="h01" type="submit" value="signup"> 
+        </form>
+
+    </div>
+    
+</body>
+</html>
