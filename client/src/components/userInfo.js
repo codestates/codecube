@@ -14,9 +14,9 @@ const UserInfoWrapper = styled.table`
 const UserInfo = () => {
   return (
     <UserInfoWrapper>
-      <tr>Stacks</tr>
+      {/* <tr>Stacks</tr>
       <tr>records</tr>
-      <tr>Description</tr>
+      <tr>Description</tr> */}
     </UserInfoWrapper>
   )
 }
