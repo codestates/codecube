@@ -6,7 +6,6 @@ import BeforeLogin from './section/login_profile/beforeLogin'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
-  const [isPublicBoard, setIsPublicBoard] = useState(true)
 
   return (
     <div id="container">
@@ -20,9 +19,7 @@ function App() {
         <div className="row h50">notice</div>
       </div>
       <div className="col w30">
-        <div className="board">
-          <Board isPublic={isPublicBoard} toggling={setIsPublicBoard} />
-        </div>
+        <Board className="board" />
       </div>
     </div>
   )
