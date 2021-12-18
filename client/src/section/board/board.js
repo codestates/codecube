@@ -1,15 +1,61 @@
 /* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react'
+import './board.css'
 
-import React from 'react'
-import styled from 'styled-components'
+import Toggle from '../../components/toggle/toggle'
+import BoardCard from './boardCard'
 
-const BoardWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`
+import publicDummy from '../../dummy/board/publicDummy'
+import privateDummy from '../../dummy/board/privateDummy'
 
-const Board = ({ isPublic, toggling }) => {
-  return <BoardWrapper></BoardWrapper>
+const Board = ({ isLoggedIn }) => {
+  const [isPublicBoard, setIsPublicBoard] = useState(true)
+  const [boardList, setBoardList] = useState(publicDummy)
+
+  useEffect(() => {
+    if (isPublicBoard) {
+      setBoardList(publicDummy)
+    } else {
+      setBoardList(privateDummy)
+    }
+  }, [isPublicBoard])
+
+  return (
+    <div id="board-wrapper">
+      <Toggle
+        isPublicBoard={isPublicBoard}
+        toggling={setIsPublicBoard}
+        isLoggedIn={isLoggedIn}
+      ></Toggle>
+      <div id="board-list">
+        {isPublicBoard ? (
+          boardList.map((data) => {
+            return (
+              <BoardCard
+                key={data.postId}
+                title={data.title}
+                confirmed={data.confirmed}
+                recruitment={data.recruitment}
+                // 모집인원 4명으로 고정이긴 하지만, 혹시 바꿀 수 있으므로 편의를 위해 미리 만들어둠.
+              />
+            )
+          })
+        ) : (
+          <>
+            <BoardCard
+              key={boardList[0].postId}
+              title={boardList[0].title}
+              confirmed={boardList[0].confirmed}
+              recruitment={boardList[0].recruitment}
+            />
+            <fieldset>
+              <legend>신청자들</legend>
+            </fieldset>
+          </>
+        )}
+      </div>
+    </div>
+  )
 }
 
 export default Board

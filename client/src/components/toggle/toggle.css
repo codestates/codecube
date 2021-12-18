@@ -1,0 +1,20 @@
+#toggle-wrapper {
+  display: flex;
+  background-color: gray;
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.board-toggle {
+  text-align: center;
+  height: 3rem;
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.clicked {
+  background-color: coral;
+}
+
+/* .private .not-logged-in {
+} */
