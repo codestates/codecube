@@ -19,10 +19,8 @@ code {
 
 #container {
   display: flex;
-  /* flex-direction: row; */
   justify-content: space-around;
   min-height: 100vh;
-  /* height: 100%; */
   background: whitesmoke;
   width: 100%;
   flex-wrap: wrap;
@@ -33,7 +31,8 @@ code {
   flex-direction: column;
   min-height: 47rem;
   min-width: 22rem;
-  max-height: 100vh;
+  height: 100%;
+  max-height: 50rem;
 }
 
 .login {
