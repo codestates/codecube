@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import './board.css'
 
 import Toggle from '../../components/toggle/toggle'
-import BoardCard from './boardCard'
+import PublicList from './publicList'
+import PrivateList from './privateList'
 
+// ! 테스트용 더미
 import publicDummy from '../../dummy/board/publicDummy'
 import privateDummy from '../../dummy/board/privateDummy'
 
@@ -31,7 +33,7 @@ const Board = ({ isLoggedIn }) => {
         {isPublicBoard ? (
           boardList.map((data) => {
             return (
-              <BoardCard
+              <PublicList
                 key={data.postId}
                 title={data.title}
                 confirmed={data.confirmed}
@@ -41,17 +43,7 @@ const Board = ({ isLoggedIn }) => {
             )
           })
         ) : (
-          <>
-            <BoardCard
-              key={boardList[0].postId}
-              title={boardList[0].title}
-              confirmed={boardList[0].confirmed}
-              recruitment={boardList[0].recruitment}
-            />
-            <fieldset>
-              <legend>신청자들</legend>
-            </fieldset>
-          </>
+          <PrivateList myPost={boardList[0]} />
         )}
       </div>
     </div>

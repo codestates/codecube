@@ -11,7 +11,7 @@
   },
   "rules": {
     "quotes": ["error", "single"],
-    "indent": ["error", 2],
+    // "indent": ["error", 2],
     "semi": ["error", "never"]
     // "eslint key-spacing": [
     //   "error",
