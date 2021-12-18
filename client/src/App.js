@@ -19,7 +19,7 @@ function App() {
         <div className="row h50">notice</div>
       </div>
       <div className="col w30">
-        <Board className="board" />
+        <Board isLoggedIn={isLoggedIn} />
       </div>
     </div>
   )

@@ -1,6 +1,9 @@
-body {
+* {
   box-sizing: border-box;
-  min-height: 100vh;
+}
+
+body {
+  /* min-height: 100vh; */
   min-width: 25rem;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -31,6 +34,7 @@ code {
   min-height: 40rem;
   /* min-width: 300px; */
   min-width: 22rem;
+  max-height: 98vh;
 }
 
 .login {

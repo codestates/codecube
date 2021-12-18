@@ -1,70 +1,58 @@
 /* eslint-disable react/prop-types */
-
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import './board.css'
+
+import Toggle from '../../components/toggle/toggle'
 import BoardCard from './boardCard'
 
-const CLICKED = 'clicked'
+import publicDummy from '../../dummy/board/publicDummy'
+import privateDummy from '../../dummy/board/privateDummy'
 
-const Board = () => {
+const Board = ({ isLoggedIn }) => {
   const [isPublicBoard, setIsPublicBoard] = useState(true)
-  const [dummy, setDummy] = useState([
-    { postId: 1, title: 'hello world', confirmed: 2 },
-    { postId: 2, title: 'hello word', confirmed: 3 },
-    { postId: 3, title: 'hello wood', confirmed: 1 },
-  ])
+  const [boardList, setBoardList] = useState(publicDummy)
 
-  const publicBoard = useRef()
-  const privateBoard = useRef()
-
-  const onToggleClick = useCallback(
-    (ref) => {
-      const classList = Object.values(ref.classList)
-      if (classList.includes(CLICKED)) {
-        return
-      }
-
-      if (isPublicBoard) {
-        publicBoard.current.classList.remove(CLICKED)
-        privateBoard.current.classList.add(CLICKED)
-      } else {
-        privateBoard.current.classList.remove(CLICKED)
-        publicBoard.current.classList.add(CLICKED)
-      }
-
-      setIsPublicBoard(!isPublicBoard)
-    },
-    [isPublicBoard]
-  )
+  useEffect(() => {
+    if (isPublicBoard) {
+      setBoardList(publicDummy)
+    } else {
+      setBoardList(privateDummy)
+    }
+  }, [isPublicBoard])
 
   return (
     <div id="board-wrapper">
-      <div id="toggle-wrapper">
-        <div
-          ref={publicBoard}
-          className="board-toggle clicked"
-          onClick={() => onToggleClick(publicBoard.current)}
-        >
-          public
-        </div>
-        <div
-          ref={privateBoard}
-          className="board-toggle "
-          onClick={() => onToggleClick(privateBoard.current)}
-        >
-          private
-        </div>
-      </div>
+      <Toggle
+        isPublicBoard={isPublicBoard}
+        toggling={setIsPublicBoard}
+        isLoggedIn={isLoggedIn}
+      ></Toggle>
       <div id="board-list">
-        {dummy.map((data) => {
-          return (
+        {isPublicBoard ? (
+          boardList.map((data) => {
+            return (
+              <BoardCard
+                key={data.postId}
+                title={data.title}
+                confirmed={data.confirmed}
+                recruitment={data.recruitment}
+                // 모집인원 4명으로 고정이긴 하지만, 혹시 바꿀 수 있으므로 편의를 위해 미리 만들어둠.
+              />
+            )
+          })
+        ) : (
+          <>
             <BoardCard
-              key={data.postId}
-              title={data.title}
-              confirmed={data.confirmed}
+              key={boardList[0].postId}
+              title={boardList[0].title}
+              confirmed={boardList[0].confirmed}
+              recruitment={boardList[0].recruitment}
             />
-          )
-        })}
+            <fieldset>
+              <legend>신청자들</legend>
+            </fieldset>
+          </>
+        )}
       </div>
     </div>
   )
