@@ -1,20 +1,21 @@
 #toggle-wrapper {
-  display: flex;
+  display: table;
   background-color: gray;
   width: 70%;
+  max-width: 22rem;
   height: 2rem;
   margin-bottom: 1rem;
 }
 
 .board-toggle {
+  display: table-cell;
   text-align: center;
-  flex-grow: 1;
+  vertical-align: middle;
+  width: 50%;
   cursor: pointer;
 }
 
 .clicked {
   background-color: coral;
+  cursor: unset;
 }
-
-/* .private .not-logged-in {
-} */
