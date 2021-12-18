@@ -3,7 +3,6 @@
 }
 
 body {
-  /* min-height: 100vh; */
   min-width: 25rem;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -23,6 +22,7 @@ code {
   /* flex-direction: row; */
   justify-content: space-around;
   min-height: 100vh;
+  /* height: 100%; */
   background: whitesmoke;
   width: 100%;
   flex-wrap: wrap;
@@ -31,10 +31,9 @@ code {
   padding: 0.4rem;
   display: flex;
   flex-direction: column;
-  min-height: 40rem;
-  /* min-width: 300px; */
+  min-height: 47rem;
   min-width: 22rem;
-  max-height: 98vh;
+  max-height: 100vh;
 }
 
 .login {
@@ -48,7 +47,6 @@ code {
 }
 .w40 {
   flex: 3.5 0 0;
-  /* min-width: 22rem; */
 }
 .w30 {
   flex: 4 0 0;
