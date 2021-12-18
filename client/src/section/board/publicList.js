@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react'
-import './boardCard.css'
+import './card.css'
 
-const BoardCard = ({ title, confirmed, recruitment }) => {
+const PublicList = ({ title, confirmed, recruitment }) => {
   return (
-    <div id="card">
+    <div className="card">
       <h3>{title}</h3>
       <div>
         참가 인원: {confirmed} / {recruitment}
@@ -14,4 +14,4 @@ const BoardCard = ({ title, confirmed, recruitment }) => {
   )
 }
 
-export default BoardCard
+export default PublicList
