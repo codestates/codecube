@@ -5,7 +5,7 @@ const hoToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOi
 module.exports = {
   users: {
     get: async (req, res) => {
-      // const token = req.cookie.token
+      // const token = req.cookies.token
       //token의 payload에 유저정보가 DB유저정보를 확인해서 userInfo에 넣기
       const testInfo = {
         id: 1,
@@ -17,7 +17,7 @@ module.exports = {
       const solve = solveToken(Token)
 
       const userInfo = await models.users.findAll({
-        where: { username: solve.username }
+        where: { id: solve.id }
       })
 
       //token이 만료되거나 유저정보에 없으면
@@ -26,66 +26,130 @@ module.exports = {
       }
       //아니면 유저정보를 보내준다.
       else {
-        res.status(200).json({ userInfo })
+        res.cookie('token', Token, {
+          sameSite: 'None',
+          httpOnly: true,
+          secure: true,
+        }).status(200).json({ userInfo })
       }
     },
     //회원탈퇴
-    delete:  (req, res) => {
-      // const Token = req.cookie.token
+    delete: async (req, res) => {
+      // const Token = req.cookies.token
       const userInfo = solveToken(hoToken)
 
       if (!userInfo) {
         res.status(401).json({ message: 'no such info' })
       }
-      else{
-        // await models.users.destroy({where:{username:userInfo}})
-        res.status(200).json({message:'byebye'})
+      else {
+        await models.users.destroy(
+          { where: { id: userInfo.id } }
+        )
+        res.status(200).json({ message: 'byebye' })
       }
     },
   },
   changeinfo: {
-    put: (req, res) => {
-      const userId = req.params.userId
-      models.orders.get(userId, (error, result) => {
+    put: async (req, res) => {
+      // const token = req.cookies.token
+      // const newInfo = req.body
+      // {username, password, image, stack, description }
 
-      })
+      //test 
+      newInfo = {
+        username: '준우',
+        description: '이보게 내가 개발자가 될 상인가?'
+      }
+      //요청정보가 없을시 
+      if (!newInfo) {
+        res.status(400).json({ message: 'invalid userinfo' })
+      }
+      //Token으로 사용자의 현재 정보를 찾는다.  
+      const userId = solveToken(hoToken).id
+
+      //access Token이 만료될 경우
+      if (!userId) {
+        res.status(401).json({ message: 'invalid authorization' })
+      }
+      else {
+        //user 정보 업데아트
+        await models.users.update(newInfo, {
+          where: {
+            id: userId
+          }
+        })
+        res.status(200).json({
+          message: 'successfully modified',
+        })
+      }
     },
   },
   logout: {
-    get: (req, res) => {
-      const userId = req.params.userId
-      models.orders.get(userId, (error, result) => {
-        if (error) {
-          res.status(500).send('Internal Server Error')
-        } else {
-          res.status(200).json(result)
-        }
+    get: async (req, res) => {
+      //  const Token = req.cookies.token
+
+      const solve = solveToken(hoToken)
+      const userInfo = await models.users.findAll({
+        where: { id: solve.id }
       })
+      if (userInfo) {
+        res.cookie('token', '', {
+          sameSite: 'None',
+          httpOnly: true,
+          secure: true,
+        })
+          .status(200).json({ message: 'logout successed' })
+      }
     },
   },
   signup: {
-    post: (req, res) => {
+    post: async (req, res) => {
       //   console.log(req.body)
-      const { id, username, image, password, stack } = req.body
-      models.users.create({
+      const { username, image, password, stack } = req.body
+      await models.users.create({
         username: username,
         email: id,
         password: password,
         image: image,
       })
-      res.status(201).json({ message: 'signup successed' })
+      models.user_stacks.({
+
+      })
+        const jwt = makejwt({username, email,description})
+      res.cookie('token',jwt,{
+        sameSite:'None',
+        httpOnly: true,
+        secure: true
+      })
+      .status(201).json({ message: 'signup successed' })
     },
   },
   login: {
-    post: (req, res) => {
-      const userId = req.params.userId
-      models.orders.get(userId, (error, result) => {
-        if (error) {
-          res.status(500).send('Internal Server Error')
-        } else {
-          res.status(200).json(result)
+    post: async (req, res) => {
+      // body에 아이디하고 비밀번호를 확인
+      const userInfo = req.body
+      const { email, password } = userInfo
+      // loginuser 변수에 DB에서 회원정보 유무를 확인하여 존재시 변수에 할당
+      const loginuser = await models.users.findAll({
+        where: {
+          email: email,
+          password: password
         }
       })
+      //DB에 유저 정보가 없을시 
+      if (!loginuser) {
+        res.status.json({message: 'login successed' })
+      }
+      //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌 
+      else{
+        const {username,email,description} = loginuser
+        const jwt = makejwt({username,email,description})
+        res.cookie('token',jwt,{
+          sameSite: 'None',
+          secure: true,
+          httpOnly: true
+        }).status(200).json({message:'login successed' })
+      }
     },
   },
 }

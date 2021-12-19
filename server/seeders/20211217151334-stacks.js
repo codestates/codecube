@@ -4,47 +4,69 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('stacks',[{
       id: 1,
-      name: 'JavaScript'
+      name: 'JavaScript',
+      createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:2,
-        name:'React'
+        name:'React',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:3,
-        name:'Node.js'
+        name:'Node.js',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:4,
-        name:'express'
+        name:'express',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:5,
-        name:'Docker'
+        name:'Docker',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:6,
-        name:'css_styled'
+        name:'css_styled',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:7,
-        name:'Mysql'
+        name:'Mysql',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:8,
-        name:'MongoDB'
+        name:'MongoDB',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:9,
-        name:'redis'
+        name:'redis',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:10,
-        name:'Python'
+        name:'Python',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       },
       {
         id:11,
-        name:'C#'
+        name:'C#',
+        createdAt: new Date(),
+     updatedAt: new Date(),
       }]
     )
   },

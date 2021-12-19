@@ -19,7 +19,7 @@ module.exports = {
       join: {
         defaultValue: 0,
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
