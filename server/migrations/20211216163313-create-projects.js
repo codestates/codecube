@@ -26,14 +26,14 @@ module.exports = {
       start: {
         defaultValue: 0,
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       done: {
         defaultValue: 0,
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
-      uploadDate: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },

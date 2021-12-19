@@ -8,7 +8,9 @@ module.exports = {
      email: 'qwer@code.com',
      image: 'asd',
      password: 'qwer123',
-     description:'나는 코딩왕이 될거야'
+     description:'나는 코딩왕이 될거야',
+     createdAt: new Date(),
+     updatedAt: new Date(),
      },
      {
       id: 2,
@@ -16,7 +18,9 @@ module.exports = {
       email: 'asd@code.com' ,
       image: 'sss',
       password: 'codecode',
-      description:'안녕하세요~ 여러분'
+      description:'안녕하세요~ 여러분',
+      createdAt: new Date(),
+     updatedAt: new Date(),
      },
      {
       id: 3,
@@ -24,7 +28,9 @@ module.exports = {
       email: 'xcv@code.com' ,
       image: 'zxczv',  
       password: 'kang123',
-      description:'반갑습니다. 미래의 개발자 여러분'
+      description:'반갑습니다. 미래의 개발자 여러분',
+      createdAt: new Date(),
+     updatedAt: new Date(),
      },
      {
       id: 4,
@@ -32,7 +38,9 @@ module.exports = {
       email: 'asdfd@code.com',
       image: 'basvasv',
       password: 'ghl456',
-      description:'안녕안녕~~'
+      description:'안녕안녕~~',
+      createdAt: new Date(),
+     updatedAt: new Date(),
      },
      {
       id: 5,
@@ -40,7 +48,9 @@ module.exports = {
       email: 'rweweg@code.com',
       image: 'asfvasvbasb',
       password: 'cube5412',
-      description:'어머니는 짜장면이 싫다고 하셨어'  
+      description:'어머니는 짜장면이 싫다고 하셨어' ,
+      createdAt: new Date(),
+     updatedAt: new Date(),
      }, 
      {
       id: 6,
@@ -48,7 +58,9 @@ module.exports = {
       email: 'asdasg@code.com',  
       image: 'asvasbasv',
       password: 'qncj0515',
-      description:'암온더 넥스트 레벨'
+      description:'암온더 넥스트 레벨',
+      createdAt: new Date(),
+     updatedAt: new Date(),
      },
     ])
   },
