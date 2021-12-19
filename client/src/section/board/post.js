@@ -39,7 +39,6 @@ const Post = () => {
         </div>
       </div>
       <div className="confirm-wrapper">
-        {/* <legend>참여인원</legend> */}
         {waitingUsers.map((user) => {
           return (
             <div key={v4()} className="user-wrapper">
