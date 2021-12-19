@@ -11,7 +11,7 @@ router.put('/', controller.users.changeinfo.put)
 router.get('/logout', controller.users.logout.get)
 // 회원 가입
 router.post('/signup', controller.users.signup.post)
-// 로그인 
+// 로그인
 router.post('/login', controller.users.login.post)
 //개인 게시판 요청
 router.get('/myProjects', controller.projects.private_post.get)
