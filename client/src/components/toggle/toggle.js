@@ -1,48 +1,37 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import React, { useCallback } from 'react'
+import { NavLink } from 'react-router-dom'
+import { PRIVATE_BOARD } from '../../section/board/board'
 
 import './toggle.css'
 
-export const CLICKED = 'clicked'
+const Toggle = ({ isLoggedIn, left, right, subLinkLeft, subLinkRight, isPrivate }) => {
+  // ! 로그인 여부에 따라 개인 게시판 선택 유무를 클래스로만 나눴기 때문에 수정필요!
+  const toggling = useCallback(
+    (e) => {
+      if (!isLoggedIn && right === PRIVATE_BOARD) {
+        e.preventDefault()
+      }
+    },
+    [isLoggedIn]
+  )
 
-const Toggle = ({ isPublicBoard, toggling }) => {
-  const publicBoard = useRef()
-  const privateBoard = useRef()
-
-  // useEffect(() => {
-  //   if (!isPublicBoard) {
-  //     publicBoard.current.classList.remove(CLICKED)
-  //     privateBoard.current.classList.add(CLICKED)
-  //   } else {
-  //     privateBoard.current.classList.remove(CLICKED)
-  //     publicBoard.current.classList.add(CLICKED)
-  //   }
-  // }, [isPublicBoard])
+  const leftLink = `${subLinkLeft}`
+  const rightLink = `${subLinkRight}`
 
   return (
-    <Routes>
-      <Route>
-        {/* <div id="toggle-wrapper">
-        <div
-          ref={publicBoard}
-          className="board-toggle clicked"
-          onClick={(e) => toggling(e, publicBoard.current)}
-        >
-          공개 게시판
-        </div> */}
-      </Route>
-      <Route>
-        {/* <div
-          ref={privateBoard}
-          className="board-toggle"
-          onClick={(e) => toggling(e, privateBoard.current)}
-        >
-          개인 게시판
-        </div>
-      </div> */}
-      </Route>
-    </Routes>
+    <div className={`toggle-wrapper ${isPrivate}`}>
+      <NavLink to={leftLink} className={({ isActive }) => 'nav-link' + (!isActive ? ' unselected' : '')}>
+        {left}
+      </NavLink>
+      <NavLink
+        to={rightLink}
+        className={({ isActive }) => 'nav-link' + (!isActive ? ' unselected' : '')}
+        onClick={toggling}
+      >
+        {right}
+      </NavLink>
+    </div>
   )
 }
 

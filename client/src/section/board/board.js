@@ -1,54 +1,36 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState, useCallback } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './board.css'
-import Toggle, { CLICKED } from '../../components/toggle/toggle'
+import Toggle from '../../components/toggle/toggle'
 import PublicList from './publicBoard/publicList'
 import PrivateList from './privateBoard/privateList'
+import Post from './post'
 
-// ! 테스트용 더미
-import publicDummy from '../../dummy/board/publicDummy'
-import privateDummy from '../../dummy/board/privateDummy'
+const PUBLIC_BOARD = '공개게시판'
+export const PRIVATE_BOARD = '개인게시판'
+const PRIVATE_LINK = '/private'
 
 const Board = ({ isLoggedIn }) => {
-  const [isPublicBoard, setIsPublicBoard] = useState(true)
-  const [publicPosts, setPublicPosts] = useState([])
-  const [privatePosts, setPrivatePosts] = useState([])
-
-  useEffect(() => {
-    if (isPublicBoard) {
-      setPublicPosts(publicDummy)
-    } else {
-      setPrivatePosts(privateDummy)
-    }
-  }, [isPublicBoard])
-
-  const toggling = useCallback(
-    (e, ref) => {
-      const classList = Object.values(ref.classList)
-      if (classList.includes(CLICKED)) {
-        return
-      } else if (!isLoggedIn) {
-        // 로그인 안된 상태면 개인게시판 클릭 이벤트를 막습니다.
-        e.stopPropagation()
-      } else {
-        setIsPublicBoard(!isPublicBoard)
-      }
-    },
-    [isPublicBoard]
-  )
-
   return (
     <BrowserRouter>
       <div id="board-wrapper">
-        <Toggle isPublicBoard={isPublicBoard} toggling={toggling}></Toggle>
+        <Toggle
+          isLoggedIn={isLoggedIn}
+          left={PUBLIC_BOARD}
+          right={PRIVATE_BOARD}
+          subLinkLeft=""
+          subLinkRight={PRIVATE_LINK}
+        />
         <div id="board-list">
-          {isPublicBoard ? (
-            <PublicList publicPosts={publicPosts} />
-          ) : (
-            <PrivateList myPost={privatePosts} />
-          )}
+          <Routes>
+            <Route path="/" element={<PublicList />} />
+            <Route path="/private/*" element={<PrivateList />}>
+              <Route path="" element={<Post />} />
+              <Route path="waiting" element={<div>waiter</div>} />
+            </Route>
+          </Routes>
         </div>
       </div>
     </BrowserRouter>

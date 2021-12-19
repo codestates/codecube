@@ -1,48 +1,43 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useState } from 'react'
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Toggle from '../../../components/toggle/toggle'
 
-import '../card.css'
+// import Post from '../post'
+import './privateList.css'
 
-import { CLICKED } from '../../../components/toggle/toggle'
-import PrivateToggle from '../../../components/toggle/privateToggle'
+const CONTENT = '본문'
+const WAITING_USERS = '신청자'
+const CONTENT_LINK = ''
+const WAITING_USERS_LINK = 'waiting'
+const PRIVATE = 'private'
 
-import waitingUserDummy from '../../../dummy/board/waitingUserDummy'
-import Post from '../post'
-
-const PrivateList = ({ myPost }) => {
-  // ! 테스트용 더미 state
-  const [waitingUsers, setWaitingUsers] = useState(waitingUserDummy)
-  const [isContent, setIsContent] = useState(true)
-
-  const confirmOrReject = useCallback(
-    // * 해당 함수 Post 컴포넌트에서 사용하면 좋을 듯함
-    (id) => {
-      const change = waitingUsers.filter((user) => {
-        return user.userId !== id
-      })
-      setWaitingUsers(change)
-    },
-    [waitingUsers]
-  )
-
-  const toggling = useCallback(
-    (ref) => {
-      const classList = Object.values(ref.classList)
-      if (classList.includes(CLICKED)) {
-        return
-      }
-      setIsContent(!isContent)
-    },
-    [isContent]
-  )
-
-  const { title, confirmed, recruitment, content } = myPost[0] ?? []
-
+const PrivateList = () => {
   return (
     <>
-      <PrivateToggle isContent={isContent} toggling={toggling} />
+      <Toggle
+        left={CONTENT}
+        right={WAITING_USERS}
+        subLinkLeft={CONTENT_LINK}
+        subLinkRight={WAITING_USERS_LINK}
+        isPrivate={PRIVATE}
+      ></Toggle>
+      <div id="private-wrapper">
+        <Outlet />
+      </div>
     </>
   )
 }
 
 export default PrivateList
+
+//  * 해당 함수 Post 컴포넌트에서 사용하면 좋을 듯함
+// const confirmOrReject = useCallback(
+//   (id) => {
+//     const change = waitingUsers.filter((user) => {
+//       return user.userId !== id
+//     })
+//     setWaitingUsers(change)
+//   },
+//   [waitingUsers]
+// )

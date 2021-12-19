@@ -2,7 +2,8 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
+    "es6": true
   },
   "extends": [
     // "eslint:recommended", 개발환경에서 잠시 끕니다.
@@ -18,7 +19,7 @@
   },
   "plugins": ["react-hooks", "react"],
   "rules": {
-    "quotes": ["error", "single"],
+    // "quotes": ["error", "single"],
     // "indent": ["error", 2],
     "indent": "off",
     "semi": ["error", "never"]

@@ -2,8 +2,22 @@ h1 {
   width: 100%;
   text-align: center;
   margin: 0;
-  margin-bottom: 1rem;
   padding: 1rem 0;
   border-bottom: 1px solid gray;
-  border-top: 1px solid gray;
 }
+
+.content {
+  line-height: 1.5rem;
+  border-bottom: 1px solid gray;
+  padding: 1rem 0;
+}
+
+/* .confirmed-wrapper {
+  background-color: rgb(100, 118, 81);
+  padding: 1rem 0;
+  height: 5rem;
+} */
+
+/* .confirmed-users {
+  height: 100%;
+} */

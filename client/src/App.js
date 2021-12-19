@@ -10,9 +10,7 @@ function App() {
   return (
     <div id="container">
       <div className="col w40">
-        <div className="login">
-          {isLoggedIn ? <AfterLogin /> : <BeforeLogin />}
-        </div>
+        <div className="login">{isLoggedIn ? <AfterLogin /> : <BeforeLogin />}</div>
       </div>
       <div className="col w30">
         <div className="row h50">git dist</div>
