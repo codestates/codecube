@@ -8,21 +8,21 @@ import GitContributionUser from './section/gitcontribution/gitContriUser'
 import NoticeBoard from './section/noticeboard/noticeBoard'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   return (
     <div id="container">
       <div className="col w40">
         <div className="login">
-          {isLoggedIn ? <AfterLogin /> : <BeforeLogin/>}
+          {isLoggedIn ? <AfterLogin /> : <BeforeLogin />}
         </div>
       </div>
       <div className="col w30">
         <div className="row h50">
-          {isLoggedIn ? <GitContributionUser /> : <GitContribution/>}
+          {isLoggedIn ? <GitContributionUser /> : <GitContribution />}
         </div>
         <div className="row h50">
-          <NoticeBoard/>
+          <NoticeBoard />
         </div>
       </div>
       <div className="col w30">
