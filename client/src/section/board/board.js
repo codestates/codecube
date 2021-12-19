@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState, useCallback } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 import './board.css'
 import Toggle, { CLICKED } from '../../components/toggle/toggle'
@@ -39,16 +40,18 @@ const Board = ({ isLoggedIn }) => {
   )
 
   return (
-    <div id="board-wrapper">
-      <Toggle isPublicBoard={isPublicBoard} toggling={toggling}></Toggle>
-      <div id="board-list">
-        {isPublicBoard ? (
-          <PublicList publicPosts={publicPosts} />
-        ) : (
-          <PrivateList myPost={privatePosts} />
-        )}
+    <BrowserRouter>
+      <div id="board-wrapper">
+        <Toggle isPublicBoard={isPublicBoard} toggling={toggling}></Toggle>
+        <div id="board-list">
+          {isPublicBoard ? (
+            <PublicList publicPosts={publicPosts} />
+          ) : (
+            <PrivateList myPost={privatePosts} />
+          )}
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   )
 }
 
