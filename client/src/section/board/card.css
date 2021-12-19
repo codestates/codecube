@@ -12,21 +12,11 @@
   line-height: 0rem;
 }
 
-.private-field .card {
-  background-color: snow;
-}
-
-.private-field .user-card {
-  padding-top: 2px;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.user-card > * {
+/* .user-card > * {
   width: 45%;
-}
+} */
 
-.button-wrapper {
+/* .button-wrapper {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -35,20 +25,29 @@
 .button-wrapper > * {
   width: 40%;
   height: 70%;
-}
+} */
 
-.profile {
+/* .profile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
-.dummy-image {
-  /* 더미데이터용 */
+/* .dummy-image {
   width: 60%;
   min-width: 4rem;
   max-width: 6rem;
   height: 100%;
   background-color: steelblue;
+} */
+
+/* .private-field .card {
+  background-color: snow;
 }
+
+.private-field .user-card {
+  padding-top: 2px;
+  flex-direction: row;
+  justify-content: space-around;
+} */

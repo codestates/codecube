@@ -1,52 +1,39 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
 import './board.css'
-
 import Toggle from '../../components/toggle/toggle'
-import PublicList from './publicList'
-import PrivateList from './privateList'
+import PublicList from './publicBoard/publicList'
+import PrivateList from './privateBoard/privateList'
+import Post from './post'
 
-// ! 테스트용 더미
-import publicDummy from '../../dummy/board/publicDummy'
-import privateDummy from '../../dummy/board/privateDummy'
+const PUBLIC_BOARD = '공개게시판'
+export const PRIVATE_BOARD = '개인게시판'
+const PRIVATE_LINK = '/private'
 
 const Board = ({ isLoggedIn }) => {
-  const [isPublicBoard, setIsPublicBoard] = useState(true)
-  const [boardList, setBoardList] = useState(publicDummy)
-
-  useEffect(() => {
-    if (isPublicBoard) {
-      setBoardList(publicDummy)
-    } else {
-      setBoardList(privateDummy)
-    }
-  }, [isPublicBoard])
-
   return (
-    <div id="board-wrapper">
-      <Toggle
-        isPublicBoard={isPublicBoard}
-        toggling={setIsPublicBoard}
-        isLoggedIn={isLoggedIn}
-      ></Toggle>
-      <div id="board-list">
-        {isPublicBoard ? (
-          boardList.map((data) => {
-            return (
-              <PublicList
-                key={data.postId}
-                title={data.title}
-                confirmed={data.confirmed}
-                recruitment={data.recruitment}
-                // 모집인원 4명으로 고정이긴 하지만, 혹시 바꿀 수 있으므로 편의를 위해 미리 만들어둠.
-              />
-            )
-          })
-        ) : (
-          <PrivateList myPost={boardList[0]} />
-        )}
+    <BrowserRouter>
+      <div id="board-wrapper">
+        <Toggle
+          isLoggedIn={isLoggedIn}
+          left={PUBLIC_BOARD}
+          right={PRIVATE_BOARD}
+          subLinkLeft=""
+          subLinkRight={PRIVATE_LINK}
+        />
+        <div id="board-list">
+          <Routes>
+            <Route path="/" element={<PublicList />} />
+            <Route path="/private/*" element={<PrivateList />}>
+              <Route path="" element={<Post />} />
+              <Route path="waiting" element={<div>waiter</div>} />
+            </Route>
+          </Routes>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   )
 }
 

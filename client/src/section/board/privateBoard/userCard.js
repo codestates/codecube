@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-import './card.css'
+import '../card.css'
 
 const UserCard = ({ id, image, name, onSelect }) => {
   return (

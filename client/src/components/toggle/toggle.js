@@ -1,65 +1,36 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useRef, useEffect, useMemo } from 'react'
+import React, { useCallback } from 'react'
+import { NavLink } from 'react-router-dom'
+import { PRIVATE_BOARD } from '../../section/board/board'
 
 import './toggle.css'
 
-const CLICKED = 'clicked'
-// const NOT_LOGGED_IN = 'not-logged-in'
-
-const Toggle = ({ isLoggedIn, isPublicBoard, toggling }) => {
-  const publicBoard = useRef()
-  const privateBoard = useRef()
-
-  // useMemo(() => {
-  //   if (!isLoggedIn) {
-  //     privateBoard.current.classList.add(NOT_LOGGED_IN)
-  //   } else {
-  //     privateBoard.current.classList.remove(NOT_LOGGED_IN)
-  //   }
-  // }, [isLoggedIn])
-
-  const onToggleClick = useCallback(
-    (ref, e) => {
-      const classList = Object.values(ref.classList)
-      if (classList.includes(CLICKED)) {
-        return
+const Toggle = ({ isLoggedIn, left, right, subLinkLeft, subLinkRight, isPrivate }) => {
+  // ! 로그인 여부에 따라 개인 게시판 선택 유무를 클래스로만 나눴기 때문에 수정필요!
+  const toggling = useCallback(
+    (e) => {
+      if (!isLoggedIn && right === PRIVATE_BOARD) {
+        e.preventDefault()
       }
-
-      if (!isLoggedIn && ref === privateBoard.current) {
-        // 로그인 안된 상태면 개인게시판 클릭 이벤트를 막습니다.
-        console.log('Pleas Login First')
-        e.stopPropagation()
-        return
-      }
-
-      if (isPublicBoard) {
-        publicBoard.current.classList.remove(CLICKED)
-        privateBoard.current.classList.add(CLICKED)
-      } else {
-        privateBoard.current.classList.remove(CLICKED)
-        publicBoard.current.classList.add(CLICKED)
-      }
-      toggling(!isPublicBoard)
     },
-    [isPublicBoard]
+    [isLoggedIn]
   )
 
+  const leftLink = `${subLinkLeft}`
+  const rightLink = `${subLinkRight}`
+
   return (
-    <div id="toggle-wrapper">
-      <div
-        ref={publicBoard}
-        className="board-toggle clicked"
-        onClick={(e) => onToggleClick(publicBoard.current, e)}
+    <div className={`toggle-wrapper ${isPrivate}`}>
+      <NavLink to={leftLink} className={({ isActive }) => 'nav-link' + (!isActive ? ' unselected' : '')}>
+        {left}
+      </NavLink>
+      <NavLink
+        to={rightLink}
+        className={({ isActive }) => 'nav-link' + (!isActive ? ' unselected' : '')}
+        onClick={toggling}
       >
-        public
-      </div>
-      <div
-        ref={privateBoard}
-        className="board-toggle"
-        onClick={(e) => onToggleClick(privateBoard.current, e)}
-      >
-        private
-      </div>
+        {right}
+      </NavLink>
     </div>
   )
 }
