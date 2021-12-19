@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/codestates/codecube#readme",
   "dependencies": {
+    "axios": "^0.24.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

@@ -22,6 +22,7 @@ app.use(cors({ origin: true }))
 app.use('/', indexRouter.users)
 app.use('/members', indexRouter.members)
 app.use('/projects', indexRouter.projects)
+app.use('/github', indexRouter.github)
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
