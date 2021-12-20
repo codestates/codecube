@@ -35,11 +35,11 @@ code {
   max-height: 50rem;
 }
 
-.login {
+/* .login {
   margin: 0.4rem;
   border: 1px solid black;
   flex: 1 0 0;
-}
+} */
 
 .row {
   border: 1px solid black;

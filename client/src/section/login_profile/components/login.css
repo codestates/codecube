@@ -1,160 +1,131 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-size: 40px;
-  }
-  body {
-    /* add */
-    min-height: 100vh;
-  }
-  #container {
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    background: whitesmoke;
-    /* padding: 0.4rem;
-    margin: 0.4rem; */
-    /* add */
-    width: 100%;
-    flex-wrap: wrap;
-  }
-  .col {
-    border: 1px solid black;
-    padding: 0.4rem;
-    display: flex;
-    flex-direction: column;
-  }
-  .board {
-    /* margin: 0.4rem; */
-    /* padding: 0.4rem; */
-    border: 1px solid black;
-    flex: 1 0 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .login {
-    margin: 0.4rem;
-    border: 1px solid black;
-    flex: 1 0 0;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-  }
+.colA {
+  border: 1px solid black;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+}
+.boardA {
+  /* margin: 0.4rem; */
+  /* padding: 0.4rem; */
+  border: 1px solid black;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.loginA {
+  margin: 0.4rem;
+  border: 1px solid black;
+  flex: 1 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
 
-  .row {
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 0.4rem;
-
-  }
-  .w40 {
-    flex: 4 0 0;
-    /* add */
-    min-width: 300px;
-  }
-  .w30 {
-    flex: 3 0 0;
-    /* add */
-    min-width: 250px;
-  }
-  .h50 {
-    flex: 1 0 0;
-    margin: 0.4rem;
-  }
-  .th50 {
-    flex: 1 0 0;
-    
-  }
-  .zh20 {
-    flex: 2 0 0;
-  }
-  .zh80 {
-    flex: 8 0 0;
-    margin: 0.4rem;
-  }
-  .zh40 {
-    flex: 4 0 0;
-    margin: 0.4rem;
-  }
-  input{
-    text-align: center;
-    width: 100%;
-    /*디스플레이 플렉스는 부모 태그가 가지고 있어야 자식태그에 플렉스적용가능
+.rowA {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0.4rem;
+}
+.w40A {
+  flex: 4 0 0;
+  /* add */
+  min-width: 300px;
+}
+.w30A {
+  flex: 3 0 0;
+  /* add */
+  min-width: 250px;
+}
+.h50A {
+  flex: 1 0 0;
+  margin: 0.4rem;
+}
+.th50A {
+  flex: 1 0 0;
+}
+.zh20A {
+  flex: 2 0 0;
+}
+.zh80A {
+  flex: 8 0 0;
+  margin: 0.4rem;
+}
+.zh40A {
+  flex: 4 0 0;
+  margin: 0.4rem;
+}
+input {
+  text-align: center;
+  width: 100%;
+  /*디스플레이 플렉스는 부모 태그가 가지고 있어야 자식태그에 플렉스적용가능
     반응형 앱으로 만들기 위해서는 min-width나 min-height으로 조절한다.
     인풋 크기 조절하려면 px가 아니라 % 로 설정한다*/
-  }
-  .login01{
-    display: flex;
-    flex-direction: column;
-  }
-  .login02{
-    display: flex;
-    flex-direction: column;
-    margin: 0.4rem;
-  }
-  .qh90{
-    flex: 9 0 0;
-    
-    
-  }
-  .qh10{
-    flex: 1 0 0;
-    
-  }
-  .table{
-
-    width: 100%;
-    /* margin: 0.4rem;         */
-    border-top: 1px solid black;
-    border-collapse: collapse;
-    /* border-collapse: collapse; */
-    text-align: center;
-    
-    
-  }
-  th, td {
-border-bottom: 1px solid black;
-padding: 2px;
 }
-  .board01{
-    text-align: center;
-  }
-  /* .codecubelogo{
+.login01A {
+  display: flex;
+  flex-direction: column;
+}
+.login02A {
+  display: flex;
+  flex-direction: column;
+  margin: 0.4rem;
+}
+.qh90A {
+  flex: 9 0 0;
+}
+.qh10A {
+  flex: 1 0 0;
+}
+.tableA {
+  width: 100%;
+  /* margin: 0.4rem;         */
+  border-top: 1px solid black;
+  border-collapse: collapse;
+  /* border-collapse: collapse; */
+  text-align: center;
+}
+th,
+td {
+  border-bottom: 1px solid black;
+  padding: 2px;
+}
+.board01A {
+  text-align: center;
+}
+/* .codecubelogo{
     min-width: 50px;
 
   } */
-  .codeimage{
-    /* margin: 10px; */
-    width: 50%;
-    /* height: 50%; */
-  }
-  .snslogolist{
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
-  .zw10{
-    flex: 1 0 0;
-  }
+.codeimageA {
+  /* margin: 10px; */
+  width: 50%;
+  /* height: 50%; */
+}
+.snslogolistA {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+.zw10A {
+  flex: 1 0 0;
+}
 
-  .snslogo{
-    width: 25%;
+.snslogoA {
+  width: 25%;
 
-    /* margin: 40px; */
-  }
+  /* margin: 40px; */
+}
 
-  .alert-box {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  
-    position: relative;
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-  }
-  
+.alert-boxA {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
