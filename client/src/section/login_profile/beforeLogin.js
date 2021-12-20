@@ -12,10 +12,9 @@ import profileDummy from '../../dummy/userinfo/profileDummy'
 // `
 
 const BeforeLogin = (props) => {
-
   const [loginInfo, setLoginInfo] = useState({
     email: '',
-    password: ''
+    password: '',
   })
   const [errorMessage, setErrorMessage] = useState('')
   const handleInputValue = (key) => (e) => {
@@ -24,42 +23,38 @@ const BeforeLogin = (props) => {
   const handleLogin = () => {
     // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
-    const {email, password} = loginInfo
-    const result = profileDummy.filter((ele)=>{
-      ele.email === email && ele.password=== password 
+    const { email, password } = loginInfo
+    const result = profileDummy.filter((ele) => {
+      ele.email === email && ele.password === password
     })
-      console.log(profileDummy)
-      console.log(result)
-      console.log(loginInfo)
-    
-    if(!email || !password){
-      setErrorMessage('이메일과 비밀번호를 입력하세요')
-    }
-    else{
-    //   const result = profileDummy.map((ele)=>{
-    //     if(ele.email === email && ele.password===password){
-    //         return ele
-    //     }
-    
-    // })
- 
+    console.log(profileDummy)
+    console.log(result)
+    console.log(loginInfo)
 
-      if (result){
-      //   axios.post('https://localhost:4000/signin',loginInfo)
-      //   .then(res=>{
-      //     // console.log("로그인후받아온쿠키???", res);
-      //     handleResponseSuccess()
-      //   })
-      //   .catch(err=>{
-      //     console.log(err)
-      //     alert('사용자정보가 없습니다.')
-      //   })
-      
-      alert('로그인성공')
-  
-      }
-      else{
-          alert('사용자정보가 없습니다.')
+    if (!email || !password) {
+      setErrorMessage('이메일과 비밀번호를 입력하세요')
+    } else {
+      //   const result = profileDummy.map((ele)=>{
+      //     if(ele.email === email && ele.password===password){
+      //         return ele
+      //     }
+
+      // })
+
+      if (result) {
+        //   axios.post('https://localhost:4000/signin',loginInfo)
+        //   .then(res=>{
+        //     // console.log("로그인후받아온쿠키???", res);
+        //     handleResponseSuccess()
+        //   })
+        //   .catch(err=>{
+        //     console.log(err)
+        //     alert('사용자정보가 없습니다.')
+        //   })
+
+        alert('로그인성공')
+      } else {
+        alert('사용자정보가 없습니다.')
       }
     }
   }
@@ -69,9 +64,9 @@ const BeforeLogin = (props) => {
     //   <div>로그인 화면이 있다고 가정.</div>
     // </Login>
     <div>
-       {/* 여기에 뭔가 써있어야함다
+      {/* 여기에 뭔가 써있어야함다
         {Login} */}
-        <div className="login">
+      <div className="login">
         <div className="lo01 th50 login01">
           <div className="zh20 codecubelogo">
             <img
@@ -81,11 +76,23 @@ const BeforeLogin = (props) => {
             />
           </div>
           <div className="zh80">
-            <form className="loginform" action="" onSubmit={(e) => e.preventDefault()}>
-                  <input type="email" placeholder="email" onChange={handleInputValue('email')}></input>
-                  <input type="password" placeholder="password" onChange={handleInputValue('password')}></input>
-                  <input type="submit" value="login" onClick={handleLogin}></input> 
-                  <div className='alert-box'>{errorMessage}</div>      
+            <form
+              className="loginform"
+              action=""
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                type="email"
+                placeholder="email"
+                onChange={handleInputValue('email')}
+              ></input>
+              <input
+                type="password"
+                placeholder="password"
+                onChange={handleInputValue('password')}
+              ></input>
+              <input type="submit" value="login" onClick={handleLogin}></input>
+              <div className="alert-box">{errorMessage}</div>
             </form>
           </div>
         </div>
@@ -108,11 +115,7 @@ const BeforeLogin = (props) => {
           </div>
           <div className="zh40">소셜로그인</div>
 
-          <input
-            className="zh20 signup "
-            type="button"
-            value="signup"
-          ></input>
+          <input className="zh20 signup " type="button" value="signup"></input>
         </div>
       </div>
     </div>

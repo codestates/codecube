@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Board from './section/board/board'
 
+// import './index.css'
+
 import AfterLogin from './section/login_profile/afterLogin'
 import BeforeLogin from './section/login_profile/beforeLogin'
 import GitContribution from './section/gitcontribution/gitContri'

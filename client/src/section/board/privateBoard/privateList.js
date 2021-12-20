@@ -1,10 +1,8 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Toggle from '../../../components/toggle/toggle'
 
-// import Post from '../post'
 import './privateList.css'
+import Toggle from '../../../components/toggle/toggle'
 
 const CONTENT = '본문'
 const WAITING_USERS = '신청자'
@@ -12,16 +10,19 @@ const CONTENT_LINK = ''
 const WAITING_USERS_LINK = 'waiting'
 const PRIVATE = 'private'
 
-const PrivateList = () => {
+const PrivateList = ({ hasHost }) => {
   return (
     <>
-      <Toggle
-        left={CONTENT}
-        right={WAITING_USERS}
-        subLinkLeft={CONTENT_LINK}
-        subLinkRight={WAITING_USERS_LINK}
-        isPrivate={PRIVATE}
-      ></Toggle>
+      <button id="dream-button">프로젝트 생성</button>
+      {hasHost ? (
+        <Toggle
+          left={CONTENT}
+          right={WAITING_USERS}
+          subLinkLeft={CONTENT_LINK}
+          subLinkRight={WAITING_USERS_LINK}
+          isPrivate={PRIVATE}
+        ></Toggle>
+      ) : null}
       <div id="private-wrapper">
         <Outlet />
       </div>
@@ -30,14 +31,3 @@ const PrivateList = () => {
 }
 
 export default PrivateList
-
-//  * 해당 함수 Post 컴포넌트에서 사용하면 좋을 듯함
-// const confirmOrReject = useCallback(
-//   (id) => {
-//     const change = waitingUsers.filter((user) => {
-//       return user.userId !== id
-//     })
-//     setWaitingUsers(change)
-//   },
-//   [waitingUsers]
-// )

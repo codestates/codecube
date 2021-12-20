@@ -1,29 +1,30 @@
-/* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { v4 } from 'uuid'
 
-import '../card.css'
-import publicDummy from '../../../dummy/board/publicDummy'
+import './postCard.css'
 
-const PublicList = () => {
-  const [publicPosts, setPublicPost] = useState([])
+const WISH_LIST = '수락 대기중'
 
-  useEffect(() => {
-    // console.log('public list request!')
-    setPublicPost(publicDummy)
-  })
-
+const PublicList = ({ list, isWish }) => {
   return (
     <>
-      {publicPosts.map((post) => {
-        return (
-          <div className="card" key={post.postId}>
-            <h3>{post.title}</h3>
-            <div>
-              대기중: {post.confirmed}/{post.recruitment}
+      {isWish ? (
+        <div id="wish-list">
+          <h2>{WISH_LIST}</h2>
+        </div>
+      ) : null}
+      <div id="post-card-wrapper">
+        {list.map((post) => {
+          return (
+            <div key={v4()} className="post-card">
+              <h3>{post.title}</h3>
+              <div>
+                대기중: {post.confirmed}/{post.recruitment}
+              </div>
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </>
   )
 }

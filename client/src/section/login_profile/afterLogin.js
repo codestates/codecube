@@ -21,8 +21,8 @@ const Profile = styled.div`
 const AfterLogin = () => {
   return (
     <Profile>
-      <img src="./dummy/codecubelogo.png" style={logoStyle} />
-      <ProfileImage />
+      {/* <img src="./dummy/codecubelogo.png" style={logoStyle} /> */}
+      {/* <ProfileImage /> */}
       <UserInfo />
     </Profile>
   )
