@@ -105,15 +105,18 @@ module.exports = {
         await models.user_stacks.destroy(
           { where: { user_id: userId } }
         )
+        const stackobj = {}
+        const newarr = []
+        newInfo.stacks.forEach(el => {
+          stackobj['user_id'] = userId
+          stackobj['stack_id'] = el
+        })
 
-        await models.user_stacks.bulkCreate([
-          {
-            user_id: userId,
-            stack_id: {
-              [Op.in]: newInfo.stacks
-            }
-          }
-        ])
+        // await models.user_stacks.bulkCreate([
+        //   {
+        //     user_id: userId, stack_id: { [Op.or]: newInfo.stacks }
+        //   }]
+        // )
 
         await models.users.update(newInfo, {
           where: {
@@ -122,6 +125,7 @@ module.exports = {
         })
         res.status(200).json({
           message: 'successfully modified',
+          infor: stackobj
         })
       }
     },
