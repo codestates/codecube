@@ -105,7 +105,7 @@ function App() {
         </div>
       </div>
       <div className="col w30">
-        <Board isLoggedIn={isLoggedIn} />
+        <Board isLoggedIn={true} />
       </div>
     </div>
   )
