@@ -2,14 +2,13 @@
 import React, { useEffect, useState } from 'react'
 // import './giContri.css'
 
-const GitContributionUser = () =>{
-    return (
-        <div className="row h50">
-          <div className="qh10">git contribution</div>
-          <div className="qh90">잔디</div>
-        </div>
-
-    )
+const GitContributionUser = () => {
+  return (
+    <div className="rowA h50A">
+      <div className="qh10A">git contribution</div>
+      <div className="qh90A">잔디</div>
+    </div>
+  )
 }
 
 export default GitContributionUser

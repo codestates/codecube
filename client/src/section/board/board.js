@@ -14,26 +14,26 @@ const PRIVATE_LINK = '/private'
 
 const Board = ({ isLoggedIn }) => {
   return (
-    <BrowserRouter>
-      <div id="board-wrapper">
-        <Toggle
-          isLoggedIn={isLoggedIn}
-          left={PUBLIC_BOARD}
-          right={PRIVATE_BOARD}
-          subLinkLeft=""
-          subLinkRight={PRIVATE_LINK}
-        />
-        <div id="board-list">
-          <Routes>
-            <Route path="/" element={<PublicList />} />
-            <Route path="/private/*" element={<PrivateList />}>
-              <Route path="" element={<Post />} />
-              <Route path="waiting" element={<div>waiter</div>} />
-            </Route>
-          </Routes>
-        </div>
+    // <BrowserRouter>
+    <div id="board-wrapper">
+      <Toggle
+        isLoggedIn={isLoggedIn}
+        left={PUBLIC_BOARD}
+        right={PRIVATE_BOARD}
+        subLinkLeft=""
+        subLinkRight={PRIVATE_LINK}
+      />
+      <div id="board-list">
+        <Routes>
+          <Route path="/" element={<PublicList />} />
+          <Route path="/private/*" element={<PrivateList />}>
+            <Route path="" element={<Post />} />
+            <Route path="waiting" element={<div>waiter</div>} />
+          </Route>
+        </Routes>
       </div>
-    </BrowserRouter>
+    </div>
+    // </BrowserRouter>
   )
 }
 
