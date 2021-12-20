@@ -21,6 +21,8 @@ const PrivateList = ({ hasHost, isLoggedIn }) => {
       navigation('wishList')
     } else if (location.pathname === '/private') {
       navigation('myPost')
+    } else if (location.pathname === '/private/wishList') {
+      navigation('myPost')
     }
   }, [hasHost, isLoggedIn])
 
