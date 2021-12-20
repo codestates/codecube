@@ -8,7 +8,7 @@ const sequelize = require('./models').sequelize
 const cookieParser = require('cookie-parser')
 const indexRouter = require('./routes')
 
-sequelize.sync()
+sequelize.sync({ alter: true })
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -31,4 +31,3 @@ module.exports = app
 
 //squelize 환경구축하고
 //연결할떄 DB
-// User.sync({ alter: true}) : 테이블의 현재 state(column, data type etc)를 체크하고 model과 비교했을 때 필요한 변경사항에 대해 수행한다.
