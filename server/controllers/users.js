@@ -3,6 +3,7 @@ const { makejwt, solveToken } = require('./function')
 const { Op } = require('sequelize')
 const stacks = require('../models/stacks')
 const hoToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiLquYDtmY3si50iLCJlbWFpbCI6InF3ZXJAY29kZS5jb20iLCJkZXNjcmlwdGlvbiI6IuuCmOuKlCDsvZTrlKnsmZXsnbQg65Cg6rGw7JW8IiwiaWF0IjoxNjM5ODE5NzcwLCJleHAiOjE2NDA2ODM3NzAsImlzcyI6ImNvZGVjdWJlIiwic3ViIjoiZGF0YSJ9.FyfaUhfTRW72gdCQnfqCvyRgEjneuAXL70dc2I3XhOU'
+const lodash = require('lodash')
 
 module.exports = {
   users: {
@@ -110,13 +111,13 @@ module.exports = {
         newInfo.stacks.forEach(el => {
           stackobj['user_id'] = userId
           stackobj['stack_id'] = el
+          let element = lodash.cloneDeep(stackobj)
+          newarr.push(element)
         })
 
-        // await models.user_stacks.bulkCreate([
-        //   {
-        //     user_id: userId, stack_id: { [Op.or]: newInfo.stacks }
-        //   }]
-        // )
+        await models.user_stacks.bulkCreate(
+          newarr
+        )
 
         await models.users.update(newInfo, {
           where: {
@@ -125,7 +126,6 @@ module.exports = {
         })
         res.status(200).json({
           message: 'successfully modified',
-          infor: stackobj
         })
       }
     },
