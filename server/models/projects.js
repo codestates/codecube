@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      projects.hasMany(models.user_stacks, {
+        as: 'user_stacks',
+        foreignKey: 'projecyt_id',
+        onDelete: 'CASCADE'
+      })
     }
   };
   projects.init({

@@ -1,25 +1,53 @@
 const models = require('../models')
 const { makejwt, solveToken } = require('./function')
-const hoToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiLquYDtmY3si50iLCJlbWFpbCI6InF3ZXJAY29kZS5jb20iLCJkZXNjcmlwdGlvbiI6IuuCmOuKlCDsvZTrlKnsmZXsnbQg65Cg6rGw7JW8IiwiaWF0IjoxNjM5ODE5NzcwLCJleHAiOjE2NDA2ODM3NzAsImlzcyI6ImNvZGVjdWJlIiwic3ViIjoiZGF0YSJ9.FyfaUhfTRW72gdCQnfqCvyRgEjneuAXL70dc2I3XhOU'
+
+const { Op } = require('sequelize')
+const stacks = require('../models/stacks')
+const hoToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiLquYDtmY3si50iLCJlbWFpbCI6InF3ZXJAY29kZS5jb20iLCJkZXNjcmlwdGlvbiI6IuuCmOuKlCDsvZTrlKnsmZXsnbQg65Cg6rGw7JW8IiwiaWF0IjoxNjM5ODE5NzcwLCJleHAiOjE2NDA2ODM3NzAsImlzcyI6ImNvZGVjdWJlIiwic3ViIjoiZGF0YSJ9.FyfaUhfTRW72gdCQnfqCvyRgEjneuAXL70dc2I3XhOU'
 
 module.exports = {
   users: {
     get: async (req, res) => {
-      // const token = req.cookies.token
+      // const tkeon = req.cookies.token
       //token의 payload에 유저정보가 DB유저정보를 확인해서 userInfo에 넣기
       const testInfo = {
         id: 1,
         username: '김홍식',
         email: 'qwer@code.com',
         description: '나는 코딩왕이 될거야',
+        stacks: [1, 2, 3, 4, 5]
       }
+
       const Token = makejwt(testInfo)
       const solve = solveToken(Token)
 
       const userInfo = await models.users.findAll({
-        where: { id: solve.id },
+        attributes: ['id', 'username', 'email', 'description'],
+        where: { id: solve.id }
       })
+
+      const stacks = await models.stacks.findAll({
+        attributes: ['id', 'name'],
+        where: {
+          id: {
+            [Op.or]: solve.stacks
+          }
+        }
+      })
+
+      const test = await models.projects.findAll({
+        include: {
+          model: models.project_users,
+          include: [
+            {
+              model: models.users,
+              through: { attributes: ['title'] }
+            }
+          ]
+        }
+      })
+
+      solve['stacks'] = stacks
 
       //token이 만료되거나 유저정보에 없으면
       if (!userInfo) {
@@ -60,6 +88,7 @@ module.exports = {
       newInfo = {
         username: '준우',
         description: '이보게 내가 개발자가 될 상인가?',
+        stacks: [1, 2, 3]
       }
       //요청정보가 없을시
       if (!newInfo) {
@@ -73,6 +102,19 @@ module.exports = {
         res.status(401).json({ message: 'invalid authorization' })
       } else {
         //user 정보 업데아트
+        await models.user_stacks.destroy(
+          { where: { user_id: userId } }
+        )
+
+        await models.user_stacks.bulkCreate([
+          {
+            user_id: userId,
+            stack_id: {
+              [Op.in]: newInfo.stacks
+            }
+          }
+        ])
+
         await models.users.update(newInfo, {
           where: {
             id: userId,
@@ -107,11 +149,12 @@ module.exports = {
   signup: {
     post: async (req, res) => {
       //   console.log(req.body)
-      const { username, image, password, stack } = req.body
-      await models.users.create({
+      const { username, email, description, image, password, stack } = req.body
+      const userId = await models.users.create({
         username: username,
-        email: id,
+        email: email,
         password: password,
+        description: description,
         image: image,
       })
       // models.user_stacks.({
@@ -144,6 +187,7 @@ module.exports = {
       if (!loginuser) {
         res.status.json({ message: 'login successed' })
       }
+
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
       else {
         const { username, email, description } = loginuser
