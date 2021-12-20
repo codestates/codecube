@@ -14,12 +14,28 @@ function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false)
   const [userinfo, setUserinfo] = useState('')
   const [isSignup, setIsSignup] = useState(false)
+  const [token, setToken] = useState('')
   const navigate = useNavigate()
-  const isAuthenticated = async () => {
+
+  const confirmedtok = token
+
+  console.log('깐부잖아~~~~제발...!!!.', token)
+  const isAuthenticated = async (data) => {
     // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
-    await axios.get('https://localhost:4000/auth').then((res) => {
-      console.log('인증받으면 서버로부터 어떤 데이터 받아오는거임?', res)
-      /*
+    console.log('프롭스토근입니다...!!!.', token)
+    console.log('최종보스 능지보소 ', confirmedtok)
+    setToken(data)
+    await axios
+      .get('http://localhost:4000/users', {
+        headers: { authorization: `bearer ${token}` },
+      })
+      .then((res) => {
+        console.log('인증받으면 서버로부터 어떤 데이터 받아오는거임?', res.data)
+        /*
+      await axios.get('http://localhost:4000/users', { headers: { authorization: `bearer ${accessToken}`, }, })
+      et response = await axios.get('https://api.github.com/user', { headers: { authorization: `token ${accessToken}`, }, })
+    let response = await axios.get('https://api.github.com/user', { headers: { authorization: `token ${accessToken}`, }, })
+
       인증받으면 서버로부터 어떤 데이터 받아오는거임? {data: {…}, status: 200, statusText: 'OK', headers: {…}, config: {…}, …}config: {url: 'https://localhost:4000/auth', method: 'get', headers: {…}, transformRequest: Array(1), transformResponse: Array(1), …}data: data: userInfo: {id: 3, email: 'tt@naver.com', username: '킴코', mobile: '198165102', createdAt: '2021-12-08', …}[[Prototype]]: Objectmessage: "ok"[[Prototype]]: Objectheaders: {content-length: '159', content-type: 'application/json; charset=utf-8'}request: XMLHttpRequest {readyState: 4, timeout: 0, withCredentials: true, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}status: 200statusText: "OK"[[Prototype]]: Object
       data:
           data:
@@ -27,17 +43,21 @@ function App() {
             [[Prototype]]: Object
           message: "ok"
       */
-      // 서버실행시키고 크롬개발자도구에서 확인가능
-      //res.status(200).json({data:{userInfo: data.dataValues}, message: 'ok'}) 패스워드 뺀 데이터 받아올듯
-      setUserinfo(res.data.data.userInfo)
-      setisLoggedIn(true)
-      navigate('/')
-      // 일단 /로간다음 로그인상태에따라서 분기 나눠준다
-    })
+        // 서버실행시키고 크롬개발자도구에서 확인가능
+        //res.status(200).json({data:{userInfo: data.dataValues}, message: 'ok'}) 패스워드 뺀 데이터 받아올듯
+        setUserinfo(res)
+        setisLoggedIn(true)
+        // navigate('/')
+        // 일단 /로간다음 로그인상태에따라서 분기 나눠준다
+      })
   }
-  const handleResponseSuccess = () => {
-    isAuthenticated()
-  }
+  console.log('ㅈㄷㄱㅈㄱㅈㄱㄷㄱㅈㄷㅈㄱ...!!!.', token)
+  // const handleResponseSuccess = () => {
+  //   console.log('살려주오...!!!.', token)
+  //   isAuthenticated()
+  //   // setisLoggedIn(true)
+  //   // navigate('/')
+  // }
   const handleLogout = () => {
     // axios.post('https://localhost:4000/signout').then((res) => {
     //   setUserinfo(null)
@@ -91,6 +111,8 @@ function App() {
               setisLoggedIn={setisLoggedIn}
               setUserinfo={setUserinfo}
               setIsSignup={setIsSignup}
+              isAuthenticated={isAuthenticated}
+              setToken={setToken}
             />
           )}
         </div>

@@ -31,47 +31,81 @@ const Login = (props) => {
     navigate('/')
   }
 
+  // const handleLogin = () => {
+  //   // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
+  //   // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
+  //   const { email, password } = loginInfo
+  //   const result = profileDummy.filter((ele) => {
+  //     return ele.email === email && ele.password === password
+  //   })
+  //   console.log(profileDummy)
+  //   console.log('결과다', result)
+  //   console.log(loginInfo)
+
+  //   if (!email || !password) {
+  //     setErrorMessage('이메일과 비밀번호를 입력하세요')
+  //   } else {
+  //     //   const result = profileDummy.map((ele)=>{
+  //     //     if(ele.email === email && ele.password===password){
+  //     //         return ele
+  //     //     }
+
+  //     // })
+
+  //     if (result) {
+  //       //   axios.post('https://localhost:4000/signin',loginInfo)
+  //       //   .then(res=>{
+  //       //     // console.log("로그인후받아온쿠키???", res);
+  //       //     handleResponseSuccess()
+  //       //   })
+  //       //   .catch(err=>{
+  //       //     console.log(err)
+  //       //     alert('사용자정보가 없습니다.')
+  //       //   })
+  //       props.setisLoggedIn(true)
+  //       props.setUserinfo(result)
+
+  //       alert('로그인성공')
+  //     } else {
+  //       alert('사용자정보가 없습니다.')
+  //     }
+  //   }
+  // }
   const handleLogin = () => {
     // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
     const { email, password } = loginInfo
-    const result = profileDummy.filter((ele) => {
-      return ele.email === email && ele.password === password
-    })
-    console.log(profileDummy)
-    console.log('결과다', result)
-    console.log(loginInfo)
-
+    console.log('로로로로그인인포', loginInfo)
     if (!email || !password) {
       setErrorMessage('이메일과 비밀번호를 입력하세요')
     } else {
-      //   const result = profileDummy.map((ele)=>{
-      //     if(ele.email === email && ele.password===password){
-      //         return ele
-      //     }
+      axios
+        .post('http://localhost:4000/login', loginInfo)
+        .then((res) => {
+          console.log('로그인후받아온쿠키???', res.data)
+          // props.setisLoggedIn(true)
+          // navigate('/')
 
-      // })
-
-      if (result) {
-        //   axios.post('https://localhost:4000/signin',loginInfo)
-        //   .then(res=>{
-        //     // console.log("로그인후받아온쿠키???", res);
-        //     handleResponseSuccess()
-        //   })
-        //   .catch(err=>{
-        //     console.log(err)
-        //     alert('사용자정보가 없습니다.')
-        //   })
-        props.setisLoggedIn(true)
-        props.setUserinfo(result)
-
-        alert('로그인성공')
-      } else {
-        alert('사용자정보가 없습니다.')
-      }
+          // props.setUserinfo(result)
+          console.log('이거진짜 토근이니 이라다 다 죽어', res.data.data.authorization)
+          props.setToken(res.data.data.authorization)
+          console.log(
+            '이거 아니면 손목날라간다  이라다 다 죽어',
+            res.data.data.authorization
+          )
+          props.isAuthenticated(res.data.data.authorization)
+        })
+        .catch((err) => {
+          console.log(err)
+          alert('사용자정보가 없습니다와아???.', err)
+        })
     }
   }
 
+  function count() {
+    console.log('몇번할수신냐 로그인!!!!!!!!!!!!!')
+  }
+  count()
   return (
     // <Login>
     //   <div>로그인 화면이 있다고 가정.</div>
@@ -81,18 +115,10 @@ const Login = (props) => {
     <div className="loginA">
       <div className="lo01A th50A login01A">
         <div className="zh20A codecubelogoA">
-          <img
-            className="codeimageA"
-            src="./dummy/codecubelogo.png"
-            alt="codecubelog"
-          />
+          <img className="codeimageA" src="./dummy/codecubelogo.png" alt="codecubelog" />
         </div>
         <div className="zh80A">
-          <form
-            className="loginformA"
-            action=""
-            onSubmit={(e) => e.preventDefault()}
-          >
+          <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
             <input
               className="inputA"
               type="email"

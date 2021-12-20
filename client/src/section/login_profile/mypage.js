@@ -198,7 +198,8 @@ const Mypage = (props) => {
   // const { email, username, stacks, description } = props.userinfo
   //https://jess2.xyz/vue/data-undefined-error/
   // TypeError: Cannot read property of undefined
-  const { username, stacks, description, image, email } = props.userinfo[0]
+  // const { username, stacks, description, image, email } = props.userinfo[0]
+  const { username, stacks, description, image, email } = props.userinfo
   const navigate = useNavigate()
 
   const [editProfileBtn, setEditProfileBtn] = useState(false)
@@ -270,11 +271,7 @@ const Mypage = (props) => {
         <center>
           <h1>프로필수정</h1>
           <div>{email}</div>
-          <form
-            className="loginformA"
-            action=""
-            onSubmit={(e) => e.preventDefault()}
-          >
+          <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
             <input
               type="file"
               id="chooseFile"
