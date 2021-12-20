@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Board from './section/board/board'
 
+// import './index.css'
+
 import AfterLogin from './section/login_profile/afterLogin'
 import BeforeLogin from './section/login_profile/beforeLogin'
 import GitContribution from './section/gitcontribution/gitContri'
@@ -13,9 +15,7 @@ function App() {
   return (
     <div id="container">
       <div className="col w40">
-        <div className="login">
-          {isLoggedIn ? <AfterLogin /> : <BeforeLogin />}
-        </div>
+        <div className="login">{isLoggedIn ? <AfterLogin /> : <BeforeLogin />}</div>
       </div>
       <div className="col w30">
         <div className="row h50">

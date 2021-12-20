@@ -1,27 +1,41 @@
-/* eslint-disable react/prop-types */
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Toggle from '../../../components/toggle/toggle'
+import React, { useEffect } from 'react'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
-// import Post from '../post'
 import './privateList.css'
+import Toggle from '../../../components/toggle/toggle'
 
 const CONTENT = '본문'
 const WAITING_USERS = '신청자'
-const CONTENT_LINK = ''
+const CONTENT_LINK = '/private/myPost'
 const WAITING_USERS_LINK = 'waiting'
 const PRIVATE = 'private'
 
-const PrivateList = () => {
+const PrivateList = ({ hasHost, isLoggedIn }) => {
+  const navigation = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigation('/')
+    } else if (!hasHost) {
+      navigation('wishList')
+    } else if (location.pathname === '/private') {
+      navigation('myPost')
+    }
+  }, [hasHost, isLoggedIn])
+
   return (
     <>
-      <Toggle
-        left={CONTENT}
-        right={WAITING_USERS}
-        subLinkLeft={CONTENT_LINK}
-        subLinkRight={WAITING_USERS_LINK}
-        isPrivate={PRIVATE}
-      ></Toggle>
+      <button id="dream-button">프로젝트 생성</button>
+      {hasHost ? (
+        <Toggle
+          left={CONTENT}
+          right={WAITING_USERS}
+          subLinkLeft={CONTENT_LINK}
+          subLinkRight={WAITING_USERS_LINK}
+          isPrivate={PRIVATE}
+        ></Toggle>
+      ) : null}
       <div id="private-wrapper">
         <Outlet />
       </div>
@@ -30,14 +44,3 @@ const PrivateList = () => {
 }
 
 export default PrivateList
-
-//  * 해당 함수 Post 컴포넌트에서 사용하면 좋을 듯함
-// const confirmOrReject = useCallback(
-//   (id) => {
-//     const change = waitingUsers.filter((user) => {
-//       return user.userId !== id
-//     })
-//     setWaitingUsers(change)
-//   },
-//   [waitingUsers]
-// )

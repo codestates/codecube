@@ -1,0 +1,51 @@
+h1 {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid gray;
+}
+
+#post-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.content-wrapper {
+  background-color: rgb(110, 110, 169);
+  height: 80%;
+  position: relative;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
+}
+.content {
+  line-height: 1.5rem;
+  border-bottom: 1px solid gray;
+  padding: 1rem 0;
+}
+
+.limit {
+  overflow-y: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+.button-backdrop {
+  position: absolute;
+  z-index: 998;
+  background-color: rgba(248, 249, 250, 0.9);
+  width: 100%;
+  height: 13%;
+  bottom: 0px;
+}
+
+.show-all {
+  position: absolute;
+  z-index: 999;
+  height: 2rem;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
