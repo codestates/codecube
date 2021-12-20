@@ -11,7 +11,7 @@ import NoticeBoard from './section/noticeboard/noticeBoard'
 import axios from 'axios'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setisLoggedIn] = useState(false)
   const [userinfo, setUserinfo] = useState('')
   const [isSignup, setIsSignup] = useState(false)
   const navigate = useNavigate()
