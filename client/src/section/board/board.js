@@ -53,48 +53,43 @@ const Board = ({ isLoggedIn }) => {
   }, [hasHost])
 
   return (
-    <BrowserRouter>
-      <div id="board-wrapper">
-        <Toggle
-          isLoggedIn={isLoggedIn}
-          left={PUBLIC_BOARD}
-          right={PRIVATE_BOARD}
-          subLinkLeft=""
-          subLinkRight={PRIVATE_LINK}
-        />
-        <div id="board-list">
-          <Routes>
+    <div id="board-wrapper">
+      <Toggle
+        isLoggedIn={isLoggedIn}
+        left={PUBLIC_BOARD}
+        right={PRIVATE_BOARD}
+        subLinkLeft=""
+        subLinkRight={PRIVATE_LINK}
+      />
+      <div id="board-list">
+        <Routes>
+          <Route
+            index
+            path="/"
+            element={<PublicList list={publicList} isWish={false} />}
+          />
+          <Route
+            path="/private/*"
+            element={<PrivateList hasHost={hasHost} isLoggedIn={isLoggedIn} />}
+          >
             <Route
-              index
-              path="/"
-              element={<PublicList list={publicList} isWish={false} />}
+              path="myPost"
+              element={<Post thisPost={myPost.host} confirmUsers={confirmUsers} />}
             />
             <Route
-              path="/private/*"
-              element={<PrivateList hasHost={hasHost} isLoggedIn={isLoggedIn} />}
-            >
-              <Route
-                path="myPost"
-                element={<Post thisPost={myPost.host} confirmUsers={confirmUsers} />}
-              />
-              <Route
-                path="wishList"
-                element={<PublicList list={myPost.guest.wishList} isWish={true} />}
-              />
-              <Route
-                path="waiting"
-                element={
-                  <Waiting
-                    waitingUsers={waitingUsers}
-                    setWaitingUsers={setWaitingUsers}
-                  />
-                }
-              />
-            </Route>
-          </Routes>
-        </div>
+              path="wishList"
+              element={<PublicList list={myPost.guest.wishList} isWish={true} />}
+            />
+            <Route
+              path="waiting"
+              element={
+                <Waiting waitingUsers={waitingUsers} setWaitingUsers={setWaitingUsers} />
+              }
+            />
+          </Route>
+        </Routes>
       </div>
-    </BrowserRouter>
+    </div>
   )
 }
 

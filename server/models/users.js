@@ -10,10 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      users.hasMany(models.user_stacks, {
+        as: 'user_stacks',
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
+      })
+      users.hasMany(models.project_users, {
+        as: 'project_users',
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
+      })
+
     }
-  };
-  users.init({ 
+  }
+  users.init({
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     image: DataTypes.STRING,

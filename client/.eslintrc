@@ -20,7 +20,7 @@
   "rules": {
     // "quotes": ["error", "single"],
     // "indent": ["error", 2],
-    "indent": ["off"],
+    "indent": "off",
     "semi": ["error", "never"],
     "react/prop-types": "off"
   }

@@ -18,12 +18,17 @@ module.exports = {
         const confirmed = await models.project_users.findAndCountAll({
           where: { project_id: project_id, join: 1 },
         })
-        finalList.push({ title: title, confirmed: confirmed.count })
+        finalList.push({
+          title,
+          project_id,
+          confirmed: confirmed.count,
+        })
       }
       res.status(200).json({ message: 'ok', list: finalList })
     },
     delete: async (req, res) => {
       //1. 일단 게시글 지우기
+      console.log(req.params)
       const project_id = req.params.postId
       const target = await models.projects.findOne({
         where: { id: project_id },
@@ -43,6 +48,7 @@ module.exports = {
       res.status(200).json({ message: 'successfully deleted' })
     },
     put: async (req, res) => {
+      // console.log(req.body)
       const { title, content, image } = req.body
       const user_id = whoRU(req.headers.authorization)
       if (!user_id) {
