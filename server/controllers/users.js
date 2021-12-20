@@ -1,7 +1,8 @@
 const models = require('../models')
+const { users } = require('../models')
 const { makejwt, solveToken } = require('./function')
 const whoRU = function (withBearer) {
-  const token = withBearer.split('=')[1]
+  const token = withBearer.split(' ')[1]
   const user_id = solveToken(token)
   return user_id
 }
@@ -19,9 +20,10 @@ module.exports = {
         'erewrewwrewreewrwrewerwewrewewrreww',
         req.headers.authorization
       )
-      const solve = solveToken(hoToken)
-      const atocken = req.headers.cookie.split('=')[1]
-      const decoded = solveToken(atocken)
+      const rtoken = req.headers.authorization.split(' ')[1]
+      // const solve = solveToken(hoToken)
+      // const atocken = req.headers.cookie.split('=')[1]
+      const decoded = solveToken(rtoken)
 
       // const token = req.cookie
       console.log('1231434414123131321312313', decoded)
@@ -38,10 +40,10 @@ module.exports = {
       // const solve = solveToken(token)
       // console.log(solve)
 
-      const userInfo = await models.users.findAll({
-        attributes: ['id', 'username', 'email', 'description'],
-        where: { id: solve.id },
+      const userInfo = await users.findOne({
+        where: { id: decoded.id },
       })
+      console.log('뭐찾은거있음??????????????????!!!!!!!!!!!!!!!!!!?', userInfo)
 
       const stacks = await models.stacks.findAll({
         attributes: ['id', 'name'],
@@ -207,8 +209,10 @@ module.exports = {
 
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
       else {
-        const { username, email, description } = loginuser
-        const jwt = makejwt({ username, email, description })
+        const { username, email, description, id } = loginuser
+        const jwt = makejwt({ id, username, email, description })
+        // const jwt = makejwt(loginuser)
+        console.log('jwt토큰코는', jwt)
         res
           // .cookie('jwt', jwt, {
           //   sameSite: 'None',
