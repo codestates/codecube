@@ -1,41 +1,50 @@
-import React, { useEffect } from 'react'
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import './privateList.css'
 import Toggle from '../../../components/toggle/toggle'
+import DreamButton from './dreamButton'
 
-const CONTENT = '본문'
-const WAITING_USERS = '신청자'
-const CONTENT_LINK = '/private/myPost'
-const WAITING_USERS_LINK = 'waiting'
-const PRIVATE = 'private'
+import { PRIVATE, CONTENT, CONTENT_LINK } from '../hardWord'
+import { WAITING_USERS, WAITING_USERS_LINK } from '../hardWord'
 
-const PrivateList = ({ hasHost, isLoggedIn }) => {
+import projectInitial from '../projectInitial'
+import privateDummy from '../../../dummy/board/privateDummy'
+
+const havePostAsHost = (obj) => {
+  return obj.host.postId > 0
+}
+
+const PrivateList = ({ setHasHost, hasHost, isLoggedIn, setDashBoardInfo }) => {
+  const [myDashBoard, setMyDashBoard] = useState(projectInitial)
   const navigation = useNavigate()
-  const location = useLocation()
 
   useEffect(() => {
     if (!isLoggedIn) {
       navigation('/')
-    } else if (!hasHost) {
-      navigation('wishList')
-    } else if (location.pathname === '/private') {
-      navigation('myPost')
-    } else if (location.pathname === '/private/wishList') {
-      navigation('myPost')
     }
-  }, [hasHost, isLoggedIn])
+    // TODO: API
+    setMyDashBoard(privateDummy)
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    setHasHost(havePostAsHost(myDashBoard))
+    setDashBoardInfo(myDashBoard)
+  }, [myDashBoard])
 
   return (
     <>
-      <button id="dream-button">프로젝트 생성</button>
+      <DreamButton
+        hasHost={hasHost}
+        postState={myDashBoard.host.start + myDashBoard.host.done}
+      />
       {hasHost ? (
         <Toggle
-          left={CONTENT}
-          right={WAITING_USERS}
-          subLinkLeft={CONTENT_LINK}
-          subLinkRight={WAITING_USERS_LINK}
-          isPrivate={PRIVATE}
+          leftName={CONTENT}
+          rightName={WAITING_USERS}
+          leftLink={CONTENT_LINK}
+          rightLink={WAITING_USERS_LINK}
+          privateClass={PRIVATE}
         ></Toggle>
       ) : null}
       <div id="private-wrapper">

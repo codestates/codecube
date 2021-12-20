@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './post.css'
 import ConfirmUsers from '../members/confirm'
 import PostContent from './content'
 
-const Post = ({ thisPost, confirmUsers }) => {
+import { thisPostDummy } from '../../../dummy/board/privateDummy'
+
+const Post = ({ postId }) => {
+  const [thisPost, setThisPost] = useState({ title: '', content: '' })
+  useEffect(() => {
+    // TODO: API 유저 아이디를 기반으로
+    setThisPost(thisPostDummy)
+  }, [])
   return (
     <div id="post-wrapper">
       <PostContent thisPost={thisPost} />
-      <ConfirmUsers confirmUsers={confirmUsers} />
+      <ConfirmUsers postId={postId} />
     </div>
   )
 }
