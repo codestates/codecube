@@ -12,15 +12,18 @@
 }
 
 #board-list {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   overflow-y: scroll;
   width: 100%;
   max-width: 35rem;
   border: 1px black solid;
   padding: 1rem;
+  padding-top: 2rem;
   height: 38.2rem;
+  /* align-items: center; */
   /* align-content: flex-start; */
   /* justify-content: center; */
   /* 게시판 크기가 클 때 카드를 작게만들고 한 row당 2개 이상의 카드를 보여주려고 시도함 */

@@ -7,8 +7,7 @@
   },
   "extends": [
     // "eslint:recommended", 개발환경에서 잠시 끕니다.
-    "plugin:react/recommended",
-    "prettier"
+    "plugin:react/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
