@@ -198,8 +198,25 @@ const Mypage = (props) => {
   // const { email, username, stacks, description } = props.userinfo
   //https://jess2.xyz/vue/data-undefined-error/
   // TypeError: Cannot read property of undefined
-  const { username, stacks, description, image, email } = props.userinfo[0]
+  // const { username, stacks, description, image, email } = props.userinfo[0]
+  const {
+    username = 'null',
+    stacks = '',
+    description = '',
+    image = '',
+    email = '',
+  } = props.userinfo
+  console.log('유제인포포포포ㅗ', props.userinfo)
   const navigate = useNavigate()
+
+  // const handleLogout = () => {
+  //   axios.get('http://localhost:4000/logout').then((res) => {
+  //     console.log('메세지가뭐야???', res)
+  //     props.setUserinfo(null)
+  //     props.setisLoggedIn(false)
+  //     navigate('/')
+  //   })
+  // }
 
   const [editProfileBtn, setEditProfileBtn] = useState(false)
   // const [saveProfileBtn, setSaveProfileBtn] = useState(false)
@@ -234,7 +251,7 @@ const Mypage = (props) => {
     // props.setisLoggedIn(true)
     navigate('/')
   }
-  console.log('프롭스로받아온유져인포', props.userinfo[0])
+  console.log('프롭스로받아온유져인포', props.userinfo)
   console.log('수정전', userInfoEdited)
 
   const handleSave = () => {
@@ -245,13 +262,15 @@ const Mypage = (props) => {
   }
   console.log()
 
-  console.log('수정후', props.userinfo[0])
+  console.log('수정후', props.userinfo)
 
   const handleWithdraw = () => {
-    confirm('정말로 탈퇴하시겠습니까?')
-    alert('회원가입이 탈퇴되었습니다')
-    props.setisLoggedIn(false)
-    navigate('/')
+    axios.delete('http://localhost:4000/users').then((res) => {
+      confirm('정말로 탈퇴하시겠습니까?')
+      alert('회원가입이 탈퇴되었습니다')
+      props.setisLoggedIn(false)
+      navigate('/')
+    })
   }
   // }
   //비밀번호 매치 함수
@@ -270,11 +289,7 @@ const Mypage = (props) => {
         <center>
           <h1>프로필수정</h1>
           <div>{email}</div>
-          <form
-            className="loginformA"
-            action=""
-            onSubmit={(e) => e.preventDefault()}
-          >
+          <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
             <input
               type="file"
               id="chooseFile"

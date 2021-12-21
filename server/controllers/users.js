@@ -1,52 +1,70 @@
 const models = require('../models')
+const { users } = require('../models')
 const { makejwt, solveToken } = require('./function')
+const whoRU = function (withBearer) {
+  const token = withBearer.split(' ')[1]
+  const user_id = solveToken(token)
+  return user_id
+}
 
 const { Op } = require('sequelize')
 const stacks = require('../models/stacks')
-const hoToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiLquYDtmY3si50iLCJlbWFpbCI6InF3ZXJAY29kZS5jb20iLCJkZXNjcmlwdGlvbiI6IuuCmOuKlCDsvZTrlKnsmZXsnbQg65Cg6rGw7JW8IiwiaWF0IjoxNjM5ODE5NzcwLCJleHAiOjE2NDA2ODM3NzAsImlzcyI6ImNvZGVjdWJlIiwic3ViIjoiZGF0YSJ9.FyfaUhfTRW72gdCQnfqCvyRgEjneuAXL70dc2I3XhOU'
+const hoToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiLquYDtmY3si50iLCJlbWFpbCI6InF3ZXJAY29kZS5jb20iLCJkZXNjcmlwdGlvbiI6IuuCmOuKlCDsvZTrlKnsmZXsnbQg65Cg6rGw7JW8IiwiaWF0IjoxNjM5ODE5NzcwLCJleHAiOjE2NDA2ODM3NzAsImlzcyI6ImNvZGVjdWJlIiwic3ViIjoiZGF0YSJ9.FyfaUhfTRW72gdCQnfqCvyRgEjneuAXL70dc2I3XhOU'
 const lodash = require('lodash')
 
 module.exports = {
   users: {
     get: async (req, res) => {
-      // const tkeon = req.cookies.token
+      console.log(
+        'erewrewwrewreewrwrewerwewrewewrreww',
+        req.headers.authorization
+      )
+      const rtoken = req.headers.authorization.split(' ')[1]
+      // const solve = solveToken(hoToken)
+      // const atocken = req.headers.cookie.split('=')[1]
+      const decoded = solveToken(rtoken)
+
+      // const token = req.cookie
+      console.log('1231434414123131321312313', decoded)
       //token의 payload에 유저정보가 DB유저정보를 확인해서 userInfo에 넣기
-      const testInfo = {
-        id: 1,
-        username: '김홍식',
-        email: 'qwer@code.com',
-        description: '나는 코딩왕이 될거야',
-        stacks: [1, 2, 3, 4, 5]
-      }
+      // const testInfo = {
+      //   id: 1,
+      //   username: '김홍식',
+      //   email: 'qwer@code.com',
+      //   description: '나는 코딩왕이 될거야',
+      //   stacks: [1, 2, 3, 4, 5],
+      // }
 
-      const Token = makejwt(testInfo)
-      const solve = solveToken(Token)
+      // const Token = makejwt(req.headers.cookie)
+      // const solve = solveToken(token)
+      // console.log(solve)
 
-      const userInfo = await models.users.findAll({
-        attributes: ['id', 'username', 'email', 'description'],
-        where: { id: solve.id }
+      const userInfo = await users.findOne({
+        where: { id: decoded.id },
       })
+      console.log('뭐찾은거있음??????????????????!!!!!!!!!!!!!!!!!!?', userInfo)
 
       const stacks = await models.stacks.findAll({
         attributes: ['id', 'name'],
         where: {
           id: {
-            [Op.or]: solve.stacks
-          }
-        }
+            [Op.or]: solve.stacks,
+          },
+        },
       })
 
-      const test = await models.projects.findAll({
-        include: {
-          model: models.project_users,
-          include: [
-            {
-              model: models.users,
-              through: { attributes: ['title'] }
-            }
-          ]
-        }
-      })
+      // const test = await models.projects.findAll({
+      //   include: {
+      //     model: models.project_users,
+      //     include: [
+      //       {
+      //         model: models.users,
+      //         through: { attributes: ['title'] },
+      //       },
+      //     ],
+      //   },
+      // })
 
       solve['stacks'] = stacks
 
@@ -57,13 +75,13 @@ module.exports = {
       //아니면 유저정보를 보내준다.
       else {
         res
-          .cookie('token', Token, {
-            sameSite: 'None',
-            httpOnly: true,
-            secure: true,
-          })
+          // .cookie('jwt', token, {
+          //   sameSite: 'None',
+          //   httpOnly: true,
+          //   secure: true,
+          // })
           .status(200)
-          .json({ userInfo })
+          .json({ solve })
       }
     },
     //회원탈퇴
@@ -89,7 +107,7 @@ module.exports = {
       newInfo = {
         username: '준우',
         description: '이보게 내가 개발자가 될 상인가?',
-        stacks: [1, 2, 3]
+        stacks: [1, 2, 3],
       }
       //요청정보가 없을시
       if (!newInfo) {
@@ -103,21 +121,17 @@ module.exports = {
         res.status(401).json({ message: 'invalid authorization' })
       } else {
         //user 정보 업데아트
-        await models.user_stacks.destroy(
-          { where: { user_id: userId } }
-        )
+        await models.user_stacks.destroy({ where: { user_id: userId } })
         const stackobj = {}
         const newarr = []
-        newInfo.stacks.forEach(el => {
+        newInfo.stacks.forEach((el) => {
           stackobj['user_id'] = userId
           stackobj['stack_id'] = el
           let element = lodash.cloneDeep(stackobj)
           newarr.push(element)
         })
 
-        await models.user_stacks.bulkCreate(
-          newarr
-        )
+        await models.user_stacks.bulkCreate(newarr)
 
         await models.users.update(newInfo, {
           where: {
@@ -166,7 +180,7 @@ module.exports = {
       // })
       const jwt = makejwt({ username, email, description })
       res
-        .cookie('token', jwt, {
+        .cookie('jwt', jwt, {
           sameSite: 'None',
           httpOnly: true,
           secure: true,
@@ -179,6 +193,7 @@ module.exports = {
     post: async (req, res) => {
       // body에 아이디하고 비밀번호를 확인
       const userInfo = req.body
+      // console.log('서버쪽 곤솤르돌', userInfo)
       const { email, password } = userInfo
       // loginuser 변수에 DB에서 회원정보 유무를 확인하여 존재시 변수에 할당
       const loginuser = await models.users.findAll({
@@ -189,21 +204,27 @@ module.exports = {
       })
       //DB에 유저 정보가 없을시
       if (!loginuser) {
-        res.status.json({ message: 'login successed' })
+        res.status.json({ message: 'login unsuccessed' })
       }
 
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
       else {
-        const { username, email, description } = loginuser
-        const jwt = makejwt({ username, email, description })
+        const { username, email, description, id } = loginuser
+        const jwt = makejwt({ id, username, email, description })
+        // const jwt = makejwt(loginuser)
+        console.log('jwt토큰코는', jwt)
         res
-          .cookie('token', jwt, {
-            sameSite: 'None',
-            secure: true,
-            httpOnly: true,
-          })
+          // .cookie('jwt', jwt, {
+          //   sameSite: 'None',
+          //   secure: true,
+          //   httpOnly: true,
+          // })
           .status(200)
-          .json({ message: 'login successed' })
+          .json({
+            message: 'login successed',
+            data: { authorization: jwt },
+            userInfo: loginuser,
+          })
       }
     },
   },
