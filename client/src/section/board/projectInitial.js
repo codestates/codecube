@@ -1,6 +1,6 @@
 export default {
   host: {
-    postId: '',
+    projectId: '',
     title: '',
     confirmed: '',
     recruitment: '',
@@ -10,7 +10,7 @@ export default {
   },
   guest: {
     confirmed: {
-      postId: '',
+      projectId: '',
       title: '',
       confirmed: '',
       recruitment: '',
