@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import './privateList.css'
 import Toggle from '../../../components/toggle/toggle'
 import DreamButton from './dreamButton'
 
-import { PRIVATE, CONTENT, CONTENT_LINK } from '../hardWord'
+import { PRIVATE, CONTENT, CONTENT_LINK, hoToken } from '../hardWord'
 import { WAITING_USERS, WAITING_USERS_LINK } from '../hardWord'
 
 import projectInitial from '../projectInitial'
 import privateDummy from '../../../dummy/board/privateDummy'
+import { codeCubeApi } from '../axiosRequests'
 
 const havePostAsHost = (obj) => {
   return obj.host.postId > 0
@@ -24,6 +26,10 @@ const PrivateList = ({ setHasHost, hasHost, isLoggedIn, setDashBoardInfo }) => {
       navigation('/')
     }
     // TODO: API
+    // codeCubeApi('GET', '/myProjects', {}, hoToken).then(({ data }) => console.log(data))
+    axios.get('http://localhost:4000/myProjects', {
+      headers: { Authorization: `bearer ${hoToken}` },
+    })
     setMyDashBoard(privateDummy)
   }, [isLoggedIn])
 

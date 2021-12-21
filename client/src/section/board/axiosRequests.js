@@ -8,14 +8,13 @@ export const codeCubeApi = (
   method = 'GET',
   url = '',
   data = null,
-  auth = null,
+  Authorization = null,
   contentType = null
 ) => {
-  console.log('REQUEST!!!!!')
   method = method.toUpperCase()
   url = `${PROTOCOL}://${DOMAIN}:${PORT}` + url
   data = data || {}
-  auth = auth ? `Bearer ${auth}` : ''
+  Authorization = Authorization ? `bearer ${Authorization}` : ''
   contentType = contentType || 'application/json; charset=utf-8'
 
   const defaultRequest = {
@@ -26,11 +25,10 @@ export const codeCubeApi = (
 
   const defaultConfig = {
     withCredentials: true,
-    auth,
     headers: {
+      Authorization,
       contentType,
     },
   }
-
   return axios(defaultRequest, defaultConfig)
 }

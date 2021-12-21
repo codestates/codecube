@@ -14,7 +14,14 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan('dev'))
-app.use(cors({ origin: true }))
+// app.use(cors({ origin: true }))
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  })
+)
 
 // app.get('/', (req, res) => {
 //   res.send('성공시 체크하기')

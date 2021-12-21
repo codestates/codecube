@@ -17,50 +17,17 @@ export default {
   host: {
     // postId: '', // 내가 쓴 글이 없을 때 더미
     postId: 9, // 내가 쓴 글이 있을 때 더미
-    start: 1,
+    start: 0,
     done: 0,
   },
   guest: {
     // confirmed or wishList 반드시 둘 중 하나만 있을 수 있음 && host or guest둘중 하나만 있을 수 있음. 양식은 둘다 존재
+    wishList: [],
     confirmed: {
-      postId: 9,
-      title: 'just DO IT!',
-      start: 1,
-      done: 1,
+      postId: 123,
+      title: 'name',
+      start: 0,
+      done: 0,
     },
-    wishList: [
-      // {
-      //   postId: 1,
-      //   title: '안녕하세요?',
-      //   confirmed: 2,
-      //   recruitment: 4,
-      //   isStart: 0,
-      //   isConfirmed: 0,
-      // },
-      // {
-      //   postId: 2,
-      //   title: 'ㅋㅋㅋㅋㅋㅋ',
-      //   confirmed: 3,
-      //   recruitment: 4,
-      //   isStart: 0,
-      //   isConfirmed: 0,
-      // },
-      // {
-      //   postId: 3,
-      //   title: '[KR] kim chi fighter',
-      //   confirmed: 1,
-      //   recruitment: 4,
-      //   isStart: 0,
-      //   isConfirmed: 0,
-      // },
-      // {
-      //   postId: 4,
-      //   title: 'Lets greep!',
-      //   confirmed: 1,
-      //   recruitment: 4,
-      //   isStart: 0,
-      //   isConfirmed: 0,
-      // },
-    ],
   },
 }

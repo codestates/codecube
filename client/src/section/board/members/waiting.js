@@ -5,10 +5,11 @@ import { v4 } from 'uuid'
 import './waiting.css'
 
 import waitingUserDummy from '../../../dummy/board/waitingUserDummy'
-import { ACCEPT, REJECT } from '../hardWord'
+import { ACCEPT, hoToken, REJECT } from '../hardWord'
+import axios from 'axios'
 
 const Waiting = ({ hasHost, postId }) => {
-  const [waitingUsers, setWaitingUsers] = useState([{}])
+  const [waitingUsers, setWaitingUsers] = useState([])
   const location = useLocation()
   const navigation = useNavigate()
 
@@ -17,7 +18,14 @@ const Waiting = ({ hasHost, postId }) => {
       navigation('/')
     } else {
       // TODO: API
-      setWaitingUsers(waitingUserDummy)
+      axios
+        .get('http://localhost:4000/members/3', {
+          headers: { Authorization: `bearer ${hoToken}` },
+        })
+        .then(({ data }) => {
+          console.log(data)
+          setWaitingUsers(data.confirmed)
+        })
     }
   }, [hasHost])
 
