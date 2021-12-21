@@ -8,11 +8,11 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      project_id: {
+      projectId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -20,6 +20,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0,
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     })
   },

@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   projects.init(
     {
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
       done: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     },
     {

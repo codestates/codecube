@@ -9,17 +9,27 @@ module.exports = (sequelize, DataTypes) => {
   }
   project_users.init(
     {
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      project_id: {
+      projectId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       join: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     },
     {

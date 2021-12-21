@@ -2,17 +2,17 @@ const models = require('../models')
 const { solveToken, makejwt } = require('./function')
 const whoRU = function (withBearer) {
   const token = withBearer.split(' ')[1]
-  const user_id = solveToken(token).id
-  return user_id
+  const userId = solveToken(token).id
+  return userId
 }
 
 module.exports = {
   delete: async (req, res) => {
     console.log(req.params)
-    const user_id = req.params.userId
-    // const user_id = whoRU(req.headers.authorization)
+    const userId = req.params.userId
+    // const userId = whoRU(req.headers.authorization)
     const target = await models.project_users.findOne({
-      where: { user_id: user_id },
+      where: { userId: userId },
     })
     if (!target) {
       res.status(404).json({ message: 'Not Found' })
@@ -24,7 +24,7 @@ module.exports = {
   put: async (req, res) => {
     const { userId, postId } = req.body
     const project_users = await models.project_users.findOne({
-      where: { user_id: userId, project_id: postId },
+      where: { userId: userId, projectId: postId },
     })
     if (!project_users) {
       res.status(404).json({ message: 'Not Found' })
@@ -34,32 +34,32 @@ module.exports = {
     }
   },
   post: async (req, res) => {
-    const project_id = req.body.postId
-    // const user_id = whoRU(req.headers.authorization)
-    const user_id = 2
+    const projectId = req.body.postId
+    // const userId = whoRU(req.headers.authorization)
+    const userId = 2
     const alreadyWaiting = await models.project_users.findOne({
-      where: { user_id: user_id, project_id: project_id },
+      where: { userId: userId, projectId: projectId },
     })
     if (alreadyWaiting) {
       res.status(400).json({ message: 'already waiting in line' })
     } else {
       await models.project_users.create({
-        user_id: user_id,
-        project_id: project_id,
+        userId: userId,
+        projectId: projectId,
         join: 0,
       })
       res.status(201).json({ message: 'successfully applied' })
     }
   },
   get: async (req, res) => {
-    const user_id = whoRU(req.headers.authorization)
+    const userId = whoRU(req.headers.authorization)
     // console.log(req.params)
-    const project_id = req.params.postId
+    const projectId = req.params.postId
     const confirmedList = await models.project_users.findAll({
-      where: { project_id: project_id },
+      where: { projectId: projectId },
     })
     const newList = []
-    confirmedList.map((el) => newList.push(el.dataValues.user_id))
+    confirmedList.map((el) => newList.push(el.dataValues.userId))
     const finalList = []
     for (let i = 0; i < newList.length; i++) {
       const target = await models.users.findOne({ where: { id: newList[i] } })

@@ -80,12 +80,12 @@ module.exports = {
         res.status(401).json({ message: 'invalid authorization' })
       } else {
         //user 정보 업데아트
-        await models.user_stacks.destroy({ where: { user_id: userId } })
+        await models.user_stacks.destroy({ where: { userId: userId } })
         const stackobj = {}
         const newarr = []
         newInfo.stacks.forEach((el) => {
-          stackobj['user_id'] = userId
-          stackobj['stack_id'] = el
+          stackobj['userId'] = userId
+          stackobj['stackId'] = el
           let element = lodash.cloneDeep(stackobj)
           newarr.push(element)
         })

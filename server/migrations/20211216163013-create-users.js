@@ -28,6 +28,16 @@ module.exports = {
         type: Sequelize.TEXT,
         defaultValue: '',
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
     })
   },
   down: async (queryInterface, Sequelize) => {
