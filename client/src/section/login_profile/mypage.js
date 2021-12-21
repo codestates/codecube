@@ -1,190 +1,8 @@
-// import React from 'react'
-// import styled from 'styled-components'
-// import axios from 'axios';
-
-// axios.defaults.withCredentials = true;
-
-// import ProfileImage from '../../components/profileImage'
-// import UserInfo from '../../components/userInfo'
-
-// import profileDummy from '../../dummy/userinfo/profileDummy'
-// import './beforeLogin.css'
-
-// const Mypage = () => {
-//   const [userInfo, setUserInfo] = useState({
-//     image: '',
-//     email: '',
-//     password: '',
-//     username: '',
-//     stacks: '',
-//     description: '',
-//   })
-//   const [errorMessage, setErrorMessage] = useState('')
-//   const handleInputValue = (key) => (e) => {
-//     setUserInfo({ ...signupInfo, [key]: e.target.value })
-//   }
-//   const handleUserInfo = () => {
-//     // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
-//     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
-//     const { image, email, password, stacks, description, username } = userInfo
-//     // const result = profileDummy.filter((ele) => {
-//     //   ele.email === email && ele.password === password
-//     // })
-//     // console.log(profileDummy)
-//     // console.log(result)
-//     // console.log(loginInfo)
-
-//     if (!email || !password) {
-//       setErrorMessage('사용하실 이메일과 비밀번호를 입력하세요')
-//     } else {
-//       //   const result = profileDummy.map((ele)=>{
-//       //     if(ele.email === email && ele.password===password){
-//       //         return ele
-//       //     }
-
-//       // })
-
-//       if (result) {
-//         //   axios.post('https://localhost:4000/signin',loginInfo)
-//         //   .then(res=>{
-//         //     // console.log("로그인후받아온쿠키???", res);
-//         //     handleResponseSuccess()
-//         //   })
-//         //   .catch(err=>{
-//         //     console.log(err)
-//         //     alert('사용자정보가 없습니다.')
-//         //   })
-
-//         alert('회원가입성공')
-//       } else {
-//         alert('사용자정보가 없습니다.')
-//       }
-//     }
-//   }
-
-//   // const handleSignup = async () => {
-//   //   // TODO : 서버에 회원가입을 요청 후 로그인 페이지로 이동하세요.
-//   //   //        회원가입 성공 후 로그인 페이지 이동은 다음 코드를 이용하세요.
-//   //   //
-//   //   //        history.push("/");
-//   //   //
-//   //   // TODO : 모든 항목을 입력하지 않았을 경우 에러를 표시해야 합니다.
-//   //   const {email, password, username, mobile} = userinfo;
-//   //   console.log("창에 입력한 이메일이다", email)
-//   //   if(!email || !password|| !username||!mobile){
-//   //     setErrorMessage('모든 항목은 필수입니다');
-//   //     alert(`${errorMessage}`)
-//   //   }
-//   //   else{
-//   //     await axios.post('https://localhost:4000/signup', userinfo)
-//   //     .then(res=>{
-//   //       console.log("사인업후 받아온데이터 ",res.data); //사인업후 받아온데이터  { message: 'ok' }
-//   //       if(res.data.message === "ok"){
-//   //         history.push("/")
-//   //       }
-//   //     })
-//   //     .catch(err =>{
-//   //       console.log(err);
-//   //       alert(err);
-//   //     })
-//   //   }
-//   // };
-
-//   return (
-//     <div className="Signup1">
-//       <div className="lo01A th50A login01A">
-//         <div className="zh20A codecubelogoA">
-//           <img
-//             className="codeimageA"
-//             src="./dummy/codecubelogo.png"
-//             alt="codecubelog"
-//           />
-//         </div>
-//         <div className="zh80A">
-//           <form
-//             className="loginformA"
-//             action=""
-//             onSubmit={(e) => e.preventDefault()}
-//           >
-//             <input
-//               type="file"
-//               id="chooseFile"
-//               name="chooseFile"
-//               accept="image/*"
-//               onChange={loadFile}
-//             />
-//             <input
-//               className="inputA"
-//               type="email"
-//               placeholder="email"
-//               onChange={handleInputValue('email')}
-//             ></input>
-//             <input
-//               className="inputA"
-//               type="password"
-//               placeholder="password"
-//               onChange={handleInputValue('password')}
-//             ></input>
-//             <input
-//               className="inputA"
-//               type="username"
-//               placeholder="username"
-//               onChange={handleInputValue('username')}
-//             ></input>
-//             <input
-//               className="inputA"
-//               type="button"
-//               value="수정"
-//               onClick={handleSignup}
-//             ></input>
-//             <div className="alert-boxA">{errorMessage}</div>
-//           </form>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Mypage
-// import React from 'react'
-// import axios from 'axios'
-
-// axios.defaults.withCredentials = true
-
-// function Mypage(props) {
-//   /* TODO : props로 받은 유저정보를 화면에 표시하세요. */
-//   // if (!props.userinfo) {
-//   //   return null
-//   //   // 리턴에 null 넣으면 랜더링 안됨
-//   // } else {
-//   //   console.log('인증후받아온정보', props.userinfo)
-//   // const { email, username, stacks, description } = props.userinfo
-//   const { email, username, stacks, description } = props.userinfo[0]
-//   // }
-//   return (
-//     <div>
-//       <center>
-//         <h1>Mypage</h1>
-//         <div className="username">{username}</div>
-//         <div className="email">{email}</div>
-//         <div className="stacks">{stacks}</div>
-//         <div className="description">{description}</div>
-//         <button className="btn btn-logout" onClick={props.handleLogout}>
-//           logout
-//         </button>
-//         <button className="btn btn-edit" onClick={props.handleEdit}>
-//           edit profile
-//         </button>
-//       </center>
-//     </div>
-//   )
-// }
-
-// export default Mypage
-
 import React, { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
+
+// import codecubelogo from '../../dummy/board/codecubelogo.png'
 
 axios.defaults.withCredentials = true
 
@@ -199,35 +17,37 @@ const Mypage = (props) => {
   //https://jess2.xyz/vue/data-undefined-error/
   // TypeError: Cannot read property of undefined
   // const { username, stacks, description, image, email } = props.userinfo[0]
-  const {
-    username = 'null',
-    stacks = '',
-    description = '',
-    image = '',
-    email = '',
-  } = props.userinfo
+  const { username, stacks, description, image, email } = props.userinfo
   console.log('유제인포포포포ㅗ', props.userinfo)
+  // console.log('스택만보여주기', stacks)
   const navigate = useNavigate()
 
-  // const handleLogout = () => {
-  //   axios.get('http://localhost:4000/logout').then((res) => {
-  //     console.log('메세지가뭐야???', res)
-  //     props.setUserinfo(null)
-  //     props.setisLoggedIn(false)
-  //     navigate('/')
-  //   })
-  // }
-
+  // const [cartStacks, setCartStacks] = useState(stacks)
+  const [file, setFile] = useState('')
+  const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
   // const [saveProfileBtn, setSaveProfileBtn] = useState(false)
   const [userInfoEdited, setUserInfoEdited] = useState({
     image: image,
-    password: '',
     email: email,
     username: username,
-    stacks: stacks,
     description: description,
   })
+
+  // const [isChecked, setIsChecked] = useState(false)
+
+  const checkboxhandler = (checked, id) => {
+    if (checked) {
+      setCheckedStacks([...checkedStacks, id])
+      // setUserInfoEdited[stacks] = checkedStacks
+      // console.log('스택추가되는거', userInfoEdited)
+    } else {
+      setCheckedStacks(checkedStacks.filter((el) => el !== id))
+      // setUserInfoEdited[stacks] = checkedStacks
+      // console.log('스택제거되는거', userInfoEdited)
+    }
+  }
+
   // 패스워드는 어떻게 수정해야할까?? 다시 엑시오스 요청보내서 받아와아함까?
   // 기존 비밀번호? 요청보내서 확인하고 확인됐으면 비번 바꿀수있게???
   // 현재 패스워드 바꿀패스 한버더 확인패스워드 ~~~~~~일단은
@@ -237,6 +57,9 @@ const Mypage = (props) => {
   //https://getbootstrap.com/docs/4.0/components/modal/
 
   const [errorMessage, setErrorMessage] = useState('')
+
+  const [myStackList, setMyStackList] = useState({ stacks })
+
   const handleInputValue = (key) => (e) => {
     setUserInfoEdited({ ...userInfoEdited, [key]: e.target.value })
   }
@@ -251,18 +74,40 @@ const Mypage = (props) => {
     // props.setisLoggedIn(true)
     navigate('/')
   }
-  console.log('프롭스로받아온유져인포', props.userinfo)
-  console.log('수정전', userInfoEdited)
+  // console.log('프롭스로받아온유져인포', props.userinfo)
+  // console.log('수정전', userInfoEdited)
 
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log('ssssssss', userInfoEdited)
-    props.setUserinfo([userInfoEdited])
-    setEditProfileBtn(false)
-    navigate('/')
-  }
-  console.log()
+    // props.setUserinfo([userInfoEdited])
+    // setEditProfileBtn(false)
+    // navigate('/')
+    userInfoEdited['stacks'] = checkedStacks
+    console.log('체크박스데이터 하니씩 추가!!!!!!!!!!!!', checkedStacks)
+    console.log(`전달되는 값 ${userInfoEdited}`)
+    await axios.put('http://localhost:4000/', userInfoEdited).then((res) => {
+      console.log('데이터수정후받아온데이터ddddddd ', res) //사인업후 받아온데이터  { message: 'ok' }
+      setEditProfileBtn(false)
+      props.isAuthenticated()
+      navigate('/')
 
-  console.log('수정후', props.userinfo)
+    })
+  }
+
+  function changeFile(data) {
+    const { target: { files } } = event
+    const theFile = files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(theFile)
+    reader.onloadend = (finishedEvent => {
+      const { currentTarget: { result } } = finishedEvent
+      setFile(result)
+    })
+  }
+
+  function clearPhoto() {
+    setFile('')
+  }
 
   const handleWithdraw = () => {
     axios.delete('http://localhost:4000/users').then((res) => {
@@ -279,30 +124,42 @@ const Mypage = (props) => {
     navigate('/')
   }
 
+  const stacklist = [
+    { id: 1, name: 'JavaScript' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Node.js' },
+    { id: 4, name: 'express' },
+    { id: 5, name: 'Docker' },
+    { id: 6, name: 'css_styled' },
+    { id: 7, name: 'Mysql' },
+    { id: 8, name: 'MongoDB' },
+    { id: 9, name: 'redis' },
+    { id: 10, name: 'Python' },
+    { id: 11, name: 'C#' },
+  ]
+
+  const checkboxstyle = {
+    justifycontent: 'center',
+    alignitems: 'center',
+  }
+
+  // const listItems = array01.map((el) => <li>{el.name}</li>)
+
   return (
     <div>
-      {/* <button onClick={() => navigate(-2)}>Go 2 pages back</button>
-      <button onClick={() => navigate(-1)}>Go back</button>
-      <button onClick={() => navigate(1)}>Go forward</button>
-      <button onClick={() => navigate(2)}>Go 2 pages forward</button> */}
       {editProfileBtn ? (
         <center>
           <h1>프로필수정</h1>
+          <button onClick={마이페이지}>내페이지</button>
           <div>{email}</div>
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="file"
-              id="chooseFile"
-              name="chooseFile"
-              accept="image/*"
-              value={userInfoEdited.image}
-              onChange={handleInputValue('image')}
-            />
+            <input type="file" accept="image/*" onChange={changeFile} />
+            <input type='submit' value="your_Image" />
             <input
               className="inputA"
               type="password"
               placeholder="password"
-              value={userInfoEdited.password}
+              // value={userInfoEdited.password}
               onChange={handleInputValue('password')}
             ></input>
             <input
@@ -310,20 +167,45 @@ const Mypage = (props) => {
               type="text"
               placeholder="username"
               value={userInfoEdited.username}
+              // value={username}
               onChange={handleInputValue('username')}
             ></input>
-            <textarea
+            {/* <textarea
               className="inputA"
               type="text"
               placeholder="stacks"
               value={userInfoEdited.stacks}
+              // value={stacks}
               onChange={handleInputValue('stacks')}
-            ></textarea>
+            ></textarea> */}
+            <div>
+              <h3>My Stacks</h3>
+              {stacklist.map((el) => {
+                return (
+                  <div key={el.id}>
+                    <input
+                      type="checkbox"
+                      value={el.name}
+                      key={el.id}
+                      className={checkboxstyle}
+                      // checked={isChecked}
+                      onChange={(e) => {
+                        checkboxhandler(e.currentTarget.checked, el.id)
+                      }}
+                      checked={checkedStacks.includes(el.id) ? true : false}
+                    ></input>
+                    <lable style={checkboxstyle}>{el.name}</lable>
+                  </div>
+                )
+              })}
+            </div>
+
             <textarea
               className="inputA"
               type="text"
               placeholder="description"
               value={userInfoEdited.description}
+              // value={description}
               onChange={handleInputValue('description')}
             ></textarea>
             <input
@@ -333,14 +215,23 @@ const Mypage = (props) => {
               onClick={handleSave}
             ></input>
           </form>
-          <button onClick={마이페이지}>내페이지</button>
         </center>
       ) : (
         <center>
           <h1>Mypage</h1>
+          {file && <div>
+            <img src={file} width="50px" height="50px" />
+            <button onClick={clearPhoto}> Clear IMG</button>
+          </div>}
           <div className="username">{username}</div>
           <div className="email">{email}</div>
-          <div className="stacks">{stacks}</div>
+          <div className="stacks">
+            <ul>
+              {stacks && stacks.map((el) => (
+                <li key={el.id}> {el.name} </li>
+              ))}
+            </ul>
+          </div>
           <div className="description">{description}</div>
           <button className="btn btn-logout" onClick={props.handleLogout}>
             logout

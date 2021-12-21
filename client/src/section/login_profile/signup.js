@@ -195,6 +195,7 @@ const Signup = (props) => {
       await axios
         .post('http://localhost:4000/signup', signupInfo)
         .then((res) => {
+          props.isAuthenticated()
           console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }
           if (res.data.message === 'signup successed') {
             props.setIsSignup(false)

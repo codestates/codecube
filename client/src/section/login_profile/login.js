@@ -87,13 +87,10 @@ const Login = (props) => {
           // navigate('/')
 
           // props.setUserinfo(result)
-          console.log('이거진짜 토근이니 이라다 다 죽어', res.data.data.authorization)
+
           // props.setToken(res.data.data.authorization)
-          console.log(
-            '이거 아니면 손목날라간다  이라다 다 죽어',
-            res.data.data.authorization
-          )
-          props.isAuthenticated(res.data.data.authorization)
+          props.setToken(res.data.data.authorization)
+          props.isAuthenticated()
         })
         .catch((err) => {
           console.log(err)
