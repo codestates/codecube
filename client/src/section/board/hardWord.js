@@ -15,9 +15,9 @@ export const WISH_LIST = '수락 대기중'
 export const ACCEPT = 'accept'
 export const REJECT = 'reject'
 
-export const mId = window.localStorage.getItem('id') ?? ''
+// export const mId = window.localStorage.getItem('id') ?? ''
 
 const pp = window.localStorage.getItem('userinfo')
-export const mi = JSON.parse(pp).id ?? ''
+export const mi = pp ? JSON.parse(pp).id : ''
 
 export const localhost = 'http://localhost:4000'
