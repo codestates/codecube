@@ -8,6 +8,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   projects.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,17 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: '',
       },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: '',
       },
       image: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: '',
       },
       start: {
         type: DataTypes.INTEGER,

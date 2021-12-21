@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   project_users.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

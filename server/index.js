@@ -23,9 +23,6 @@ app.use(
   })
 )
 
-// app.get('/', (req, res) => {
-//   res.send('성공시 체크하기')
-// })
 app.use('/', indexRouter.users)
 app.use('/members', indexRouter.members)
 app.use('/projects', indexRouter.projects)
@@ -36,5 +33,3 @@ app.listen(PORT, () => {
 })
 
 module.exports = app
-
-//squelize 환경구축하고

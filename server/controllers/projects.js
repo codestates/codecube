@@ -1,3 +1,5 @@
+const { Sequelize } = require('../models')
+const Op = Sequelize.Op
 const models = require('../models')
 const { solveToken, makejwt } = require('./function')
 const lodash = require('lodash')
@@ -60,12 +62,13 @@ module.exports = {
       // })
       // obj.confirmed = confirmed.count
 
+
       res.status(200).json({ message: 'ok', list: finalList })
     },
     delete: async (req, res) => {
       //1. 일단 게시글 지우기
       console.log(req.params)
-      const projectId = req.params.postId
+      const projectId = req.params.projectId
       const target = await models.projects.findOne({
         where: { id: projectId },
       })
@@ -127,14 +130,17 @@ module.exports = {
     },
     //특정 게시글 요청
     get: async (req, res) => {
-      // console.log(req.params)
-      const projectId = req.params.postId
+      const projectId = req.params.projectId
       const target = await models.projects.findOne({
         where: { id: projectId },
       })
+
       if (!target) {
         return res.status(404).json({ message: 'Not Found' })
+      } else {
+        res.json(target.dataValues)
       }
+
       const { title, content, image } = target.dataValues
       //1. 프로젝트 id로 해당 데이터들을 pro-user 테이블에서 찾기
       const firstList = await models.project_users.findAll({
@@ -174,79 +180,33 @@ module.exports = {
       if (target) {
         console.log('host!!')
         const { id: projectId, start, done } = target.dataValues
-        return res.status(200).json({
-          host: {
-            projectId,
-            start,
-            done,
-          },
-          guest: { whishList: [], confirmed: {} },
-        })
+        return res
+          .status(200)
+          .json({ ...myProjectsForm, ...{ host: { projectId, start, done } } })
       } else {
         console.log('guest!!')
         // * guest인 경우
         const inList = await models.project_users.findAll({
-          // where: { userId },
-          include: { model: models.projects, as: 'user_stacks' },
+          raw: true,
+          include: [models.projects],
+          where: { userId },
         })
-        console.log(inList)
-        // if (inList.length === 1 && inList[0].join === 1) {
-        //   // confirm
-        // } else {
-        //   console.log('나를 get 해줘...')
-        //   inList[0].dataValues.projectId
-        //   // { postId: '', title: '', confirmed: 0, start: 0, done: 0 },
-        //   inList.map(({dataValues: { projectId }}) => {
-        //   })
-        //   // waitings
-        // }
+
+        const cnt = []
+        const pending = inList.map((v) => {
+          cnt.push(v.projectId)
+          return {
+            userId: v.userId,
+            projectId: v.projectId,
+            title: v['project.title'],
+          }
+        })
+
+        res.json({
+          ...myProjectsForm,
+          ...{ guest: { wishList: pending, confirmed: {} } },
+        })
       }
-
-      // const finalList = []
-      // const firstList = await models.project_users.findAll({
-      //   where: { userId },
-      // })
-
-      // for (let i = 0; i < firstList.length; i++) {
-      //   const projectId = firstList[i].dataValues.projectId
-      //   const titleJson = await models.projects.findOne({
-      //     where: { id: projectId },
-      //   })
-      //   const title = titleJson.dataValues.title
-      //   const isConfirmedInt = firstList[i].dataValues.join
-      //   let isConfirmed = false
-      //   if (isConfirmedInt === 1) {
-      //     isConfirmed = true
-      //   }
-      //   const isStartTest = await models.projects.findOne({
-      //     id: firstList[i].dataValues.projectId,
-      //   })
-      //   const isStartInt = isStartTest.dataValues.start
-      //   let isStart = false
-      //   if (isStartInt === 1) {
-      //     isStart = true
-      //   }
-      //   //요기만 다시하면됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //   const confirmedSeq = await models.project_users.findAndCountAll({
-      //     where: {
-      //       projectId: projectId,
-      //       join: 1,
-      //     },
-      //   })
-      //   console.log('count:' + confirmedSeq.count)
-      //   finalList.push({
-      //     title: title,
-      //     confirmed: confirmedSeq.count,
-      //     isStart: isStart,
-      //     isConfirmed: isConfirmed,
-      //   })
-      // }
-      // //2-2. confirmed의 인원이 몇명인지 찾기
-
-      // //2-3. isStart 여부 - projects테이블에서 projectId로 여부 확인하면 됨
-
-      // //2-4. join값이 1인지 0인지
-      // res.status(200).json({ guest: finalList })
     },
   },
 }

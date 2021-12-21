@@ -1,7 +1,6 @@
 const models = require('../models')
 const { users } = require('../models')
 const { makejwt, solveToken } = require('./function')
-
 const whoRU = function (withBearer) {
   const token = withBearer.split(' ')[1]
   const userInfo = solveToken(token)
@@ -9,19 +8,25 @@ const whoRU = function (withBearer) {
 }
 
 const { Op } = require('sequelize')
-const stacks = require('../models/stacks')
 const lodash = require('lodash')
+const { isFunction } = require('lodash')
 
 module.exports = {
   users: {
     get: async (req, res) => {
       const rtoken = req.cookies.jwt
       const decoded = whoRU(rtoken)
+      
+      // 혹시 문제있으면 이거 사용
+      //const decoded = solveToken(rtoken)
+      //
+      
       const solve = await users.findOne({
-        where: { id: decoded.id },
+        raw: true,
+        where: { username: decoded.username },
       })
-      const userInfo = solve
 
+      const userInfo = solve
       const { id, email, username, image, description, createdAt, updatedAt } =
         userInfo.dataValues
       const userData = {
@@ -35,34 +40,57 @@ module.exports = {
       }
 
       //token이 만료되거나 유저정보에 없으면
-      if (!userInfo) {
+
+      let stacklist = await models.user_stacks.findAll({
+        raw: true,
+        where: { user_id: solve.id },
+      })
+      stacklist = stacklist.map((el) => el.stack_id)
+
+      if (!solve) {
         res.status(401).json({ message: 'invalid authorization' })
       }
       //아니면 유저정보를 보내준다.
       else {
-        res.status(200).json({ message: 'confirmed', data: userData })
+        if (stacklist.length !== 0) {
+          const stacks = await models.stacks.findAll({
+            raw: true,
+            attributes: ['id', 'name'],
+            where: {
+              id: {
+                [Op.or]: stacklist,
+              },
+            },
+          })
+          solve.stacks = stacks
+        } else {
+          solve.stacks = []
+        }
+
+        console.log(solve)
+        res.status(200).json({ data: solve })
       }
     },
     //회원탈퇴
     delete: async (req, res) => {
-      const Token = req.cookies.token
-      const rtoken = req.cookies.jwt
-      console.log('ddddssdsfsdfsdfsfs', req.cookies.token)
-      console.log('ddddssdsfsdfsdfsfs', req.cookies.jwt)
-      // const userInfo = solveToken(hoToken)
+      const Token = req.cookies.jwt
+      const userInfo = solveToken(Token)
 
       if (!userInfo) {
         res.status(401).json({ message: 'no such info' })
       } else {
+        await models.user_stacks.destroy({ where: { user_id: userInfo.id } })
         await models.users.destroy({ where: { id: userInfo.id } })
-        res.status(200).json({ message: 'byebye' })
+        res.clearCookie('id')
+        res.status(200).clearCookie('jwt').json({ message: 'byebye' })
       }
     },
   },
   changeinfo: {
     put: async (req, res) => {
-      const token = req.cookies.token
+      const token = req.cookies.jwt
       const newInfo = req.body
+
       // {username, password, image, stack, description }
       // console.log('ddddssdsfsdfsdfsfs', req.cookies.token)
       // console.log('ddddssdsfsdfsdfsfs', req.cookies.jwt)
@@ -91,13 +119,17 @@ module.exports = {
         })
 
         await models.user_stacks.bulkCreate(newarr)
-
         await models.users.update(newInfo, {
           where: {
             id: userId,
           },
         })
+        const solve = await users.findOne({
+          raw: true,
+          where: { id: userId },
+        })
         res.status(200).json({
+          userInfo: solve,
           message: 'successfully modified',
         })
       }
@@ -105,12 +137,16 @@ module.exports = {
   },
   logout: {
     get: async (req, res) => {
-      res.status(205).clearCookie('jwt').send('Logged out successfully')
+      res
+        .status(205)
+        .clearCookie('jwt')
+        .clearCookie('id')
+        .send('Logged out successfully')
     },
   },
   signup: {
     post: async (req, res) => {
-      //   console.log(req.body)
+      console.log('요청들어온거', req.body)
       const { username, email, description, image, password, stacks } = req.body
       await models.users.create({
         username: username,
@@ -130,6 +166,7 @@ module.exports = {
         })
         .status(201)
         .json({ message: 'signup successed' })
+
     },
   },
   login: {
@@ -146,14 +183,18 @@ module.exports = {
         },
       })
       const target = loginuser[0].dataValues
-
       //DB에 유저 정보가 없을시
       if (!target) {
         res.status.json({ message: 'login unsuccessed' })
       }
-
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
       else {
+        let stacks = await models.user_stacks.findAll({
+          raw: true,
+          where: { user_id: target.id },
+        })
+        stacks = stacks.map((el) => el.stack_id)
+        console.log(stacks)
         const { username, email, description, id } = target
         const jwt = makejwt({ id, username, email, description })
 

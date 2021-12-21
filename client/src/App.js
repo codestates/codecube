@@ -25,6 +25,7 @@ function App() {
     console.log('로그인 요청은 성공함.')
     await axios.get('http://localhost:4000/users').then(({ data: { data } }) => {
       const userJSON = {
+        id: data.id,
         username: data.username,
         email: data.email,
         description: data.description,
@@ -43,6 +44,7 @@ function App() {
       setUserinfo('')
       setisLoggedIn(false)
       navigate('/')
+      // window.location.replace('/')
     })
   }
 
@@ -72,6 +74,7 @@ function App() {
               handleLogout={handleLogout}
               setUserinfo={setUserinfo}
               setisLoggedIn={setisLoggedIn}
+              isAuthenticated={isAuthenticated}
               // handleEdit={handleEdit}
             />
           ) : isSignup ? (

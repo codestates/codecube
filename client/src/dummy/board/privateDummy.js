@@ -1,5 +1,5 @@
 export const thisPostDummy = {
-  postId: 9,
+  projectId: 9,
   title: 'just DO IT!',
   confirmed: 1,
   recruitment: 4,
@@ -15,8 +15,8 @@ export const thisPostDummy = {
 
 export default {
   host: {
-    // postId: '', // 내가 쓴 글이 없을 때 더미
-    postId: 9, // 내가 쓴 글이 있을 때 더미
+    // projectId: '', // 내가 쓴 글이 없을 때 더미
+    projectId: 9, // 내가 쓴 글이 있을 때 더미
     start: 0,
     done: 0,
   },
@@ -24,7 +24,7 @@ export default {
     // confirmed or wishList 반드시 둘 중 하나만 있을 수 있음 && host or guest둘중 하나만 있을 수 있음. 양식은 둘다 존재
     wishList: [],
     confirmed: {
-      postId: 123,
+      projectId: 123,
       title: 'name',
       start: 0,
       done: 0,
