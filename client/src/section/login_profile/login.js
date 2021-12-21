@@ -35,7 +35,6 @@ const Login = (props) => {
       await axios
         .post('http://localhost:4000/login', loginInfo)
         .then((res) => {
-          // console.log(res.data)
           props.isAuthenticated()
         })
         .catch((err) => {

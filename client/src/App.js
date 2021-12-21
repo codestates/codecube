@@ -17,6 +17,7 @@ function App() {
   const [isLoggedIn, setisLoggedIn] = useState(savedUserInfo ?? false)
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
   const [isSignup, setIsSignup] = useState(false)
+  const [Token, setToken] = useState('')
   const navigate = useNavigate()
   console.log('로그인은 했냐', isLoggedIn ? 'ㅇㅇ' : 'ㄴㄴ')
 
@@ -70,21 +71,26 @@ function App() {
         <div className="login">
           {isLoggedIn ? (
             <Mypage
+              Token={Token}
+              setToken={setToken}
               userinfo={userinfo}
               handleLogout={handleLogout}
               setUserinfo={setUserinfo}
               setisLoggedIn={setisLoggedIn}
+              isLoggedIn={isLoggedIn}
               isAuthenticated={isAuthenticated}
-              // handleEdit={handleEdit}
+            // handleEdit={handleEdit}
             />
           ) : isSignup ? (
             <Signup
               setUserinfo={setUserinfo}
               userinfo={userinfo}
               setIsSignup={setIsSignup}
+              isAuthenticated={isAuthenticated}
             />
           ) : (
             <Login
+              setToken={setToken}
               setisLoggedIn={setisLoggedIn}
               setUserinfo={setUserinfo}
               setIsSignup={setIsSignup}

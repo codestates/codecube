@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 
+// import codecubelogo from '../../dummy/board/codecubelogo.png'
+
 axios.defaults.withCredentials = true
 
 const Mypage = (props) => {
-
   const { username, stacks, description, image, email } = props.userinfo
-  // console.log('유제인포포포포ㅗ', props.userinfo)
-
   const navigate = useNavigate()
-
+  const [file, setFile] = useState('')
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
 
@@ -49,7 +48,7 @@ const Mypage = (props) => {
     setEditProfileBtn(true)
     navigate('/')
   }
-
+  
   const handleSave = async () => {
     console.log('ssssssss', userInfoEdited)
     // props.setUserinfo([userInfoEdited])
@@ -59,14 +58,27 @@ const Mypage = (props) => {
     console.log('체크박스데이터 하니씩 추가!!!!!!!!!!!!', checkedStacks)
     console.log(`전달되는 값 ${userInfoEdited}`)
     await axios.put('http://localhost:4000/', userInfoEdited).then((res) => {
-      console.log('데이터수정후받아온데이터ddddddd ', res.data.userInfo) //사인업후 받아온데이터  { message: 'ok' }
-      // setisLoggedIn(true)
-      // props.setUserinfo(res.data.userInfo)
-      props.isAuthenticated(res.data.userInfo)
+      console.log('데이터수정후받아온데이터ddddddd ', res) //사인업후 받아온데이터  { message: 'ok' }
       setEditProfileBtn(false)
-      // navigate('/')
-      // window.location.replace('/')
+      props.isAuthenticated()
+      navigate('/')
+
     })
+  }
+
+  function changeFile(data) {
+    const { target: { files } } = event
+    const theFile = files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(theFile)
+    reader.onloadend = (finishedEvent => {
+      const { currentTarget: { result } } = finishedEvent
+      setFile(result)
+    })
+  }
+
+  function clearPhoto() {
+    setFile('')
   }
 
   const handleWithdraw = () => {
@@ -103,6 +115,25 @@ const Mypage = (props) => {
     alignitems: 'center',
   }
 
+  const stacklist = [
+    { id: 1, name: 'JavaScript' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Node.js' },
+    { id: 4, name: 'express' },
+    { id: 5, name: 'Docker' },
+    { id: 6, name: 'css_styled' },
+    { id: 7, name: 'Mysql' },
+    { id: 8, name: 'MongoDB' },
+    { id: 9, name: 'redis' },
+    { id: 10, name: 'Python' },
+    { id: 11, name: 'C#' },
+  ]
+
+  const checkboxstyle = {
+    justifycontent: 'center',
+    alignitems: 'center',
+  }
+
   // const listItems = array01.map((el) => <li>{el.name}</li>)
 
   return (
@@ -110,23 +141,25 @@ const Mypage = (props) => {
       {editProfileBtn ? (
         <center>
           <h1>프로필수정</h1>
-          <button onClick={mypage}>내페이지</button>
+          <button onClick={마이페이지}>내페이지</button>
           <div>{email}</div>
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="file"
-              id="chooseFile"
-              name="chooseFile"
-              accept="image/*"
-              // value={userInfoEdited.image}
-              // value={image}
-              // onError="this.src='./dummy/codecubelogo.png'"
-              onError={(e) => {
-                e.target.onerror = null
-                e.target.src = './dummy/codecubelogo.png'
-              }}
-              onChange={handleInputValue('image')}
-            />
+            <input type="file" accept="image/*" onChange={changeFile} />
+            <input type='submit' value="your_Image" />
+//           <button onClick={mypage}>내페이지</button>
+//           <div>{email}</div>
+//           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
+//             <input
+//               type="file"
+//               id="chooseFile"
+//               name="chooseFile"
+//               accept="image/*"
+//               onError={(e) => {
+//                 e.target.onerror = null
+//                 e.target.src = './dummy/codecubelogo.png'
+//               }}
+//               onChange={handleInputValue('image')}
+//             />
             <input
               className="inputA"
               type="password"
@@ -191,10 +224,18 @@ const Mypage = (props) => {
       ) : (
         <center>
           <h1>Mypage</h1>
+          {file && <div>
+            <img src={file} width="50px" height="50px" />
+            <button onClick={clearPhoto}> Clear IMG</button>
+          </div>}
           <div className="username">{username}</div>
           <div className="email">{email}</div>
           <div className="stacks">
-            {stacks && stacks.map((el) => <li key={el.id}> {el.name} </li>)}
+            <ul>
+              {stacks && stacks.map((el) => (
+                <li key={el.id}> {el.name} </li>
+              ))}
+            </ul>
           </div>
           <div className="description">{description}</div>
           <button className="btn btn-logout" onClick={props.handleLogout}>
