@@ -44,6 +44,7 @@ function App() {
       setUserinfo('')
       setisLoggedIn(false)
       navigate('/')
+      // window.location.replace('/')
     })
   }
 
@@ -73,6 +74,7 @@ function App() {
               handleLogout={handleLogout}
               setUserinfo={setUserinfo}
               setisLoggedIn={setisLoggedIn}
+              isAuthenticated={isAuthenticated}
               // handleEdit={handleEdit}
             />
           ) : isSignup ? (
