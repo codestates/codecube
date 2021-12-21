@@ -48,7 +48,7 @@ const Mypage = (props) => {
     setEditProfileBtn(true)
     navigate('/')
   }
-  
+
   const handleSave = async () => {
     console.log('ssssssss', userInfoEdited)
     // props.setUserinfo([userInfoEdited])
@@ -62,19 +62,22 @@ const Mypage = (props) => {
       setEditProfileBtn(false)
       props.isAuthenticated()
       navigate('/')
-
     })
   }
 
   function changeFile(data) {
-    const { target: { files } } = event
+    const {
+      target: { files },
+    } = event
     const theFile = files[0]
     const reader = new FileReader()
     reader.readAsDataURL(theFile)
-    reader.onloadend = (finishedEvent => {
-      const { currentTarget: { result } } = finishedEvent
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent
       setFile(result)
-    })
+    }
   }
 
   function clearPhoto() {
@@ -83,8 +86,10 @@ const Mypage = (props) => {
 
   const handleWithdraw = () => {
     axios.delete('http://localhost:4000/users').then((res) => {
-      confirm('정말로 탈퇴하시겠습니까?')
-      alert('회원가입이 탈퇴되었습니다')
+      const ㅅㄱ = confirm('정말로 탈퇴하시겠습니까?')
+      ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
+
+      window.localStorage.removeItem('userinfo')
       props.setisLoggedIn(false)
       navigate('/')
     })
@@ -115,25 +120,6 @@ const Mypage = (props) => {
     alignitems: 'center',
   }
 
-  const stacklist = [
-    { id: 1, name: 'JavaScript' },
-    { id: 2, name: 'React' },
-    { id: 3, name: 'Node.js' },
-    { id: 4, name: 'express' },
-    { id: 5, name: 'Docker' },
-    { id: 6, name: 'css_styled' },
-    { id: 7, name: 'Mysql' },
-    { id: 8, name: 'MongoDB' },
-    { id: 9, name: 'redis' },
-    { id: 10, name: 'Python' },
-    { id: 11, name: 'C#' },
-  ]
-
-  const checkboxstyle = {
-    justifycontent: 'center',
-    alignitems: 'center',
-  }
-
   // const listItems = array01.map((el) => <li>{el.name}</li>)
 
   return (
@@ -141,48 +127,41 @@ const Mypage = (props) => {
       {editProfileBtn ? (
         <center>
           <h1>프로필수정</h1>
-          <button onClick={마이페이지}>내페이지</button>
+          <button onClick={mypage}>내페이지</button>
+
           <div>{email}</div>
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
             <input type="file" accept="image/*" onChange={changeFile} />
-            <input type='submit' value="your_Image" />
-//           <button onClick={mypage}>내페이지</button>
-//           <div>{email}</div>
-//           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-//             <input
-//               type="file"
-//               id="chooseFile"
-//               name="chooseFile"
-//               accept="image/*"
-//               onError={(e) => {
-//                 e.target.onerror = null
-//                 e.target.src = './dummy/codecubelogo.png'
-//               }}
-//               onChange={handleInputValue('image')}
-//             />
+            <input type="submit" value="your_Image" />
+            <button onClick={mypage}>내페이지</button>
+
+            {/* <div>{email}</div>
+           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>  
+             <input
+              type="file"
+              id="chooseFile"
+              name="chooseFile"
+              accept="image/*"
+              onError={(e) => {
+                e.target.onerror = null
+                e.target.src = './dummy/codecubelogo.png'
+               }}
+               onChange={handleInputValue('image')}
+              ></input> */}
+
             <input
               className="inputA"
               type="password"
               placeholder="password"
-              // value={userInfoEdited.password}
               onChange={handleInputValue('password')}
-            ></input>
+            />
             <input
               className="inputA"
               type="text"
               placeholder="username"
               value={userInfoEdited.username}
-              // value={username}
               onChange={handleInputValue('username')}
             ></input>
-            {/* <textarea
-              className="inputA"
-              type="text"
-              placeholder="stacks"
-              value={userInfoEdited.stacks}
-              // value={stacks}
-              onChange={handleInputValue('stacks')}
-            ></textarea> */}
             <div>
               <h3>My Stacks</h3>
               {stacklist.map((el) => {
@@ -193,13 +172,12 @@ const Mypage = (props) => {
                       value={el.name}
                       key={el.id}
                       className={checkboxstyle}
-                      // checked={isChecked}
                       onChange={(e) => {
                         checkboxhandler(e.currentTarget.checked, el.id)
                       }}
                       checked={checkedStacks.includes(el.id) ? true : false}
                     ></input>
-                    <lable style={checkboxstyle}>{el.name}</lable>
+                    <label style={checkboxstyle}>{el.name}</label>
                   </div>
                 )
               })}
@@ -224,18 +202,16 @@ const Mypage = (props) => {
       ) : (
         <center>
           <h1>Mypage</h1>
-          {file && <div>
-            <img src={file} width="50px" height="50px" />
-            <button onClick={clearPhoto}> Clear IMG</button>
-          </div>}
+          {file && (
+            <div>
+              <img src={file} width="50px" height="50px" />
+              <button onClick={clearPhoto}> Clear IMG</button>
+            </div>
+          )}
           <div className="username">{username}</div>
           <div className="email">{email}</div>
           <div className="stacks">
-            <ul>
-              {stacks && stacks.map((el) => (
-                <li key={el.id}> {el.name} </li>
-              ))}
-            </ul>
+            <ul>{stacks && stacks.map((el) => <li key={el.id}> {el.name} </li>)}</ul>
           </div>
           <div className="description">{description}</div>
           <button className="btn btn-logout" onClick={props.handleLogout}>

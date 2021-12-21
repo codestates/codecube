@@ -13,21 +13,20 @@ const { isFunction } = require('lodash')
 module.exports = {
   users: {
     get: async (req, res) => {
-
       const rtoken = req.cookies.jwt
       const decoded = whoRU(rtoken)
-      
+
       // 혹시 문제있으면 이거 사용
-      //const decoded = solveToken(rtoken)
+      // const decoded = solveToken(rtoken)
       //
-      
+
       const solve = await users.findOne({
         raw: true,
         where: { username: decoded.username },
       })
       const userInfo = solve
       const { id, email, username, image, description, createdAt, updatedAt } =
-        userInfo.dataValues
+        userInfo
       const userData = {
         id,
         email,
@@ -45,7 +44,7 @@ module.exports = {
         where: { userId: solve.id },
       })
       stacklist = stacklist.map((el) => el.stackId)
-      
+
       if (!solve) {
         res.status(401).json({ message: 'invalid authorization' })
       }
@@ -67,15 +66,13 @@ module.exports = {
         }
 
         console.log(solve)
-        res
-          .status(200)
-          .json({ data: solve })
+        res.status(200).json({ data: solve })
       }
     },
     //회원탈퇴
     delete: async (req, res) => {
       const Token = req.cookies.jwt
-      const userInfo = solveToken(Token)
+      const userInfo = whoRU(Token)
 
       if (!userInfo) {
         res.status(401).json({ message: 'no such info' })
@@ -93,15 +90,15 @@ module.exports = {
     put: async (req, res) => {
       const token = req.cookies.jwt
       const newInfo = req.body
-      console.log(newInfo)
+      // console.log(newInfo)
 
       //요청정보가 없을시
       if (!newInfo) {
         res.status(400).json({ message: 'invalid userinfo' })
       }
       //Token으로 사용자의 현재 정보를 찾는다.
-      const userId = solveToken(token).username
-      console.log(userId)
+      const userId = whoRU(token).id
+      // console.log(userId)
       //access Token이 만료될 경우
       if (!userId) {
         res.status(401).json({ message: 'invalid authorization' })
@@ -153,7 +150,7 @@ module.exports = {
       const Idtrue = await models.users.findOne({
         raw: true,
         attributes: ['email'],
-        where: { email: email }
+        where: { email: email },
       })
 
       if (!Idtrue) {
@@ -167,37 +164,35 @@ module.exports = {
 
         const userInfo = await models.users.findOne({
           raw: true,
-          where: { username: username }
+          where: { username: username },
         })
 
         const stackobj = {}
         const newarr = []
         if (stacks.length !== 0) {
           stacks.forEach((el) => {
-            stackobj['user_id'] = userInfo.id
-            stackobj['stack_id'] = el
+            stackobj['userId'] = userInfo.id
+            stackobj['stackId'] = el
             let element = lodash.cloneDeep(stackobj)
             newarr.push(element)
-            stacks = newarr
+            // stacks = newarr
           })
           await models.user_stacks.bulkCreate(newarr)
         }
         const uId = userInfo.id
-        console.log(uId.id)
-        const jwt = makejwt({ uId, username, email, description, stacks })
-
+        console.log(uId)
+        const jwt = makejwt({ uId, username, email, description })
 
         res
           .cookie('id', uId)
-          .cookie('jwt', jwt, {
-//             sameSite: 'None',
+          .cookie('jwt', `bearer ${jwt}`, {
+            //             sameSite: 'None',
             httpOnly: true,
-//             secure: true,
+            //             secure: true,
           })
           .status(201)
           .json({ message: 'signup successed' })
-      }
-      else {
+      } else {
         res.status(400).json({ message: '이미 있는 아이디 입니다' })
       }
     },
@@ -232,7 +227,6 @@ module.exports = {
         const { username, email, description, id } = target
         const jwt = makejwt({ id, username, email, description, stacks })
 
-
         res
           .cookie('jwt', `bearer ${jwt}`, {
             // sameSite: 'None',
@@ -253,5 +247,3 @@ module.exports = {
     },
   },
 }
-
-
