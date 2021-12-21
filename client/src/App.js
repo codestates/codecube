@@ -208,6 +208,7 @@ Unhandled Rejection (TypeError): Cannot destructure property 'username' of 'prop
       setUserinfo('')
       setisLoggedIn(false)
       navigate('/')
+      // window.location.replace('/')
     })
   }
 
@@ -240,6 +241,7 @@ Unhandled Rejection (TypeError): Cannot destructure property 'username' of 'prop
               handleLogout={handleLogout}
               setUserinfo={setUserinfo}
               setisLoggedIn={setisLoggedIn}
+              isAuthenticated={isAuthenticated}
               // handleEdit={handleEdit}
             />
           ) : isSignup ? (

@@ -159,35 +159,37 @@ const Signup = (props) => {
     stacks: '',
     description: '',
   })
+
+  const [checkedStacks, setCheckedStacks] = useState([])
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
   const handleInputValue = (key) => (e) => {
     setSignupInfo({ ...signupInfo, [key]: e.target.value })
   }
-  // const handleSignup = () => {
-  //   // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
-  //   // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
-  //   const { image, email, password, stacks, description, username } = signupInfo
-  //   if (!email || !password || !username) {
-  //     setErrorMessage('사용하실 이메일과 비밀번호, 유저이름을 입력하세요')
-  //   } else {
 
-  //     const result = profileDummy.push(signupInfo)
-  //     console.log(profileDummy)
-  //     props.setIsSignup(false)
-  //     navigate('/')
-  //   }
-  // }
+  const stacklist = [
+    { id: 1, name: 'JavaScript' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Node.js' },
+    { id: 4, name: 'express' },
+    { id: 5, name: 'Docker' },
+    { id: 6, name: 'css_styled' },
+    { id: 7, name: 'Mysql' },
+    { id: 8, name: 'MongoDB' },
+    { id: 9, name: 'redis' },
+    { id: 10, name: 'Python' },
+    { id: 11, name: 'C#' },
+  ]
+
+  const checkboxstyle = {
+    justifycontent: 'center',
+    alignitems: 'center',
+  }
 
   const handleSignup = async () => {
-    // TODO : 서버에 회원가입을 요청 후 로그인 페이지로 이동하세요.
-    //        회원가입 성공 후 로그인 페이지 이동은 다음 코드를 이용하세요.
-    //
-    //        history.push("/");
-    //
-    // TODO : 모든 항목을 입력하지 않았을 경우 에러를 표시해야 합니다.
     const { email, password, username, stacks, description, image } = signupInfo
-    console.log('창에 입력한 이메일이다', email)
+    signupInfo['stacks'] = checkedStacks
+    console.log('창에 입력한 이메일이다', signupInfo)
     if (!email || !password || !username) {
       setErrorMessage('모든 항목은 필수입니다')
       alert(`${errorMessage}`)
@@ -198,7 +200,7 @@ const Signup = (props) => {
           console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }
           if (res.data.message === 'signup successed') {
             props.setIsSignup(false)
-            navigate('/')
+            // navigate('/')
           }
         })
         .catch((err) => {
@@ -211,6 +213,18 @@ const Signup = (props) => {
   const backtoLogin = () => {
     props.setIsSignup(false)
     navigate('/')
+  }
+
+  const checkboxhandler = (checked, id) => {
+    if (checked) {
+      setCheckedStacks([...checkedStacks, id])
+      // setUserInfoEdited[stacks] = checkedStacks
+      // console.log('스택추가되는거', userInfoEdited)
+    } else {
+      setCheckedStacks(checkedStacks.filter((el) => el !== id))
+      // setUserInfoEdited[stacks] = checkedStacks
+      // console.log('스택제거되는거', userInfoEdited)
+    }
   }
 
   return (
@@ -250,12 +264,25 @@ const Signup = (props) => {
               placeholder="username"
               onChange={handleInputValue('username')}
             ></input>
-            <textarea
-              className="inputA"
-              type="stacks"
-              placeholder="stacks"
-              onChange={handleInputValue('stack')}
-            ></textarea>
+            <h3>Stacks</h3>
+            {stacklist.map((el) => {
+              return (
+                <div key={el.id}>
+                  <input
+                    type="checkbox"
+                    value={el.name}
+                    key={el.id}
+                    className={checkboxstyle}
+                    // checked={isChecked}
+                    onChange={(e) => {
+                      checkboxhandler(e.currentTarget.checked, el.id)
+                    }}
+                    checked={checkedStacks.includes(el.id) ? true : false}
+                  ></input>
+                  <lable style={checkboxstyle}>{el.name}</lable>
+                </div>
+              )
+            })}
             <textarea
               className="inputA"
               type="description"
