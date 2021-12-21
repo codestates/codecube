@@ -159,14 +159,13 @@ function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false)
   const [userinfo, setUserinfo] = useState('')
   const [isSignup, setIsSignup] = useState(false)
+  const [Token, setToken] = useState('')
   const navigate = useNavigate()
 
-  const isAuthenticated = async (data) => {
+  const isAuthenticated = async () => {
     // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
     await axios
-      .get('http://localhost:4000/users', {
-        headers: { authorization: `bearer ${data}` },
-      })
+      .get('http://localhost:4000/users')
       .then((res) => {
         console.log('인증받으면 서버로부터 어떤 데이터 받아오는거임?', res.data.data)
         /*
@@ -236,20 +235,26 @@ Unhandled Rejection (TypeError): Cannot destructure property 'username' of 'prop
         <div className="login">
           {isLoggedIn ? (
             <Mypage
+              Token={Token}
+              setToken={setToken}
               userinfo={userinfo}
               handleLogout={handleLogout}
               setUserinfo={setUserinfo}
               setisLoggedIn={setisLoggedIn}
-              // handleEdit={handleEdit}
+              isLoggedIn={isLoggedIn}
+              isAuthenticated={isAuthenticated}
+            // handleEdit={handleEdit}
             />
           ) : isSignup ? (
             <Signup
               setUserinfo={setUserinfo}
               userinfo={userinfo}
               setIsSignup={setIsSignup}
+              isAuthenticated={isAuthenticated}
             />
           ) : (
             <Login
+              setToken={setToken}
               setisLoggedIn={setisLoggedIn}
               setUserinfo={setUserinfo}
               setIsSignup={setIsSignup}
