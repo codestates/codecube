@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
 import { WISH_LIST } from '../hardWord'
+import axios from 'axios'
 
 import './postCard.css'
 
@@ -8,17 +9,21 @@ import publicDummy from '../../../dummy/board/publicDummy'
 import wishListDummy from '../../../dummy/board/wishListDummy'
 
 import { codeCubeApi } from '../axiosRequests'
-import { hoToken } from '../hardWord'
-import axios from 'axios'
+// import { hoToken } from '../hardWord'
 
 const PublicList = ({ isWish }) => {
   const [publicList, setPublicList] = useState([])
   useEffect(() => {
+    console.log('isWish???? ====>>', isWish)
     if (!isWish) {
-      // TODO: API
-      codeCubeApi('GET', '/projects', {}, hoToken).then(({ data }) => {
-        setPublicList(data.list)
-      })
+      axios
+        .get('http://localhost:4000/projects')
+        .then(({ data }) => {
+          setPublicList(data.list)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     } else {
       setPublicList(wishListDummy)
     }

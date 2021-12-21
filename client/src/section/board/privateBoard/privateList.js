@@ -22,14 +22,12 @@ const PrivateList = ({ setHasHost, hasHost, isLoggedIn, setDashBoardInfo }) => {
   const navigation = useNavigate()
 
   useEffect(() => {
+    console.log('reload')
     if (!isLoggedIn) {
       navigation('/')
     }
     // TODO: API
-    // codeCubeApi('GET', '/myProjects', {}, hoToken).then(({ data }) => console.log(data))
-    axios.get('http://localhost:4000/myProjects', {
-      headers: { Authorization: `bearer ${hoToken}` },
-    })
+    axios.get('http://localhost:4000/myProjects').then(({ data }) => console.log(data))
     setMyDashBoard(privateDummy)
   }, [isLoggedIn])
 
