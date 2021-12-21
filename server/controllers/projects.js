@@ -1,6 +1,7 @@
 const models = require('../models')
 const { solveToken, makejwt } = require('./function')
 const whoRU = function (withBearer) {
+  console.log(withBearer)
   const token = withBearer.split(' ')[1]
   const user_id = solveToken(token).id
   return user_id
