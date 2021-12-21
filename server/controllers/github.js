@@ -40,7 +40,7 @@ module.exports = {
     })
     const { name, login, html_url, public_repos } = response.data
     // console.log('login:' + login)
-    const images = `https://ghchart.rshah.org/219138/${login}`
+    const calendar = `https://ghchart.rshah.org/219138/${login}`
     const userInfo = { name, login, html_url, public_repos, calendar }
 
     res.status(200).send({ userInfo })

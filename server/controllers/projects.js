@@ -29,24 +29,37 @@ module.exports = {
     get: async (req, res) => {
       //전체 개시글 요청
       const finalList = []
-      const firstList = await models.projects.findAll({
-        include: models.users,
-        raw: true,
-      })
-      firstList.map((el) => {
-        const obj = {}
-        obj.title = el.title
-        obj.projectId = el.id
-        const confirmed = models.project_users.findAndCountAll({
-          raw: true,
-          where: { projectId: el.id, join: 1 },
-        })
-        obj.confirmed = confirmed.count
+      const confirmedProjectIds = []
+      // const firstList = await models.projects.findAll({
+      //   include: [
+      //     {
+      //       model: models.users,
+      //       require: true,
+      //     },
+      //     {
+      //       model: models.project_users,
+      //       where: { join: 1 },
+      //     },
+      //   ],
+      //   raw: true,
+      // })
+      // console.log(firstList)
+      // firstList.map((el) => {
+      //   const obj = {}
+      //   obj.title = el.title
+      //   obj.projectId = el.id
+      //   confirmedProjectIds.push(el.id)
+      //   let element = lodash.cloneDeep(obj)
+      //   finalList.push(element)
+      // })
+      // console.log(confirmedProjectIds)
+      // confirmedProjectIds.map(el=>)
+      // const confirmed = models.project_users.findAndCountAll({
+      //   raw: true,
+      //   where: { projectId: el.id, join: 1 },
+      // })
+      // obj.confirmed = confirmed.count
 
-        let element = lodash.cloneDeep(obj)
-        finalList.push(element)
-      })
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', finalList)
       res.status(200).json({ message: 'ok', list: finalList })
     },
     delete: async (req, res) => {
