@@ -1,7 +1,7 @@
 const models = require('../models')
 const { users } = require('../models')
 const { makejwt, solveToken } = require('./function')
-const { Op } = require('sequelize')
+const { Op, CIDR } = require('sequelize')
 const lodash = require('lodash')
 const { isFunction } = require('lodash')
 
@@ -16,7 +16,6 @@ module.exports = {
         where: { username: decoded.username },
       })
 
-      // console.log(solve)
       //token이 만료되거나 유저정보에 없으면
 
       let stacklist = await models.user_stacks.findAll({
@@ -61,7 +60,9 @@ module.exports = {
       if (!userInfo) {
         res.status(401).json({ message: 'no such info' })
       } else {
-        await models.user_stacks.destroy({ where: { user_id: userInfo.id } })
+        if (userInfo.stacks.length !== 0) {
+          await models.user_stacks.destroy({ where: { user_id: userInfo.id } })
+        }
         await models.users.destroy({ where: { id: userInfo.id } })
         res.clearCookie('id')
         res.status(200).clearCookie('jwt').json({ message: 'byebye' })
@@ -80,8 +81,8 @@ module.exports = {
         res.status(400).json({ message: 'invalid userinfo' })
       }
       //Token으로 사용자의 현재 정보를 찾는다.
-      const userId = solveToken(token).id
-
+      const userId = solveToken(token).username
+      console.log(userId)
       //access Token이 만료될 경우
       if (!userId) {
         res.status(401).json({ message: 'invalid authorization' })
@@ -106,10 +107,12 @@ module.exports = {
             id: userId,
           },
         })
+
         const solve = await users.findOne({
           raw: true,
           where: { id: userId },
         })
+
         res.status(200).json({
           userInfo: solve,
           message: 'successfully modified',
@@ -128,26 +131,57 @@ module.exports = {
     post: async (req, res) => {
       //   console.log(req.body)
       const { username, email, description, image, password, stacks } = req.body
-      await models.users.create({
-        username: username,
-        email: email,
-        password: password,
-        description: description,
-        image: image,
-        stacks: stacks
-      })
-      // models.user_stacks.({
 
-      // })
-      const jwt = makejwt({ username, email, description })
-      res
-        .cookie('jwt', jwt, {
-          sameSite: 'None',
-          httpOnly: true,
-          secure: true,
+      const Idtrue = await models.users.findOne({
+        raw: true,
+        attributes: ['email'],
+        where: { email: email }
+      })
+
+      if (!Idtrue) {
+        await models.users.create({
+          username: username,
+          email: email,
+          password: password,
+          description: description,
+          image: image,
         })
-        .status(201)
-        .json({ message: 'signup successed' })
+
+        const userInfo = await models.users.findOne({
+          raw: true,
+          where: { username: username }
+        })
+
+        const stackobj = {}
+        const newarr = []
+        if (stacks.length !== 0) {
+          stacks.forEach((el) => {
+            stackobj['user_id'] = userInfo.id
+            stackobj['stack_id'] = el
+            let element = lodash.cloneDeep(stackobj)
+            newarr.push(element)
+            stacks = newarr
+          })
+          await models.user_stacks.bulkCreate(newarr)
+        }
+        const uId = userInfo.id
+        console.log(uId.id)
+        const jwt = makejwt({ uId, username, email, description, stacks })
+
+
+        res
+          .cookie('id', uId)
+          .cookie('jwt', jwt, {
+            sameSite: 'None',
+            httpOnly: true,
+            secure: true,
+          })
+          .status(201)
+          .json({ message: 'signup successed' })
+      }
+      else {
+        res.status(400).json({ message: '이미 있는 아이디 입니다' })
+      }
     },
   },
   login: {
@@ -157,16 +191,18 @@ module.exports = {
       // console.log('서버쪽 곤솤르돌', userInfo)
       const { email, password } = userInfo
       // loginuser 변수에 DB에서 회원정보 유무를 확인하여 존재시 변수에 할당
-      const loginuser = await models.users.findAll({
+      const loginuser = await models.users.findOne({
+        raw: true,
         where: {
           email: email,
           password: password,
         },
       })
-      const target = loginuser[0].dataValues
+      console.log(loginuser)
+      const target = loginuser
       //DB에 유저 정보가 없을시
-      if (!target) {
-        res.status.json({ message: 'login unsuccessed' })
+      if (target.length === 0) {
+        res.status(400).json({ message: 'login unsuccessed' })
       }
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
       else {
@@ -176,6 +212,8 @@ module.exports = {
         })
         stacks = stacks.map((el) => el.stack_id)
         console.log(stacks)
+
+
         const { username, email, description, id } = target
         const jwt = makejwt({ id, username, email, description, stacks })
 
