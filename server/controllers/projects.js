@@ -1,10 +1,27 @@
 const models = require('../models')
 const { solveToken, makejwt } = require('./function')
+
+const myProjectsForm = {
+  host: {
+    projectId: '',
+    start: 0,
+    done: 0,
+  },
+  guest: {
+    wishList: [],
+    confirmed: {
+      projectId: '', //
+      title: '',
+      start: 0,
+      done: 0,
+    },
+  },
+}
+
 const whoRU = function (withBearer) {
-  console.log(withBearer)
   const token = withBearer.split(' ')[1]
-  const user_id = solveToken(token).id
-  return user_id
+  const userInfo = solveToken(token)
+  return userInfo
 }
 
 module.exports = {
@@ -51,7 +68,9 @@ module.exports = {
     put: async (req, res) => {
       // console.log(req.body)
       const { title, content, image } = req.body
+      // !!
       const user_id = whoRU(req.headers.authorization)
+      // !!
       if (!user_id) {
         return res.status(401).json({ message: 'invalid authorization' })
       }
@@ -65,7 +84,9 @@ module.exports = {
   post: {
     //게시글 작성
     post: async (req, res) => {
+      // !!
       const user_id = whoRU(req.headers.authorization)
+      // !!
       if (!user_id) {
         return res.status(401).json({ message: 'invalid authorization' })
       }
@@ -127,73 +148,87 @@ module.exports = {
   },
   private_post: {
     get: async (req, res) => {
-      //헤더일지,쿠키일지 몰라서 일단 여기 넣어둔 더미데이터로 테스트 해볼게요
-      const user_id = whoRU(req.headers.authorization)
-      //1.이 사람 id로 된 글이 하나라도 있으면 그 글을 팝업
+      const { id: user_id } = whoRU(req.cookies.jwt)
       const target = await models.projects.findOne({
-        where: { user_id: user_id },
+        where: { user_id },
       })
+
       if (target) {
-        const project_id = target.dataValues.id
-        const confirmed = await models.project_users.findAndCountAll({
-          where: { project_id: project_id },
-        })
+        console.log('host!!')
+        const { id: projectId, start, done } = target.dataValues
         return res.status(200).json({
           host: {
-            title: target.dataValues.title,
-            confirmed: confirmed.count,
+            projectId,
+            start,
+            done,
           },
+          guest: { whishList: [], confirmed: {} },
         })
+      } else {
+        console.log('guest!!')
+        // * guest인 경우
+        const inList = await models.project_users.findAll({
+          // where: { user_id },
+          include: { model: models.projects, as: 'user_stacks' },
+        })
+        console.log(inList)
+        // if (inList.length === 1 && inList[0].join === 1) {
+        //   // confirm
+        // } else {
+        //   console.log('나를 get 해줘...')
+        //   inList[0].dataValues.project_id
+        //   // { postId: '', title: '', confirmed: 0, start: 0, done: 0 },
+        //   inList.map(({dataValues: { project_id }}) => {
+        //   })
+        //   // waitings
+        // }
       }
-      //2. 없다면 참가한 리스트 표현
-      //2-1. 내가 참가한 title부터 찾아서 적기
-      const finalList = []
-      const firstList = await models.project_users.findAll({
-        where: { user_id: user_id },
-      })
-      // console.log(firstList)
-      for (let i = 0; i < firstList.length; i++) {
-        const project_id = firstList[i].dataValues.project_id
-        // console.log(project_id)
-        const titleJson = await models.projects.findOne({
-          where: { id: project_id },
-        })
-        const title = titleJson.dataValues.title
-        // console.log('title:' + title)
-        const isConfirmedInt = firstList[i].dataValues.join
-        let isConfirmed = false
-        if (isConfirmedInt === 1) {
-          isConfirmed = true
-        }
-        const isStartTest = await models.projects.findOne({
-          id: firstList[i].dataValues.project_id,
-        })
-        const isStartInt = isStartTest.dataValues.start
-        let isStart = false
-        if (isStartInt === 1) {
-          isStart = true
-        }
-        //요기만 다시하면됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        const confirmedSeq = await models.project_users.findAndCountAll({
-          where: {
-            project_id: project_id,
-            join: 1,
-          },
-        })
-        console.log('count:' + confirmedSeq.count)
-        finalList.push({
-          title: title,
-          confirmed: confirmedSeq.count,
-          isStart: isStart,
-          isConfirmed: isConfirmed,
-        })
-      }
-      //2-2. confirmed의 인원이 몇명인지 찾기
 
-      //2-3. isStart 여부 - projects테이블에서 project_id로 여부 확인하면 됨
+      // const finalList = []
+      // const firstList = await models.project_users.findAll({
+      //   where: { user_id },
+      // })
 
-      //2-4. join값이 1인지 0인지
-      res.status(200).json({ guest: finalList })
+      // for (let i = 0; i < firstList.length; i++) {
+      //   const project_id = firstList[i].dataValues.project_id
+      //   const titleJson = await models.projects.findOne({
+      //     where: { id: project_id },
+      //   })
+      //   const title = titleJson.dataValues.title
+      //   const isConfirmedInt = firstList[i].dataValues.join
+      //   let isConfirmed = false
+      //   if (isConfirmedInt === 1) {
+      //     isConfirmed = true
+      //   }
+      //   const isStartTest = await models.projects.findOne({
+      //     id: firstList[i].dataValues.project_id,
+      //   })
+      //   const isStartInt = isStartTest.dataValues.start
+      //   let isStart = false
+      //   if (isStartInt === 1) {
+      //     isStart = true
+      //   }
+      //   //요기만 다시하면됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      //   const confirmedSeq = await models.project_users.findAndCountAll({
+      //     where: {
+      //       project_id: project_id,
+      //       join: 1,
+      //     },
+      //   })
+      //   console.log('count:' + confirmedSeq.count)
+      //   finalList.push({
+      //     title: title,
+      //     confirmed: confirmedSeq.count,
+      //     isStart: isStart,
+      //     isConfirmed: isConfirmed,
+      //   })
+      // }
+      // //2-2. confirmed의 인원이 몇명인지 찾기
+
+      // //2-3. isStart 여부 - projects테이블에서 project_id로 여부 확인하면 됨
+
+      // //2-4. join값이 1인지 0인지
+      // res.status(200).json({ guest: finalList })
     },
   },
 }
