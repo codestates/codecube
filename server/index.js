@@ -8,7 +8,7 @@ const sequelize = require('./models').sequelize
 const cookieParser = require('cookie-parser')
 const indexRouter = require('./routes')
 
-sequelize.sync({ alter: true })
+// sequelize.sync({ alter: true })
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
