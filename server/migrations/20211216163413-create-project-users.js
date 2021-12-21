@@ -3,35 +3,37 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('project_users', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER
       },
-      project_id: {
+      projectId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER
       },
       join: {
+        type: Sequelize.INTEGER,
         defaultValue: 0,
         allowNull: false,
-        type: Sequelize.INTEGER
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: new Date(),
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: new Date(),
+      },
     })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('project_users')
-  }
+  },
 }

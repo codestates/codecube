@@ -2,76 +2,44 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('stacks',[{
-      id: 1,
-      name: 'JavaScript',
-      createdAt: new Date(),
-     updatedAt: new Date(),
+    await queryInterface.bulkInsert('stacks', [
+      {
+        name: 'JavaScript',
       },
       {
-        id:2,
-        name:'React',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'React',
       },
       {
-        id:3,
-        name:'Node.js',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'Node.js',
       },
       {
-        id:4,
-        name:'express',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'express',
       },
       {
-        id:5,
-        name:'Docker',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'Docker',
       },
       {
-        id:6,
-        name:'css_styled',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'css_styled',
       },
       {
-        id:7,
-        name:'Mysql',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'Mysql',
       },
       {
-        id:8,
-        name:'MongoDB',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'MongoDB',
       },
       {
-        id:9,
-        name:'redis',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'redis',
       },
       {
-        id:10,
-        name:'Python',
-        createdAt: new Date(),
-     updatedAt: new Date(),
+        name: 'Python',
       },
       {
-        id:11,
-        name:'C#',
-        createdAt: new Date(),
-     updatedAt: new Date(),
-      }]
-    )
+        name: 'C#',
+      },
+    ])
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('stacks',null,{})
-  }
+    return queryInterface.bulkDelete('stacks', null, {})
+  },
 }

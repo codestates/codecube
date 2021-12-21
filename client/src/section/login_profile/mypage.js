@@ -7,26 +7,12 @@ import axios from 'axios'
 axios.defaults.withCredentials = true
 
 const Mypage = (props) => {
-  /* TODO : props로 받은 유저정보를 화면에 표시하세요. */
-  // if (!props.userinfo) {
-  //   return null
-  //   // 리턴에 null 넣으면 랜더링 안됨
-  // } else {
-  //   console.log('인증후받아온정보', props.userinfo)
-  // const { email, username, stacks, description } = props.userinfo
-  //https://jess2.xyz/vue/data-undefined-error/
-  // TypeError: Cannot read property of undefined
-  // const { username, stacks, description, image, email } = props.userinfo[0]
   const { username, stacks, description, image, email } = props.userinfo
-  console.log('유제인포포포포ㅗ', props.userinfo)
-  // console.log('스택만보여주기', stacks)
   const navigate = useNavigate()
-
-  // const [cartStacks, setCartStacks] = useState(stacks)
   const [file, setFile] = useState('')
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
-  // const [saveProfileBtn, setSaveProfileBtn] = useState(false)
+
   const [userInfoEdited, setUserInfoEdited] = useState({
     image: image,
     email: email,
@@ -34,17 +20,11 @@ const Mypage = (props) => {
     description: description,
   })
 
-  // const [isChecked, setIsChecked] = useState(false)
-
   const checkboxhandler = (checked, id) => {
     if (checked) {
       setCheckedStacks([...checkedStacks, id])
-      // setUserInfoEdited[stacks] = checkedStacks
-      // console.log('스택추가되는거', userInfoEdited)
     } else {
       setCheckedStacks(checkedStacks.filter((el) => el !== id))
-      // setUserInfoEdited[stacks] = checkedStacks
-      // console.log('스택제거되는거', userInfoEdited)
     }
   }
 
@@ -65,18 +45,10 @@ const Mypage = (props) => {
   }
 
   const handleEdit = () => {
-    // axios.put('https://localhost:4000/').then((res) => {
-    //   setUserinfo(null)
-    //   setisLoggedIn(true)
-    //   navigate('/')
-    // })
     setEditProfileBtn(true)
-    // props.setisLoggedIn(true)
     navigate('/')
   }
-  // console.log('프롭스로받아온유져인포', props.userinfo)
-  // console.log('수정전', userInfoEdited)
-
+  
   const handleSave = async () => {
     console.log('ssssssss', userInfoEdited)
     // props.setUserinfo([userInfoEdited])
@@ -119,9 +91,28 @@ const Mypage = (props) => {
   }
   // }
   //비밀번호 매치 함수
-  const 마이페이지 = () => {
+  const mypage = () => {
     setEditProfileBtn(false)
-    navigate('/')
+    // navigate('/')
+  }
+
+  const stacklist = [
+    { id: 1, name: 'JavaScript' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Node.js' },
+    { id: 4, name: 'express' },
+    { id: 5, name: 'Docker' },
+    { id: 6, name: 'css_styled' },
+    { id: 7, name: 'Mysql' },
+    { id: 8, name: 'MongoDB' },
+    { id: 9, name: 'redis' },
+    { id: 10, name: 'Python' },
+    { id: 11, name: 'C#' },
+  ]
+
+  const checkboxstyle = {
+    justifycontent: 'center',
+    alignitems: 'center',
   }
 
   const stacklist = [
@@ -155,6 +146,20 @@ const Mypage = (props) => {
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
             <input type="file" accept="image/*" onChange={changeFile} />
             <input type='submit' value="your_Image" />
+//           <button onClick={mypage}>내페이지</button>
+//           <div>{email}</div>
+//           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
+//             <input
+//               type="file"
+//               id="chooseFile"
+//               name="chooseFile"
+//               accept="image/*"
+//               onError={(e) => {
+//                 e.target.onerror = null
+//                 e.target.src = './dummy/codecubelogo.png'
+//               }}
+//               onChange={handleInputValue('image')}
+//             />
             <input
               className="inputA"
               type="password"

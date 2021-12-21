@@ -5,10 +5,10 @@ import { v4 } from 'uuid'
 import './waiting.css'
 
 import waitingUserDummy from '../../../dummy/board/waitingUserDummy'
-import { ACCEPT, hoToken, REJECT } from '../hardWord'
+import { ACCEPT, hoToken, localhost, REJECT } from '../hardWord'
 import axios from 'axios'
 
-const Waiting = ({ hasHost, postId }) => {
+const Waiting = ({ hasHost, projectId }) => {
   const [waitingUsers, setWaitingUsers] = useState([])
   const location = useLocation()
   const navigation = useNavigate()
@@ -18,14 +18,10 @@ const Waiting = ({ hasHost, postId }) => {
       navigation('/')
     } else {
       // TODO: API
-      axios
-        .get('http://localhost:4000/members/3', {
-          headers: { Authorization: `bearer ${hoToken}` },
-        })
-        .then(({ data }) => {
-          console.log(data)
-          setWaitingUsers(data.confirmed)
-        })
+      axios.get(`${localhost}/members/${projectId}`).then(({ data }) => {
+        console.log(data)
+        setWaitingUsers(data)
+      })
     }
   }, [hasHost])
 
@@ -45,11 +41,11 @@ const Waiting = ({ hasHost, postId }) => {
 
   return (
     <div id="waiting-wrapper">
-      {waitingUsers.map(({ img, username, userId }) => {
+      {waitingUsers.map(({ image, username, userId }) => {
         return (
           <div key={v4()} className="waiting-card">
             <div className="waiting-profile">
-              <div className="waiting-dummy-image">img</div>
+              <div className="waiting-dummy-image">{image}</div>
               <div className="waiting-username">{username}</div>
             </div>
             <div className="waiting-button-wrapper">

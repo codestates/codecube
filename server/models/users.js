@@ -1,37 +1,65 @@
 'use strict'
-const {
-  Model
-} = require('sequelize')
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      users.hasMany(models.user_stacks, {
-        as: 'user_stacks',
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE'
-      })
-      users.hasMany(models.project_users, {
-        as: 'project_users',
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE'
-      })
-
+      users.hasMany(models.user_stacks)
+      users.hasMany(models.project_users)
     }
   }
-  users.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    image: DataTypes.STRING,
-    password: DataTypes.STRING,
-    description: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'users',
-  })
+  users.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+    },
+    {
+      sequelize,
+      modelName: 'users',
+    }
+  )
   return users
 }

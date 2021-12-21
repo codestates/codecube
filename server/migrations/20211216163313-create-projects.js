@@ -3,43 +3,46 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('projects', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
       },
-      user_id: {
-        allowNull: false,
+      userId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       title: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
       },
       content: {
-        allowNull: false,
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       image: {
         type: Sequelize.TEXT,
+        defaultValue: '',
       },
       start: {
-        defaultValue: 0,
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER
+        defaultValue: 0,
       },
       done: {
-        defaultValue: 0,
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER
+        defaultValue: 0,
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     })
   },
