@@ -1,0 +1,14 @@
+#private-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+}
+
+#dream-button {
+  position: absolute;
+  width: 7rem;
+  margin-bottom: 10px;
+  top: 0.3rem;
+  right: 1rem;
+}
