@@ -2,33 +2,46 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('project_users', [{
-      id: 1,
-      user_id: 1,
-      project_id:5, 
-      join:0,createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 3,
-      user_id: 1,
-      project_id:3, 
-      join:1,
-      createdAt: new Date(),
-     updatedAt: new Date(),
-    },
-    {
-      id: 9,
-      user_id: 6,
-      project_id:3, 
-      join:0,
-      createdAt: new Date(),
-     updatedAt: new Date(),
-    },
+    await queryInterface.bulkInsert('project_users', [
+      {
+        userId: 1,
+        projectId: 1,
+        join: 1,
+      },
+      {
+        userId: 2,
+        projectId: 2,
+        join: 1,
+      },
+      {
+        userId: 3,
+        projectId: 1,
+        join: 1,
+      },
+      {
+        userId: 4,
+        projectId: 1,
+        join: 0,
+      },
+      {
+        userId: 5,
+        projectId: 1,
+        join: 0,
+      },
+      {
+        userId: 6,
+        projectId: 1,
+        join: 0,
+      },
+      {
+        userId: 6,
+        projectId: 2,
+        join: 0,
+      },
     ])
   },
 
   down: async (queryInterface, Sequelize) => {
-  return queryInterface.bulkDelete('project_users',null,{})
-  }
+    return queryInterface.bulkDelete('project_users', null, {})
+  },
 }

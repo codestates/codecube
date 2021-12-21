@@ -9,13 +9,29 @@ module.exports = (sequelize, DataTypes) => {
   }
   user_stacks.init(
     {
-      user_id: {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      stack_id: {
+      stackId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     },
     {

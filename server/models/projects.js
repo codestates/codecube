@@ -8,24 +8,27 @@ module.exports = (sequelize, DataTypes) => {
   }
   projects.init(
     {
-      user_id: {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: '',
       },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: '',
       },
       image: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: '',
       },
       start: {
         type: DataTypes.INTEGER,
@@ -34,6 +37,16 @@ module.exports = (sequelize, DataTypes) => {
       done: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     },
     {

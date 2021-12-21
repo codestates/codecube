@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.addConstraint('project_users', {
-      fields: ['user_id'],
+      fields: ['userId'],
       type: 'foreign key',
       name: 'project_users_constraint_userId',
       references: {
@@ -15,7 +15,7 @@ module.exports = {
     })
 
     await queryInterface.addConstraint('project_users', {
-      fields: ['project_id'],
+      fields: ['projectId'],
       type: 'foreign key',
       name: 'project_users_constraint_projectId',
       references: {
