@@ -71,7 +71,7 @@ const Login = (props) => {
   //     }
   //   }
   // }
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
     const { email, password } = loginInfo
@@ -79,7 +79,7 @@ const Login = (props) => {
     if (!email || !password) {
       setErrorMessage('이메일과 비밀번호를 입력하세요')
     } else {
-      axios
+      await axios
         .post('http://localhost:4000/login', loginInfo)
         .then((res) => {
           console.log('로그인후받아온쿠키???', res.data)
@@ -88,7 +88,7 @@ const Login = (props) => {
 
           // props.setUserinfo(result)
           console.log('이거진짜 토근이니 이라다 다 죽어', res.data.data.authorization)
-          props.setToken(res.data.data.authorization)
+          // props.setToken(res.data.data.authorization)
           console.log(
             '이거 아니면 손목날라간다  이라다 다 죽어',
             res.data.data.authorization
@@ -102,10 +102,6 @@ const Login = (props) => {
     }
   }
 
-  function count() {
-    console.log('몇번할수신냐 로그인!!!!!!!!!!!!!')
-  }
-  count()
   return (
     // <Login>
     //   <div>로그인 화면이 있다고 가정.</div>
