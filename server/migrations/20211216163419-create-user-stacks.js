@@ -3,30 +3,32 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('user_stacks', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER
       },
-      stack_id: {
+      stackId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: new Date(),
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: new Date(),
+      },
     })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('user_stacks')
-  }
+  },
 }

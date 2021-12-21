@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { codeCubeApi } from './axiosRequests'
-
 import './board.css'
 import Toggle from '../../components/toggle/toggle'
 import PublicList from './publicBoard/publicList'
@@ -16,7 +14,7 @@ import projectInitial from './projectInitial'
 const Board = ({ isLoggedIn }) => {
   const [dashBoardInfo, setDashBoardInfo] = useState(projectInitial)
   const [hasHost, setHasHost] = useState(false)
-
+  const [wishList, setWishList] = useState(projectInitial)
   return (
     <div id="board-wrapper">
       <Toggle
@@ -37,7 +35,9 @@ const Board = ({ isLoggedIn }) => {
                 hasHost={hasHost}
                 setHasHost={setHasHost}
                 isLoggedIn={isLoggedIn}
+                dashBoardInfo={dashBoardInfo}
                 setDashBoardInfo={setDashBoardInfo}
+                setWishList={setWishList}
               />
             }
           >
@@ -45,15 +45,17 @@ const Board = ({ isLoggedIn }) => {
               path=""
               element={
                 hasHost ? (
-                  <Post postId={dashBoardInfo.host.postId} />
+                  <Post projectId={dashBoardInfo.host.projectId} />
                 ) : (
-                  <PublicList isWish={true} />
+                  <PublicList isWish={true} wishList={wishList} />
                 )
               }
             ></Route>
             <Route
               path="waiting"
-              element={<Waiting hasHost={hasHost} postId={dashBoardInfo.host.postId} />}
+              element={
+                <Waiting hasHost={hasHost} projectId={dashBoardInfo.host.projectId} />
+              }
             />
           </Route>
         </Routes>

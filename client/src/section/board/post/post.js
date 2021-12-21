@@ -4,18 +4,25 @@ import './post.css'
 import ConfirmUsers from '../members/confirm'
 import PostContent from './content'
 
-import { thisPostDummy } from '../../../dummy/board/privateDummy'
+import axios from 'axios'
+import { localhost } from '../hardWord'
 
-const Post = ({ postId }) => {
-  const [thisPost, setThisPost] = useState({ title: '', content: '' })
-  useEffect(() => {
+const initialPostInfo = { title: '', content: '' }
+
+const Post = ({ projectId }) => {
+  const [thisPost, setThisPost] = useState(initialPostInfo)
+
+  useEffect(async () => {
     // TODO: API 유저 아이디를 기반으로
-    setThisPost(thisPostDummy)
+    const url = `${localhost}/projects/${projectId}`
+    await axios.get(url).then(({ data }) => {
+      setThisPost(data)
+    })
   }, [])
   return (
     <div id="post-wrapper">
       <PostContent thisPost={thisPost} />
-      <ConfirmUsers postId={postId} />
+      <ConfirmUsers projectId={projectId} />
     </div>
   )
 }

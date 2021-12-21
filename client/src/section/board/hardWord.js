@@ -15,5 +15,9 @@ export const WISH_LIST = '수락 대기중'
 export const ACCEPT = 'accept'
 export const REJECT = 'reject'
 
-export const hoToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiLquYDtmY3si50iLCJlbWFpbCI6InF3ZXJAY29kZS5jb20iLCJkZXNjcmlwdGlvbiI6IuuCmOuKlCDsvZTrlKnsmZXsnbQg65Cg6rGw7JW8IiwiaWF0IjoxNjM5ODE5NzcwLCJleHAiOjE2NDA2ODM3NzAsImlzcyI6ImNvZGVjdWJlIiwic3ViIjoiZGF0YSJ9.FyfaUhfTRW72gdCQnfqCvyRgEjneuAXL70dc2I3XhOU'
+export const mId = window.localStorage.getItem('id') ?? ''
+
+const pp = window.localStorage.getItem('userinfo')
+export const mi = JSON.parse(pp).id ?? ''
+
+export const localhost = 'http://localhost:4000'

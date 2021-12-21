@@ -1,6 +1,12 @@
 const models = require('../models')
 const { users } = require('../models')
 const { makejwt, solveToken } = require('./function')
+const whoRU = function (withBearer) {
+  const token = withBearer.split(' ')[1]
+  const userInfo = solveToken(token)
+  return userInfo
+}
+
 const { Op } = require('sequelize')
 const lodash = require('lodash')
 const { isFunction } = require('lodash')
@@ -9,13 +15,30 @@ module.exports = {
   users: {
     get: async (req, res) => {
       const rtoken = req.cookies.jwt
-      const decoded = solveToken(rtoken)
+      const decoded = whoRU(rtoken)
+      
+      // 혹시 문제있으면 이거 사용
+      //const decoded = solveToken(rtoken)
+      //
+      
       const solve = await users.findOne({
         raw: true,
         where: { username: decoded.username },
       })
 
-      // console.log(solve)
+      const userInfo = solve
+      const { id, email, username, image, description, createdAt, updatedAt } =
+        userInfo.dataValues
+      const userData = {
+        id,
+        email,
+        username,
+        image,
+        description,
+        createdAt,
+        updatedAt,
+      }
+
       //token이 만료되거나 유저정보에 없으면
 
       let stacklist = await models.user_stacks.findAll({
@@ -68,7 +91,10 @@ module.exports = {
       const token = req.cookies.jwt
       const newInfo = req.body
 
-      console.log(newInfo)
+      // {username, password, image, stack, description }
+      // console.log('ddddssdsfsdfsdfsfs', req.cookies.token)
+      // console.log('ddddssdsfsdfsdfsfs', req.cookies.jwt)
+      // console.log('ddddssdsfsdfsdfsfs', req.body)
 
       //요청정보가 없을시
       if (!newInfo) {
@@ -82,20 +108,18 @@ module.exports = {
         res.status(401).json({ message: 'invalid authorization' })
       } else {
         //user 정보 업데아트
-        await models.user_stacks.destroy({ where: { user_id: userId } })
 
+        await models.user_stacks.destroy({ where: { userId: userId } })
         const stackobj = {}
         const newarr = []
-        if (newInfo.stacks.length !== 0) {
-          newInfo.stacks.forEach((el) => {
-            stackobj['user_id'] = userId
-            stackobj['stack_id'] = el
-            let element = lodash.cloneDeep(stackobj)
-            newarr.push(element)
-          })
-          await models.user_stacks.bulkCreate(newarr)
-        }
+        newInfo.stacks.forEach((el) => {
+          stackobj['userId'] = userId
+          stackobj['stackId'] = el
+          let element = lodash.cloneDeep(stackobj)
+          newarr.push(element)
+        })
 
+        await models.user_stacks.bulkCreate(newarr)
         await models.users.update(newInfo, {
           where: {
             id: userId,
@@ -114,46 +138,36 @@ module.exports = {
   },
   logout: {
     get: async (req, res) => {
-      //  const Token = req.cookies.token
-      res.clearCookie('id')
-      res.status(205).clearCookie('jwt').send('Logged out successfilly')
+      res
+        .status(205)
+        .clearCookie('jwt')
+        .clearCookie('id')
+        .send('Logged out successfully')
     },
   },
   signup: {
     post: async (req, res) => {
       console.log('요청들어온거', req.body)
       const { username, email, description, image, password, stacks } = req.body
-      // await models.users.create({
-      //   username: username,
-      //   email: email,
-      //   password: password,
-      //   description: description,
-      //   image: image,
-      //   stacks: stacks,
-      // })
-      // models.user_stacks.({
-
-      // })
-      const existingUser = await models.users.findOne({
-        where: {
-          email: email,
-        },
+      await models.users.create({
+        username: username,
+        email: email,
+        password: password,
+        description: description,
+        image: image,
+        stacks: stacks,
       })
-      console.log('ddddddd', existingUser)
-      if (existingUser) {
-        res.send('email exists please use different email address')
-      } else {
-        await models.users.create(req.body)
-        // const jwt = makejwt({ username, email, description, stacks })
-        res
-          // .cookie('jwt', jwt, {
-          //   sameSite: 'None',
-          //   httpOnly: true,
-          //   secure: true,
-          // })
-          .status(201)
-          .json({ message: 'signup successed' })
-      }
+
+      const jwt = makejwt({ username, email, description })
+      res
+        .cookie('jwt', jwt, {
+          sameSite: 'None',
+          httpOnly: true,
+          secure: true,
+        })
+        .status(201)
+        .json({ message: 'signup successed' })
+
     },
   },
   login: {
@@ -186,16 +200,20 @@ module.exports = {
         const jwt = makejwt({ id, username, email, description })
 
         res
-          .cookie('jwt', jwt, {
-            sameSite: 'None',
-            secure: true,
+          .cookie('jwt', `bearer ${jwt}`, {
+            // sameSite: 'None',
+            // secure: true,
             httpOnly: true,
           })
-          .cookie('id', id)
+          .cookie('id', id, {
+            // sameSite: 'None',
+            // secure: true,
+            httpOnly: true,
+          })
           .status(200)
           .json({
             message: 'login successed',
-            data: { authorization: jwt },
+            // data: { authorization: jwt },
           })
       }
     },

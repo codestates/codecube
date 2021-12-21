@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -6,43 +6,47 @@ import './privateList.css'
 import Toggle from '../../../components/toggle/toggle'
 import DreamButton from './dreamButton'
 
-import { PRIVATE, CONTENT, CONTENT_LINK, hoToken } from '../hardWord'
+import { PRIVATE, CONTENT, CONTENT_LINK } from '../hardWord'
 import { WAITING_USERS, WAITING_USERS_LINK } from '../hardWord'
 
-import projectInitial from '../projectInitial'
-import privateDummy from '../../../dummy/board/privateDummy'
-import { codeCubeApi } from '../axiosRequests'
-
 const havePostAsHost = (obj) => {
-  return obj.host.postId > 0
+  return obj.host.projectId > 0
 }
 
-const PrivateList = ({ setHasHost, hasHost, isLoggedIn, setDashBoardInfo }) => {
-  const [myDashBoard, setMyDashBoard] = useState(projectInitial)
+const PrivateList = ({
+  setHasHost,
+  hasHost,
+  isLoggedIn,
+  dashBoardInfo,
+  setDashBoardInfo,
+  setWishList,
+}) => {
   const navigation = useNavigate()
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!isLoggedIn) {
       navigation('/')
     }
     // TODO: API
-    // codeCubeApi('GET', '/myProjects', {}, hoToken).then(({ data }) => console.log(data))
-    axios.get('http://localhost:4000/myProjects', {
-      headers: { Authorization: `bearer ${hoToken}` },
+    await axios.get('http://localhost:4000/myProjects').then(({ data }) => {
+      if (hasHost) {
+        setDashBoardInfo(data)
+      } else {
+        console.log('!!!!!!!!!!!!!!!!!')
+        setWishList(data)
+      }
     })
-    setMyDashBoard(privateDummy)
   }, [isLoggedIn])
 
   useEffect(() => {
-    setHasHost(havePostAsHost(myDashBoard))
-    setDashBoardInfo(myDashBoard)
-  }, [myDashBoard])
+    setHasHost(havePostAsHost(dashBoardInfo))
+  }, [dashBoardInfo])
 
   return (
     <>
       <DreamButton
         hasHost={hasHost}
-        postState={myDashBoard.host.start + myDashBoard.host.done}
+        postState={dashBoardInfo.host.start + dashBoardInfo.host.done}
       />
       {hasHost ? (
         <Toggle

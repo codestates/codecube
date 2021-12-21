@@ -3,22 +3,24 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('stacks', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: new Date(),
       },
     })
   },
