@@ -30,9 +30,9 @@ require('dotenv').config()
 // local환경에서 테스트 할때 사용할 DataBase용 config
 module.exports = {
   development: {
-    username: 'root',
-    password: '1111',
-    database: 'codecube',
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
     host: '127.0.0.1',
     dialect: 'mysql',
   },

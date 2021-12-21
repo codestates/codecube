@@ -108,7 +108,6 @@ module.exports = {
         res.status(401).json({ message: 'invalid authorization' })
       } else {
         //user 정보 업데아트
-
         await models.user_stacks.destroy({ where: { userId: userId } })
         const stackobj = {}
         const newarr = []

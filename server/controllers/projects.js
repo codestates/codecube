@@ -2,7 +2,7 @@ const { Sequelize } = require('../models')
 const Op = Sequelize.Op
 const models = require('../models')
 const { solveToken, makejwt } = require('./function')
-
+const lodash = require('lodash')
 const myProjectsForm = {
   host: {
     projectId: '',
@@ -30,20 +30,39 @@ module.exports = {
   project: {
     get: async (req, res) => {
       //전체 개시글 요청
-      const firstList = await models.projects.findAll()
       const finalList = []
-      for (let i = 0; i < firstList.length; i++) {
-        const title = firstList[i].dataValues.title
-        const projectId = firstList[i].dataValues.id
-        const confirmed = await models.project_users.findAndCountAll({
-          where: { projectId: projectId, join: 1 },
-        })
-        finalList.push({
-          title,
-          projectId,
-          confirmed: confirmed.count,
-        })
-      }
+      const confirmedProjectIds = []
+      // const firstList = await models.projects.findAll({
+      //   include: [
+      //     {
+      //       model: models.users,
+      //       require: true,
+      //     },
+      //     {
+      //       model: models.project_users,
+      //       where: { join: 1 },
+      //     },
+      //   ],
+      //   raw: true,
+      // })
+      // console.log(firstList)
+      // firstList.map((el) => {
+      //   const obj = {}
+      //   obj.title = el.title
+      //   obj.projectId = el.id
+      //   confirmedProjectIds.push(el.id)
+      //   let element = lodash.cloneDeep(obj)
+      //   finalList.push(element)
+      // })
+      // console.log(confirmedProjectIds)
+      // confirmedProjectIds.map(el=>)
+      // const confirmed = models.project_users.findAndCountAll({
+      //   raw: true,
+      //   where: { projectId: el.id, join: 1 },
+      // })
+      // obj.confirmed = confirmed.count
+
+
       res.status(200).json({ message: 'ok', list: finalList })
     },
     delete: async (req, res) => {
@@ -121,6 +140,34 @@ module.exports = {
       } else {
         res.json(target.dataValues)
       }
+
+      const { title, content, image } = target.dataValues
+      //1. 프로젝트 id로 해당 데이터들을 pro-user 테이블에서 찾기
+      const firstList = await models.project_users.findAll({
+        where: { projectId: projectId },
+      })
+      //2. 그 찾은 사람들 중에 join값이 0인 사람들 찾기
+      let finalList = []
+      for (let i = 0; i < firstList.length; i++) {
+        // console.log(firstList[i].dataValues)
+        if (firstList[i].dataValues.join === 0) {
+          const userInfo = await models.users.findOne({
+            where: { id: firstList[i].dataValues.userId },
+          })
+          // console.log('userInfo:' + JSON.stringify(userInfo))
+          finalList.push({ username: userInfo.username, image: userInfo.image })
+        }
+      }
+      console.log(finalList)
+
+      res.status(200).json({
+        postInfo: {
+          title: title,
+          content: content,
+          image: image,
+          waiting: finalList,
+        },
+      })
     },
   },
   private_post: {
