@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
 
 import './confirm.css'
+import confirmUsersDummy from '../../../dummy/board/confirmUsersDummy'
 
-const ConfirmUsers = ({ confirmUsers }) => {
+const ConfirmUsers = ({ postId }) => {
+  const [confirmUsers, setConfirmUsers] = useState([])
+
+  useEffect(() => {
+    // TODO: API
+    setConfirmUsers(confirmUsersDummy)
+  }, [postId])
+
   return (
     <div className="confirm-wrapper">
       {confirmUsers.map((user) => {
