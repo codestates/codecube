@@ -12,12 +12,12 @@ const Waiting = ({ hasHost, projectId }) => {
   const [waitingUsers, setWaitingUsers] = useState([])
   const location = useLocation()
   const navigation = useNavigate()
+  console.log(waitingUsers)
 
   useEffect(() => {
     if (!hasHost && location.pathname.includes('/waiting')) {
       navigation('/')
     } else {
-      // TODO: API
       axios.get(`${localhost}/members/${projectId}`).then(({ data }) => {
         setWaitingUsers(data.waiting)
       })

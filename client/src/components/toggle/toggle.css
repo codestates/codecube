@@ -1,6 +1,5 @@
 .toggle-wrapper {
   display: flex;
-  background-color: gray;
   width: 70%;
   max-width: 22rem;
   height: 2rem;
@@ -13,11 +12,17 @@
 }
 .nav-link {
   display: flex;
+  margin: 0.4rem;
   align-items: center;
   justify-content: center;
-  background-color: ivory;
   cursor: default;
   width: 40%;
+}
+
+.nav-link:link,
+.nav-link:visited {
+  color: black;
+  text-decoration: none;
 }
 
 .unselected {

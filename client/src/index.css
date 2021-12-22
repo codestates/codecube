@@ -2,7 +2,6 @@
   --main-border-radius: 1rem;
   --main-color: rgb(100, 203, 203);
 }
-
 /* ?  */
 
 #container {
@@ -15,21 +14,38 @@
 
 .main-box {
   background-color: #ecf0f3;
+  /* background-color: rgba(100, 203, 203, 0.057); */
   border-radius: var(--main-border-radius);
   box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
 }
 
-/* ?  */
+.hidden {
+  display: none;
+}
+
+.form-wrapper {
+  height: 80%;
+  flex-direction: column;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+}
 
 .col {
+  flex-direction: column;
   padding: 0.4rem;
   display: flex;
-  flex-direction: column;
   min-height: 47rem;
-  min-width: 22rem;
+  min-width: 28rem;
   height: 100%;
   max-height: 50rem;
+  max-width: 35rem;
 }
+
+.board-col {
+  max-width: 50rem;
+}
+/* ?  */
 
 .row {
   margin: 0.4rem;
@@ -40,10 +56,6 @@
 }
 .w30 {
   flex: 4 0 0;
-}
-
-.login {
-  height: 100%;
 }
 
 .notice-wrapper,

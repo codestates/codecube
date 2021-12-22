@@ -63,7 +63,6 @@ module.exports = {
       const userInfo = whoRU(Token)
       // 탈퇴하려는 가입정보가 Null일경우 분기
 
-      console.log(DeleteUser)
       if (!userInfo) {
         res.status(401).json({ message: 'no such info' })
       } else {

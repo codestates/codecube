@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import GitHubLogin from './githublogin'
@@ -10,11 +10,17 @@ const Login = (props) => {
     email: '',
     password: '',
   })
-  const [errorMessage, setErrorMessage] = useState('')
+  const [loginText, setLoginText] = useState('login')
   const navigate = useNavigate()
+  const alertBox = useRef()
+
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value })
   }
+  useEffect(() => {
+    setLoginText('Login')
+    alertBox.current.classList.remove('alert')
+  }, [loginInfo])
 
   const handleSignup = () => {
     props.setIsSignup(true)
@@ -23,8 +29,10 @@ const Login = (props) => {
 
   const handleLogin = async () => {
     const { email, password } = loginInfo
+    alertBox.current.classList.remove('hidden')
     if (!email || !password) {
-      setErrorMessage('이메일과 비밀번호를 입력하세요')
+      setLoginText('이메일과 비밀번호를 입력하세요')
+      alertBox.current.classList.add('alert')
     } else {
       await axios
         .post('http://localhost:4000/login', loginInfo)
@@ -32,19 +40,20 @@ const Login = (props) => {
           props.isAuthenticated()
         })
         .catch((err) => {
-          alert('사용자정보가 없습니다???.', err)
+          setLoginText('이메일과 비밀번호를 입력하세요')
+          alertBox.current.classList.add('alert')
         })
     }
   }
 
   return (
-    <div className="loginA main-box">
+    <div className="left-box main-box">
       <div className="lo01A th50A login01A">
         <div className="zh20A codecubelogoA">
           <img className="codeimageA" src="./dummy/codecubelogo.png" alt="codecubelog" />
         </div>
-        <div className="zh80A">
-          <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
+        <div className="user-input-box">
+          <form className="form-wrapper" action="" onSubmit={(e) => e.preventDefault()}>
             <input
               className="inputA"
               type="email"
@@ -58,19 +67,19 @@ const Login = (props) => {
               onChange={handleInputValue('password')}
             ></input>
             <input
-              className="inputA login-button"
+              ref={alertBox}
+              className="login-button"
               type="submit"
-              value="login"
+              value={loginText}
               onClick={handleLogin}
             ></input>
-            <div className="alert-boxA">{errorMessage}</div>
           </form>
         </div>
       </div>
       <div className="lo02A th50A login02A">
         <GitHubLogin></GitHubLogin>
         <input
-          className="inputA zh20A signupA "
+          className="mypage-btn"
           type="button"
           value="signup"
           onClick={handleSignup}

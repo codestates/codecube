@@ -13,7 +13,6 @@ const Post = ({ projectId }) => {
   const [thisPost, setThisPost] = useState(initialPostInfo)
 
   useEffect(async () => {
-    // TODO: API 유저 아이디를 기반으로
     const url = `${localhost}/projects/${projectId}`
     await axios.get(url).then(({ data }) => {
       setThisPost(data.projectInfo)

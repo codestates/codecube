@@ -28,10 +28,6 @@ h1 {
   overflow-y: hidden;
 }
 
-.hidden {
-  display: none;
-}
-
 .button-backdrop {
   position: absolute;
   z-index: 998;

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-// import codecubelogo from '../../dummy/board/codecubelogo.png'
-
+import './mypage.css'
 axios.defaults.withCredentials = true
 
 const Mypage = (props) => {
@@ -27,18 +26,6 @@ const Mypage = (props) => {
     }
   }
 
-  // 패스워드는 어떻게 수정해야할까?? 다시 엑시오스 요청보내서 받아와아함까?
-  // 기존 비밀번호? 요청보내서 확인하고 확인됐으면 비번 바꿀수있게???
-  // 현재 패스워드 바꿀패스 한버더 확인패스워드 ~~~~~~일단은
-  // 회원탈퇴~~모달창으로 컴펌 띠우기
-  //https://velog.io/@edie_ko/React-%EC%84%B8%EC%83%81-%EA%B0%84%EB%8B%A8%ED%95%98%EA%B2%8C-%EB%AA%A8%EB%8B%AC%EC%B0%BD-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-X
-
-  //https://getbootstrap.com/docs/4.0/components/modal/
-
-  const [errorMessage, setErrorMessage] = useState('')
-
-  const [myStackList, setMyStackList] = useState({ stacks })
-
   const handleInputValue = (key) => (e) => {
     setUserInfoEdited({ ...userInfoEdited, [key]: e.target.value })
   }
@@ -49,29 +36,21 @@ const Mypage = (props) => {
   }
 
   const handleSave = async () => {
-    console.log('ssssssss', userInfoEdited)
-    // props.setUserinfo([userInfoEdited])
-    // setEditProfileBtn(false)
-    // navigate('/')
     userInfoEdited['stacks'] = checkedStacks
-    console.log('체크박스데이터 하니씩 추가!!!!!!!!!!!!', checkedStacks)
-    console.log(`전달되는 값 ${userInfoEdited}`)
     await axios.put('http://localhost:4000/', userInfoEdited).then((res) => {
-      console.log('데이터수정후받아온데이터ddddddd ', res) //사인업후 받아온데이터  { message: 'ok' }
       setEditProfileBtn(false)
       props.isAuthenticated()
       navigate('/')
     })
   }
 
-  //사진 삭제 전송 함수 
+  //사진 삭제 전송 함수
   function changeMyprofile(event) {
     props.changePhoto(event)
   }
   function clearMyProfile(event) {
     props.clearPhoto(event)
   }
-
 
   const handleWithdraw = () => {
     axios.delete('http://localhost:4000/users').then((res) => {
@@ -83,11 +62,10 @@ const Mypage = (props) => {
       navigate('/')
     })
   }
-  // }
+
   //비밀번호 매치 함수
   const mypage = () => {
     setEditProfileBtn(false)
-    // navigate('/')
   }
 
   const stacklist = [
@@ -109,18 +87,34 @@ const Mypage = (props) => {
     alignitems: 'center',
   }
 
-  // const listItems = array01.map((el) => <li>{el.name}</li>)
-
   return (
-    <div>
+    <>
       {editProfileBtn ? (
-        <center>
+        <div className="main-box left-box">
           <h1>프로필수정</h1>
-          <button onClick={mypage}>내페이지</button>
+          <button className="mypage-btn" onClick={mypage}>
+            내페이지
+          </button>
 
-          <div>{email}</div>
-          <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-            <input type="file" accept="image/*" onChange={changeMyprofile} />
+          <div className="mypage-email">{email}</div>
+          <div id="left-image-wrapper">
+            <div id="left-pi-wrapper">기본 이미지</div>
+            <input
+              id="left-profile-button"
+              className="hidden"
+              type="file"
+              accept="image/*"
+              onChange={changeMyprofile}
+            />
+            <label id="left-fake-btn" htmlFor="left-profile-button">
+              프로필
+            </label>
+            <input id="left-delete-button" className="hidden" />
+            <label id="left-fake-delete" htmlFor="left-delete-button">
+              삭제
+            </label>
+          </div>
+          <form className="form-wrapper" action="" onSubmit={(e) => e.preventDefault()}>
             <input
               className="inputA"
               type="password"
@@ -134,8 +128,8 @@ const Mypage = (props) => {
               value={userInfoEdited.username}
               onChange={handleInputValue('username')}
             ></input>
-            <div>
-              <h3>My Stacks</h3>
+            <h3>My Stacks</h3>
+            <div id="stack-wrapper">
               {stacklist.map((el) => {
                 return (
                   <div key={el.id}>
@@ -156,23 +150,22 @@ const Mypage = (props) => {
             </div>
 
             <textarea
-              className="inputA"
+              className="left-textarea"
               type="text"
               placeholder="description"
               value={userInfoEdited.description}
-              // value={description}
               onChange={handleInputValue('description')}
             ></textarea>
             <input
-              className="inputA"
+              className="mypage-btn"
               type="submit"
               value="저장버튼"
               onClick={handleSave}
             ></input>
           </form>
-        </center>
+        </div>
       ) : (
-        <center>
+        <div className="main-box left-box">
           <h1>Mypage</h1>
           {props.File && (
             <div>
@@ -182,24 +175,28 @@ const Mypage = (props) => {
               </div>
             </div>
           )}
-          <div className="username">{username}</div>
-          <div className="email">{email}</div>
-          <div className="stacks">
-            <ul>{stacks && stacks.map((el) => <li key={el.id}> {el.name} </li>)}</ul>
+          <div id="mypage-userInfo">
+            <div>{username}</div>
+            <div>{email}</div>
+            <div className="stack-wrapper">
+              <ul>{stacks && stacks.map((el) => <li key={el.id}> {el.name} </li>)}</ul>
+            </div>
+            <div className="description">{description}</div>
           </div>
-          <div className="description">{description}</div>
-          <button className="btn btn-logout" onClick={props.handleLogout}>
-            logout
-          </button>
-          <button className="btn btn-edit" onClick={handleEdit}>
-            edit profile
-          </button>
-          <button className="btn btn-withdrawal" onClick={handleWithdraw}>
-            Account Withdraw(회원탈퇴)
-          </button>
-        </center>
+          <div id="mypage-btn-wrapper">
+            <button className="mypage-btn" onClick={props.handleLogout}>
+              logout
+            </button>
+            <button className="mypage-btn" onClick={handleEdit}>
+              edit profile
+            </button>
+            <button className="mypage-btn" onClick={handleWithdraw}>
+              Account Withdraw(회원탈퇴)
+            </button>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   )
 }
 

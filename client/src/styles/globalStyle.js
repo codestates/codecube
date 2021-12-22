@@ -13,7 +13,9 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'yg-jalnan'
+  font-family: 'yg-jalnan';
+  letter-spacing: .1rem;
+  line-height: 1.5rem;
 }
 
 `
