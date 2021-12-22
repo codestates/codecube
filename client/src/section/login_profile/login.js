@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import GitHubLogin from './githublogin'
 
 import './beforeLogin.css'
 
@@ -31,7 +32,7 @@ const Login = (props) => {
           props.isAuthenticated()
         })
         .catch((err) => {
-          alert('사용자정보가 없습니다와아???.', err)
+          alert('사용자정보가 없습니다???.', err)
         })
     }
   }
@@ -67,12 +68,7 @@ const Login = (props) => {
         </div>
       </div>
       <div className="lo02A th50A login02A">
-        <div className="zh40A snslogolistA">
-          <a href="https://www.google.com">
-            <img className="snslogoA zw10A" src="" alt="github" />
-          </a>
-        </div>
-        <div className="zh40A">소셜로그인</div>
+        <GitHubLogin></GitHubLogin>
         <input
           className="inputA zh20A signupA "
           type="button"

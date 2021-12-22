@@ -15,6 +15,9 @@ import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
+const url = new URL(window.location.href)
+const authorizationCode = url.searchParams.get('code')
+// console.log('깃에서받은 authorization code', authorizationCode)
 
 function App() {
   const [File, setFile] = useState('')
@@ -22,6 +25,8 @@ function App() {
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
   const [isSignup, setIsSignup] = useState(false)
   const [Token, setToken] = useState('')
+  const [gitAccessToken, setGtiAccessToken] = useState()
+  const [gitContri, setGitContri] = useState('')
   const navigate = useNavigate()
   console.log('로그인은 했냐', isLoggedIn ? 'ㅇㅇ' : 'ㄴㄴ')
 
@@ -42,6 +47,36 @@ function App() {
       setisLoggedIn(true)
     })
   }
+
+  //받은 authorization 코드이용 서버로 callback api 요청
+  const getAccessTocken = async (authorizationCode) => {
+    await axios
+      .post('http://localhost:4000/github/callback', {
+        authorizationCode: authorizationCode,
+      })
+      .then((res) => {
+        setGtiAccessToken(res.data.accessToken)
+        window.localStorage.setItem('accessToken', res.data.accessToken)
+        getGithudInfo(res.data.accessToken)
+      })
+  }
+
+  const getGithudInfo = async (gitAccessToken) => {
+    await axios
+      .get('http://localhost:4000/github/userInfo', {
+        headers: { authorization: gitAccessToken },
+      })
+      .then((res) => {
+        const { login, calendar } = res.data.userInfo
+        setUserinfo({ email: login + '@github.com', username: login })
+        setGitContri(calendar)
+        setisLoggedIn(true)
+      })
+  }
+
+  useEffect(() => {
+    getAccessTocken(authorizationCode)
+  }, [])
 
   const handleLogout = () => {
     axios.get('http://localhost:4000/logout').then((res) => {
@@ -125,7 +160,11 @@ function App() {
         </div>
         <div className="col w30">
           <div className="row github-wrapper main-box">
-            {isLoggedIn ? <GitContributionUser /> : <GitContribution />}
+            {isLoggedIn ? (
+              <GitContributionUser gitContri={gitContri} />
+            ) : (
+              <GitContribution />
+            )}
           </div>
           <div className="row notice-wrapper main-box">
             <NoticeBoard />
