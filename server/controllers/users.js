@@ -83,9 +83,9 @@ module.exports = {
   },
   changeinfo: {
     put: async (req, res) => {
+      console.log(req)
       const token = req.cookies.jwt
       const newInfo = req.body
-
       //요청정보가 없을시 분기처리
       if (!newInfo) {
         res.status(400).json({ message: 'invalid userinfo' })
@@ -131,6 +131,7 @@ module.exports = {
         .status(200)
         .clearCookie('jwt')
         .clearCookie('id')
+        .clearCookie('__gads')
         .send('Logged out successfully')
     },
   },

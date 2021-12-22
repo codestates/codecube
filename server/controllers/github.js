@@ -1,7 +1,9 @@
 require('dotenv').config()
+const models = require('../models')
 const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
 const axios = require('axios')
+const { makejwt, solveToken } = require('./function')
 
 module.exports = {
   callback: async (req, res) => {
@@ -44,7 +46,40 @@ module.exports = {
     const { name, login, html_url, public_repos } = response.data
     const calendar = `https://ghchart.rshah.org/219138/${login}`
     const userInfo = { login, html_url, public_repos, calendar }
-
-    res.status(200).send({ userInfo })
+    const isExist = await models.users.findOne({
+      where: { username: login },
+      raw: true,
+    })
+    console.log(isExist)
+    if (isExist) {
+      const { id, username, email, description, image } = isExist
+      const jwt = makejwt({ id, username, email })
+      return res
+        .cookie('jwt', `bearer ${jwt}`, {
+          httpOnly: true,
+        })
+        .cookie('id', id, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json({ message: 'LogIn success', userInfo })
+    }
+    const signUp = await models.users.create({
+      username: login,
+      email: `${login}@github.com`,
+      password: req.headers.authorization,
+    })
+    console.log(signUp.dataValues)
+    const { id, username, email, description, image } = signUp.dataValues
+    const jwt = makejwt({ id, username, email })
+    res
+      .cookie('jwt', `bearer ${jwt}`, {
+        httpOnly: true,
+      })
+      .cookie('id', id, {
+        httpOnly: true,
+      })
+      .status(201)
+      .send({ message: 'Created', userInfo })
   },
 }
