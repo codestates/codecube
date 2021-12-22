@@ -40,7 +40,7 @@ const Signup = (props) => {
   }
 
   const handleSignup = async () => {
-    const { email, password, username, stacks, description, image } = signupInfo
+    const { email, password, username, description, image } = signupInfo
     signupInfo['stacks'] = checkedStacks
     console.log('창에 입력한 이메일이다', signupInfo)
     if (!email || !password || !username) {
@@ -81,6 +81,13 @@ const Signup = (props) => {
     }
   }
 
+  //사진 삭제 전송 함수 
+  function changeMyprofile(event) {
+    props.changePhoto(event)
+  }
+  function clearMyProfile(event) {
+    props.clearPhoto(event)
+  }
   return (
     <div className="Signup1">
       <h1>회원가입</h1>
@@ -89,17 +96,23 @@ const Signup = (props) => {
       </button>
       <div className="lo01A th50A login01A">
         <div className="zh20A codecubelogoA">
-          <img className="codeimageA" src="./dummy/codecubelogo.png" alt="codecubelog" />
+          {props.File && (
+            <div>
+              <img src={props.File} width="250px" height="130px" />
+              <button onClick={clearMyProfile}> Clear IMG</button>
+            </div>
+          )}
         </div>
         <div className="zh80A">
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-            <input
+            <input type="file" accept="image/*" onChange={changeMyprofile} />
+            {/* <input
               type="file"
               id="chooseFile"
               name="chooseFile"
               accept="image/*"
-              onChange={handleInputValue('image')}
-            />
+              onChange={handleInputValue('image')} t
+            /> */}
             <input
               className="inputA"
               type="email"
