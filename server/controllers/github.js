@@ -6,7 +6,7 @@ const axios = require('axios')
 module.exports = {
   callback: async (req, res) => {
     if (!req.body.authorizationCode) {
-      return res.status(400).json({ message: 'no authcode' })
+      return res.status(302).location('/')
     }
     axios({
       method: 'post',
