@@ -10,25 +10,26 @@ module.exports = {
   delete: async (req, res) => {
     console.log(req.params)
     const userId = req.params.userId
-    const target = await models.project_users.findOne({
-      where: { userId: userId },
+    const proId = req.params.projectId
+    const target = await models.project_users.destroy({
+      where: { userId: userId, projectId: proId },
     })
+
     if (!target) {
       res.status(404).json({ message: 'Not Found' })
     } else {
-      await target.destroy()
       await res.status(204).json({ message: 'member rejected' })
     }
   },
   put: async (req, res) => {
     const { userId, projectId } = req.body
-    const project_users = await models.project_users.findOne({
+    console.log(req.body)
+    const project_users = await models.project_users.update({ join: 1 }, {
       where: { userId: userId, projectId: projectId },
     })
     if (!project_users) {
       res.status(404).json({ message: 'Not Found' })
     } else {
-      await project_users.update({ join: 1 })
       res.status(204).json({ message: 'member accepted' })
     }
   },
@@ -63,13 +64,13 @@ module.exports = {
           acc.confirmed.push({
             userId: cur.userId,
             username: cur['user.username'],
-            image: cur['user.image'],
+            projectId: cur['projectId']
           })
         } else {
           acc.waiting.push({
             userId: cur.userId,
             username: cur['user.username'],
-            image: cur['user.image'],
+            projectId: cur['projectId']
           })
         }
         return acc

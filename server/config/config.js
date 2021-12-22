@@ -25,6 +25,10 @@ require('dotenv').config()
 //     dialect: 'mysql',
 //     port: process.env.RDS_DATABASE_PORT,
 //   },
+// S3: {
+//   ID: process.env.S3_MULTER_ID,
+//   KEY: process.env.S3_MULTER_KEY
+// }
 // }
 
 // local환경에서 테스트 할때 사용할 DataBase용 config
@@ -50,4 +54,9 @@ module.exports = {
     host: process.env.DATABASE_HOST,
     dialect: 'mysql',
   },
+  S3: {
+    ID: process.env.S3_MULTER_ID,
+    KEY: process.env.S3_MULTER_KEY,
+    NAME: prosecc.env.S3_MULTER_NAME
+  }
 }

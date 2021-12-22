@@ -17,8 +17,7 @@ module.exports = {
         allowNull: false,
       },
       image: {
-        type: Sequelize.STRING,
-        defaultValue: '',
+        type: Sequelize.TEXT,
       },
       password: {
         type: Sequelize.STRING,
