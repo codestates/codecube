@@ -204,10 +204,10 @@ module.exports = {
             //   '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
             // )
             return res.status(200).json({
-              host: {},
+              host: { projectId: '', start: 0, done: 0 },
               guest: {
                 //???? 위시리스트에 뭘넣어야 하는거지?
-                wishList: [wishListObj],
+                wishList: [],
                 confirmed: {
                   projectId,
                   title: inList[0]['project.title'],
@@ -242,7 +242,7 @@ module.exports = {
               '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
             )
             return res.status(200).json({
-              host: {},
+              host: { projectId: '', start: 0, done: 0 },
               guest: {
                 //???? 위시리스트에 뭘넣어야 하는거지?
                 wishList: [wishListObj],
