@@ -32,20 +32,26 @@ function App() {
 
   const isAuthenticated = async () => {
     // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
-    console.log('로그인 요청은 성공함.')
-    await axios.get('http://localhost:4000/users').then(({ data: { data } }) => {
-      const userJSON = {
-        id: data.id,
-        username: data.username,
-        email: data.email,
-        description: data.description,
-        stacks: data.stacks,
-        image: data.image,
-      }
-      window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-      setUserinfo(data)
-      setisLoggedIn(true)
-    })
+
+    if (authorizationCode) {
+      // 깃헙관련
+      console.log('$$$$$$$$$$$$$$$$$$$$', authorizationCode)
+    } else {
+      console.log('로그인 요청은 성공함.')
+      await axios.get('http://localhost:4000/users').then(({ data: { data } }) => {
+        const userJSON = {
+          id: data.id,
+          username: data.username,
+          email: data.email,
+          description: data.description,
+          stacks: data.stacks,
+          image: data.image,
+        }
+        window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
+        setUserinfo(data)
+        setisLoggedIn(true)
+      })
+    }
   }
 
   //받은 authorization 코드이용 서버로 callback api 요청

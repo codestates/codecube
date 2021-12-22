@@ -45,7 +45,6 @@ const Login = (props) => {
         })
     }
   }
-
   return (
     <div className="left-box main-box">
       <div className="lo01A th50A login01A">
@@ -77,6 +76,15 @@ const Login = (props) => {
         </div>
       </div>
       <div className="lo02A th50A login02A">
+<<<<<<< HEAD
+        {/* <div className="zh40A snslogolistA">
+          <a href="https://www.google.com">
+            <img className="snslogoA zw10A" src="" alt="github" />
+          </a>
+        </div>
+        <div className="zh40A">소셜로그인</div> */}
+=======
+>>>>>>> 305e42ccf38e2034b7d1aa4b36ade9b41570455e
         <GitHubLogin></GitHubLogin>
         <input
           className="mypage-btn"
