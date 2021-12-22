@@ -1,7 +1,5 @@
 import dotenv from 'dotenv'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import React from 'react'
 dotenv.config()
 
 const GitHubLogin = (props) => {

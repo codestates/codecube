@@ -17,7 +17,6 @@ import GlobalStyle from './styles/globalStyle'
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
 const authorizationCode = url.searchParams.get('code')
-// console.log('깃에서받은 authorization code', authorizationCode)
 
 function App() {
   const [File, setFile] = useState('')
