@@ -11,6 +11,9 @@ import GitContributionUser from './section/gitcontribution/gitContriUser'
 import NoticeBoard from './section/noticeboard/noticeBoard'
 import axios from 'axios'
 
+import GlobalFont from './styles/globalFont'
+import GlobalStyle from './styles/globalStyle'
+
 const savedUserInfo = window.localStorage.getItem('userinfo')
 
 function App() {
@@ -60,58 +63,57 @@ function App() {
     navigate('/')
   }
 
-  // ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
-  useEffect(() => {
-    // isAuthenticated()
-  }, [])
-  // ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
   return (
-    <div id="container">
-      <div className="col w40">
-        <div className="login">
-          {isLoggedIn ? (
-            <Mypage
-              Token={Token}
-              setToken={setToken}
-              userinfo={userinfo}
-              handleLogout={handleLogout}
-              setUserinfo={setUserinfo}
-              setisLoggedIn={setisLoggedIn}
-              isLoggedIn={isLoggedIn}
-              isAuthenticated={isAuthenticated}
-            // handleEdit={handleEdit}
-            />
-          ) : isSignup ? (
-            <Signup
-              setUserinfo={setUserinfo}
-              userinfo={userinfo}
-              setIsSignup={setIsSignup}
-              isAuthenticated={isAuthenticated}
-            />
-          ) : (
-            <Login
-              setToken={setToken}
-              setisLoggedIn={setisLoggedIn}
-              setUserinfo={setUserinfo}
-              setIsSignup={setIsSignup}
-              isAuthenticated={isAuthenticated}
-            />
-          )}
+    <>
+      <GlobalFont />
+      <GlobalStyle />
+      <div id="container">
+        <div className="col w40">
+          <div className="login">
+            {isLoggedIn ? (
+              <Mypage
+                Token={Token}
+                setToken={setToken}
+                userinfo={userinfo}
+                handleLogout={handleLogout}
+                setUserinfo={setUserinfo}
+                setisLoggedIn={setisLoggedIn}
+                isLoggedIn={isLoggedIn}
+                isAuthenticated={isAuthenticated}
+                // handleEdit={handleEdit}
+              />
+            ) : isSignup ? (
+              <Signup
+                setUserinfo={setUserinfo}
+                userinfo={userinfo}
+                setIsSignup={setIsSignup}
+                isAuthenticated={isAuthenticated}
+              />
+            ) : (
+              <Login
+                setToken={setToken}
+                setisLoggedIn={setisLoggedIn}
+                setUserinfo={setUserinfo}
+                setIsSignup={setIsSignup}
+                isAuthenticated={isAuthenticated}
+              />
+            )}
+          </div>
+          <div></div>
         </div>
-        <div></div>
-      </div>
-      <div className="col w30">
-        <div className="row h50">
-          {isLoggedIn ? <GitContributionUser /> : <GitContribution />}
+        <div className="col w30">
+          <div className="row github-wrapper main-box">
+            {isLoggedIn ? <GitContributionUser /> : <GitContribution />}
+          </div>
+          <div className="row notice-wrapper main-box">
+            <NoticeBoard />
+          </div>
         </div>
-        <div className="row h50">
-          <NoticeBoard />
+        <div className="col w30">
+          <Board isLoggedIn={isLoggedIn} />
         </div>
       </div>
-      <div className="col w30">
-        <Board isLoggedIn={isLoggedIn} />
-      </div>
-    </div>
+    </>
   )
 }
 

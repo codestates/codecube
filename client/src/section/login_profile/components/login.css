@@ -1,47 +1,16 @@
-<<<<<<< HEAD
-/* * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-size: 40px;
-  } */
-/* body {
-  min-height: 100vh;
-}
-#container {
-  display: flex;
-  flex-direction: row;
-  min-height: 100vh;
-  background: whitesmoke;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.col {
-=======
 .colA {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   border: 1px solid black;
   padding: 0.4rem;
   display: flex;
   flex-direction: column;
 }
-<<<<<<< HEAD
-.board {
-=======
 .boardA {
-  /* margin: 0.4rem; */
-  /* padding: 0.4rem; */
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   border: 1px solid black;
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
 }
-<<<<<<< HEAD
-.login {
-=======
 .loginA {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   margin: 0.4rem;
   border: 1px solid black;
   flex: 1 0 0;
@@ -50,42 +19,13 @@
   flex-direction: column;
 }
 
-<<<<<<< HEAD
-.row {
-=======
 .rowA {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   border: 1px solid black;
   display: flex;
   flex-direction: column;
   text-align: center;
   margin: 0.4rem;
 }
-<<<<<<< HEAD
-.w40 {
-  flex: 4 0 0;
-  min-width: 300px;
-}
-.w30 {
-  flex: 3 0 0;
-  min-width: 250px;
-}
-.h50 {
-  flex: 1 0 0;
-  margin: 0.4rem;
-}
-.th50 {
-  flex: 1 0 0;
-}
-.zh20 {
-  flex: 2 0 0;
-}
-.zh80 {
-  flex: 8 0 0;
-  margin: 0.4rem;
-}
-.zh40 {
-=======
 .w40A {
   flex: 4 0 0;
   /* add */
@@ -111,62 +51,22 @@
   margin: 0.4rem;
 }
 .zh40A {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   flex: 4 0 0;
   margin: 0.4rem;
 }
 input {
   text-align: center;
   width: 100%;
-<<<<<<< HEAD
-}
-.login01 {
-  display: flex;
-  flex-direction: column;
-}
-.login02 {
-=======
-  /*디스플레이 플렉스는 부모 태그가 가지고 있어야 자식태그에 플렉스적용가능
-    반응형 앱으로 만들기 위해서는 min-width나 min-height으로 조절한다.
-    인풋 크기 조절하려면 px가 아니라 % 로 설정한다*/
 }
 .login01A {
   display: flex;
   flex-direction: column;
 }
 .login02A {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   display: flex;
   flex-direction: column;
   margin: 0.4rem;
 }
-<<<<<<< HEAD
-.qh90 {
-  flex: 9 0 0;
-}
-.qh10 {
-  flex: 1 0 0;
-}
-.table {
-  width: 100%;
-  border-top: 1px solid black;
-  border-collapse: collapse;
-  text-align: center;
-}
-
-th,
-td {
-  border-bottom: 1px solid black;
-  padding: 2px;
-}
-.board01 {
-  text-align: center;
-}
-.codeimage {
-  width: 50%;
-}
-.snslogolist {
-=======
 .qh90A {
   flex: 9 0 0;
 }
@@ -175,10 +75,8 @@ td {
 }
 .tableA {
   width: 100%;
-  /* margin: 0.4rem;         */
   border-top: 1px solid black;
   border-collapse: collapse;
-  /* border-collapse: collapse; */
   text-align: center;
 }
 th,
@@ -189,44 +87,24 @@ td {
 .board01A {
   text-align: center;
 }
-/* .codecubelogo{
-    min-width: 50px;
 
-  } */
 .codeimageA {
-  /* margin: 10px; */
   width: 50%;
-  /* height: 50%; */
 }
 .snslogolistA {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   display: flex;
   flex-direction: row;
   text-align: center;
 }
-<<<<<<< HEAD
-.zw10 {
-  flex: 1 0 0;
-}
-
-.snslogo {
-  width: 25%;
-}
-
-.alert-box {
-=======
 .zw10A {
   flex: 1 0 0;
 }
 
 .snslogoA {
   width: 25%;
-
-  /* margin: 40px; */
 }
 
 .alert-boxA {
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
@@ -236,8 +114,4 @@ td {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-<<<<<<< HEAD
-} */
-=======
 }
->>>>>>> f286cf9dd984de830f472d281d08f7d649c8ace9

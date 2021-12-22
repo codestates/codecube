@@ -16,7 +16,7 @@ const Board = ({ isLoggedIn }) => {
   const [hasHost, setHasHost] = useState(false)
   const [wishList, setWishList] = useState(projectInitial)
   return (
-    <div id="board-wrapper">
+    <div id="board-wrapper" className="main-box">
       <Toggle
         isLoggedIn={isLoggedIn}
         leftName={PUBLIC_BOARD}

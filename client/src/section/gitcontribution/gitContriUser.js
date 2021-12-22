@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 const GitContributionUser = () => {
   return (
-    <div className="rowA h50A">
+    <div className="rowA h50A contribution">
       <div className="qh10A">git contribution</div>
       <div className="qh90A">잔디</div>
     </div>

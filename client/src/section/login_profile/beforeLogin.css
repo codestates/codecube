@@ -1,3 +1,60 @@
+/* ? */
+.inputA {
+  text-align: center;
+  min-width: 17rem;
+  width: 70%;
+  max-width: 25rem;
+  margin-bottom: 1rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.inputA[type='email'],
+.inputA[type='password'] {
+  box-shadow: inset 1.5px 1.5px 3px #cbced1, inset -3px -3px 15px white;
+  transition: box-shadow 0.3s;
+}
+.inputA[type='email']:focus,
+.inputA[type='password']:focus {
+  box-shadow: inset 3px 3px 5px #cbced1, inset -3px -3px 5px white;
+  transition: box-shadow 0.3s;
+}
+
+.login-button {
+  background-color: var(--main-color);
+  transition: box-shadow 0.3s;
+}
+
+.login-button:hover,
+.login-button:active {
+  box-shadow: inset 3px 3px 5px rgb(86, 179, 179), inset -3px -3px 5px var(--main-color);
+  transition: box-shadow 0.3s;
+}
+
+.codecubelogoA {
+  display: flex;
+  justify-content: center;
+  max-height: 8rem;
+  box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
+}
+
+.codeimageA {
+  max-height: 8rem;
+  height: 100%;
+  min-width: 17rem;
+  width: 100%;
+}
+
+.login01A {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ? */
+
 .colA {
   border: 1px solid black;
   padding: 0.4rem;
@@ -5,17 +62,21 @@
   flex-direction: column;
 }
 .boardA {
-  /* margin: 0.4rem; */
-  /* padding: 0.4rem; */
   border: 1px solid black;
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
 }
+
+.loginA {
+  max-height: 45.3rem;
+  min-height: 45.3rem;
+}
+
 .loginA,
 .signup1 {
   margin: 0.4rem;
-  border: 1px solid black;
+  padding: 5rem 1rem;
   flex: 1 0 0;
   text-align: center;
   display: flex;
@@ -28,6 +89,7 @@
   flex-direction: column;
   text-align: center;
   margin: 0.4rem;
+  height: 100%;
 }
 .w40A {
   flex: 4 0 0;
@@ -57,17 +119,7 @@
   flex: 4 0 0;
   margin: 0.4rem;
 }
-.inputA {
-  text-align: center;
-  width: 100%;
-  /*디스플레이 플렉스는 부모 태그가 가지고 있어야 자식태그에 플렉스적용가능
-      반응형 앱으로 만들기 위해서는 min-width나 min-height으로 조절한다.
-      인풋 크기 조절하려면 px가 아니라 % 로 설정한다*/
-}
-.login01A {
-  display: flex;
-  flex-direction: column;
-}
+
 .login02A {
   display: flex;
   flex-direction: column;
@@ -81,10 +133,8 @@
 }
 .tableA {
   width: 100%;
-  /* margin: 0.4rem;         */
   border-top: 1px solid black;
   border-collapse: collapse;
-  /* border-collapse: collapse; */
   text-align: center;
 }
 th,
@@ -95,19 +145,12 @@ td {
 .board01A {
   text-align: center;
 }
-/* .codecubelogo{
-      min-width: 50px;
-  
-    } */
-.codeimageA {
-  /* margin: 10px; */
-  width: 50%;
-  /* height: 50%; */
-}
+
 .snslogolistA {
   display: flex;
   flex-direction: row;
   text-align: center;
+  justify-content: center;
 }
 .zw10A {
   flex: 1 0 0;
@@ -115,8 +158,6 @@ td {
 
 .snslogoA {
   width: 25%;
-
-  /* margin: 40px; */
 }
 
 .alert-boxA {
@@ -129,4 +170,8 @@ td {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+}
+
+.signupA {
+  align-self: center;
 }

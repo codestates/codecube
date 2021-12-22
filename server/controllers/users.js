@@ -77,7 +77,7 @@ module.exports = {
       if (!userInfo) {
         res.status(401).json({ message: 'no such info' })
       } else {
-        if (userInfo.stacks.length !== 0) {
+        if (userInfo.stacks?.length) {
           await models.user_stacks.destroy({ where: { userId: userInfo.id } })
         }
         await models.users.destroy({ where: { id: userInfo.id } })
@@ -214,7 +214,7 @@ module.exports = {
       console.log(loginuser)
       const target = loginuser
       //DB에 유저 정보가 없을시
-      if (target.length === 0) {
+      if (!target) {
         res.status(400).json({ message: 'login unsuccessed' })
       }
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
