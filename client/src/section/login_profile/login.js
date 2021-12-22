@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import GitHubLogin from './githublogin'
 
 import './beforeLogin.css'
 
@@ -76,11 +77,7 @@ const Login = (props) => {
         </div>
       </div>
       <div className="lo02A th50A login02A">
-        <div className="zh40A snslogolistA">
-          <a href="https://www.google.com">
-            <img className="snslogoA zw10A" src="" alt="github" />
-          </a>
-        </div>
+        <GitHubLogin></GitHubLogin>
         <input
           className="mypage-btn"
           type="button"

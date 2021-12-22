@@ -19,7 +19,6 @@ module.exports = {
     })
       .then((response) => {
         accessToken = response.data.access_token
-        // console.log('acc:' + accessToken)
         res.status(200).json({ accessToken: accessToken })
       })
       .catch((e) => {
@@ -35,13 +34,13 @@ module.exports = {
     }
     let response = await axios.get('https://api.github.com/user', {
       headers: {
-        authorization: `token ${accessToken}`,
+        authorization: `token ${req.headers.authorization}`,
       },
     })
+
     const { name, login, html_url, public_repos } = response.data
-    // console.log('login:' + login)
     const calendar = `https://ghchart.rshah.org/219138/${login}`
-    const userInfo = { name, login, html_url, public_repos, calendar }
+    const userInfo = { login, html_url, public_repos, calendar }
 
     res.status(200).send({ userInfo })
   },
