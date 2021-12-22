@@ -9,7 +9,6 @@ axios.defaults.withCredentials = true
 const Mypage = (props) => {
   const { username, stacks, description, image, email } = props.userinfo
   const navigate = useNavigate()
-  const [file, setFile] = useState('')
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
 
@@ -65,24 +64,14 @@ const Mypage = (props) => {
     })
   }
 
-  function changeFile(data) {
-    const {
-      target: { files },
-    } = event
-    const theFile = files[0]
-    const reader = new FileReader()
-    reader.readAsDataURL(theFile)
-    reader.onloadend = (finishedEvent) => {
-      const {
-        currentTarget: { result },
-      } = finishedEvent
-      setFile(result)
-    }
+  //사진 삭제 전송 함수 
+  function changeMyprofile(event) {
+    props.changePhoto(event)
+  }
+  function clearMyProfile(event) {
+    props.clearPhoto(event)
   }
 
-  function clearPhoto() {
-    setFile('')
-  }
 
   const handleWithdraw = () => {
     axios.delete('http://localhost:4000/users').then((res) => {
@@ -131,9 +120,7 @@ const Mypage = (props) => {
 
           <div>{email}</div>
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-            <input type="file" accept="image/*" onChange={changeFile} />
-            <input type="submit" value="your_Image" />
-            <button onClick={mypage}>내페이지</button>
+            <input type="file" accept="image/*" onChange={changeMyprofile} />
             <input
               className="inputA"
               type="password"
@@ -187,10 +174,12 @@ const Mypage = (props) => {
       ) : (
         <center>
           <h1>Mypage</h1>
-          {file && (
+          {props.File && (
             <div>
-              <img src={file} width="50px" height="50px" />
-              <button onClick={clearPhoto}> Clear IMG</button>
+              <img src={props.File} width="200px" height="100px" />
+              <div>
+                <button onClick={clearMyProfile}> Clear IMG</button>
+              </div>
             </div>
           )}
           <div className="username">{username}</div>

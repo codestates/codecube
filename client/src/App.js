@@ -17,6 +17,7 @@ import GlobalStyle from './styles/globalStyle'
 const savedUserInfo = window.localStorage.getItem('userinfo')
 
 function App() {
+  const [File, setFile] = useState('')
   const [isLoggedIn, setisLoggedIn] = useState(savedUserInfo ?? false)
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
   const [isSignup, setIsSignup] = useState(false)
@@ -62,6 +63,27 @@ function App() {
     setSignupButton(true)
     navigate('/')
   }
+  //사진삭제
+  function clearPhoto() {
+    setFile('')
+  }
+  //사진 입력
+  function changePhoto(data) {
+    console.log('사진입력')
+    const {
+      target: { files },
+    } = event
+    const theFile = files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(theFile)
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent
+      setFile(result)
+    }
+  }
+
 
   return (
     <>
@@ -81,6 +103,10 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 isAuthenticated={isAuthenticated}
                 // handleEdit={handleEdit}
+                changePhoto={changePhoto}
+                clearPhoto={clearPhoto}
+                File={File}
+                
               />
             ) : isSignup ? (
               <Signup
@@ -99,7 +125,6 @@ function App() {
               />
             )}
           </div>
-          <div></div>
         </div>
         <div className="col w30">
           <div className="row github-wrapper main-box">
