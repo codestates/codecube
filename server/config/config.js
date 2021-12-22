@@ -57,6 +57,6 @@ module.exports = {
   S3: {
     ID: process.env.S3_MULTER_ID,
     KEY: process.env.S3_MULTER_KEY,
-    NAME: prosecc.env.S3_MULTER_NAME
-  }
+    NAME: process.env.S3_MULTER_NAME,
+  },
 }

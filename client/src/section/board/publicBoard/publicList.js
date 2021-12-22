@@ -6,13 +6,13 @@ import axios from 'axios'
 import './postCard.css'
 
 const PublicList = ({ isWish, wishList }) => {
-  const [publicList, setPublicList] = useState([])
+  const [publicList, setPublicList] = useState([{}])
+  console.log('@@@@@@@@@@@@@@@', publicList)
   useEffect(() => {
     if (!isWish) {
       axios
         .get('http://localhost:4000/projects')
         .then(({ data }) => {
-          console.log(data)
           setPublicList(data.list)
         })
         .catch((err) => {
@@ -31,16 +31,18 @@ const PublicList = ({ isWish, wishList }) => {
         </div>
       ) : null}
       <div id="post-card-wrapper">
-        {publicList.map((post) => {
-          return (
-            <div key={v4()} className="post-card">
-              <h3>{post.title}</h3>
-              <div>
-                {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'}
-              </div>
-            </div>
-          )
-        })}
+        {Object.keys(publicList[0]).length
+          ? publicList.map((post) => {
+              return (
+                <div key={v4()} className="post-card">
+                  <h3>{post.title}</h3>
+                  <div>
+                    {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'}
+                  </div>
+                </div>
+              )
+            })
+          : null}
       </div>
     </>
   )
