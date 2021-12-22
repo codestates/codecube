@@ -5,6 +5,9 @@ const axios = require('axios')
 
 module.exports = {
   callback: async (req, res) => {
+    if (!req.body.authorizationCode) {
+      return res.status(400).json({ message: 'no authcode' })
+    }
     axios({
       method: 'post',
       url: 'https://github.com/login/oauth/access_token',
@@ -22,12 +25,12 @@ module.exports = {
         res.status(200).json({ accessToken: accessToken })
       })
       .catch((e) => {
+        console.log('github login errer!')
         res.status(404)
       })
   },
   userInfo: async (req, res) => {
     if (!req.headers.authorization) {
-      console.log('working')
       return res.status(403).send({
         message: 'no permission to access resources',
       })
