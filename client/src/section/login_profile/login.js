@@ -72,11 +72,11 @@ const Login = (props) => {
               value={loginText}
               onClick={handleLogin}
             ></input>
+            <GitHubLogin></GitHubLogin>
           </form>
         </div>
       </div>
-      <div className="lo02A th50A login02A">
-        <GitHubLogin></GitHubLogin>
+      <div className="lo02A th50A login02A login-btn-wrapper">
         <input
           className="mypage-btn"
           type="button"

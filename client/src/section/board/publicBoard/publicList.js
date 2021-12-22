@@ -7,7 +7,7 @@ import './postCard.css'
 
 const PublicList = ({ isWish, wishList }) => {
   const [publicList, setPublicList] = useState([{}])
-  console.log('@@@@@@@@@@@@@@@', publicList)
+
   useEffect(() => {
     if (!isWish) {
       axios
@@ -19,30 +19,42 @@ const PublicList = ({ isWish, wishList }) => {
           console.error(err)
         })
     } else {
-      setPublicList(wishList.guest.wishList)
+      if (!wishList.guest.wishList.length) {
+        setPublicList(wishList.guest.confirmed)
+      } else {
+        setPublicList(wishList.guest.wishList)
+      }
     }
   }, [isWish, wishList])
 
   return (
     <>
-      {isWish ? (
+      {isWish && Array.isArray(publicList) ? (
         <div id="wish-list">
           <h2>{WISH_LIST}</h2>
         </div>
       ) : null}
       <div id="post-card-wrapper">
-        {Object.keys(publicList[0]).length
-          ? publicList.map((post) => {
-              return (
-                <div key={v4()} className="post-card">
-                  <h3>{post.title}</h3>
-                  <div>
-                    {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'}
-                  </div>
+        {Array.isArray(publicList) ? (
+          publicList.map((post) => {
+            return (
+              <div key={v4()} className="post-card">
+                <h3>{post.title}</h3>
+                <div>
+                  {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'}
                 </div>
-              )
-            })
-          : null}
+              </div>
+            )
+          })
+        ) : (
+          <div id="wish-list">
+            <h2>참가중인 프로젝트</h2>
+            <div className="post-card">
+              <div>{publicList.title}</div>
+              자세히 보기👁‍🗨
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

@@ -29,13 +29,6 @@
   transition: box-shadow 0.3s;
 }
 
-.login-button:hover,
-.login-button:active {
-  background-color: rgb(88, 201, 201);
-  box-shadow: inset 3px 3px 5px rgb(86, 179, 179), inset -3px -3px 5px var(--main-color);
-  transition: box-shadow 0.3s;
-}
-
 .alert {
   color: #721c24;
   background-color: #f8d7da;
@@ -85,6 +78,18 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+}
+
+.githublogo-s {
+  width: 4rem;
+  height: 4rem;
+}
+.hat-s {
+  position: absolute;
+  width: 3.5rem;
+  height: 2.2rem;
+  top: 10.6rem;
+  left: 7.1rem;
 }
 
 /* ? */
