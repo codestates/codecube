@@ -9,24 +9,20 @@ const NoticeBoard = () => {
         <thead className="label">
           <tr>
             <th>제목</th>
-            {/* <!-- <th>작성자</th> --> */}
             <th>날짜</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>제목이다</td>
-            {/* <!-- <td>작성자이다룰루</td> --> */}
             <td>2021</td>
           </tr>
           <tr>
             <td>제목이다</td>
-            {/* <!-- <td>작성자이다룰루</td> --> */}
             <td>2021</td>
           </tr>
           <tr>
             <td>제목이다</td>
-            {/* <!-- <td>작성자이다룰루</td> --> */}
             <td>2021</td>
           </tr>
         </tbody>

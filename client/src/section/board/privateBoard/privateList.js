@@ -39,10 +39,6 @@ const PrivateList = ({
     })
   }, [isLoggedIn])
 
-  // useEffect(() => {
-  //   setHasHost(havePostAsHost(dashBoardInfo))
-  // }, [dashBoardInfo])
-
   return (
     <>
       <DreamButton

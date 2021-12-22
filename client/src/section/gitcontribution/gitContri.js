@@ -4,7 +4,7 @@ const GitContribution = () => {
   return (
     <div className="contribution">
       <div className="qh10A">git contribution</div>
-      <div className="qh90A">잔디</div>
+      <img src="https://ghchart.rshah.org/219138/codestate"></img>
     </div>
   )
 }
