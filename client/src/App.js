@@ -15,6 +15,18 @@ import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
+const url = new URL(window.location.href)
+const authorizationCode = url.searchParams.get('code')
+console.log('깃에서받은 authorization code', authorizationCode)
+
+// 깃 로그인누르면
+//  깃헙로그인 컴포넌트에 redirectUrl ㅣ3000 번으로 실행되고
+// const authorizationCode 실행
+//   그후    isAuthenticated
+
+// 1. authorization 코드 받아오기
+
+// 2. 그 코드 사용해서 깃에서 발행한 accesstoken 서버로부터 받아오기
 
 function App() {
   const [File, setFile] = useState('')
@@ -27,21 +39,42 @@ function App() {
 
   const isAuthenticated = async () => {
     // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
-    console.log('로그인 요청은 성공함.')
-    await axios.get('http://localhost:4000/users').then(({ data: { data } }) => {
-      const userJSON = {
-        id: data.id,
-        username: data.username,
-        email: data.email,
-        description: data.description,
-        stacks: data.stacks,
-        image: data.image,
-      }
-      window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-      setUserinfo(data)
-      setisLoggedIn(true)
-    })
+
+    if (authorizationCode) {
+      // 깃헙관련
+      console.log('$$$$$$$$$$$$$$$$$$$$', authorizationCode)
+    } else {
+      console.log('로그인 요청은 성공함.')
+      await axios.get('http://localhost:4000/users').then(({ data: { data } }) => {
+        const userJSON = {
+          id: data.id,
+          username: data.username,
+          email: data.email,
+          description: data.description,
+          stacks: data.stacks,
+          image: data.image,
+        }
+        window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
+        setUserinfo(data)
+        setisLoggedIn(true)
+      })
+    }
   }
+
+  useEffect(() => {
+    const getAccessTocken = async (authorizationCode) => {
+      await axios
+        .post('http://localhost:4000/github/callback', {
+          authorizationCode: authorizationCode,
+        })
+        .then((res) => {
+          console.log('authorization code보내고 방아온데 이터', res.data)
+          // setisLoggedIn(true)
+          // props.setAccessToken(res)
+        })
+    }
+    getAccessTocken()
+  })
 
   const handleLogout = () => {
     axios.get('http://localhost:4000/logout').then((res) => {
