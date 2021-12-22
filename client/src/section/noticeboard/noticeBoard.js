@@ -3,7 +3,7 @@ import './noticeBoard.css'
 
 const NoticeBoard = () => {
   return (
-    <div className="noticeA">
+    <div className="notice">
       <div className="noticeA qh10A">공지게시판</div>
       <table className="tableA qh90A">
         <thead className="label">
