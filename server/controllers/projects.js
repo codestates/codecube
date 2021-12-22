@@ -30,39 +30,35 @@ module.exports = {
   project: {
     get: async (req, res) => {
       //전체 개시글 요청
+      //title, projectId, confirmed list 구하기
       const finalList = []
       const confirmedProjectIds = []
-      // const firstList = await models.projects.findAll({
-      //   include: [
-      //     {
-      //       model: models.users,
-      //       require: true,
-      //     },
-      //     {
-      //       model: models.project_users,
-      //       where: { join: 1 },
-      //     },
-      //   ],
-      //   raw: true,
-      // })
-      // console.log(firstList)
-      // firstList.map((el) => {
-      //   const obj = {}
-      //   obj.title = el.title
-      //   obj.projectId = el.id
-      //   confirmedProjectIds.push(el.id)
-      //   let element = lodash.cloneDeep(obj)
-      //   finalList.push(element)
-      // })
-      // console.log(confirmedProjectIds)
-      // confirmedProjectIds.map(el=>)
-      // const confirmed = models.project_users.findAndCountAll({
-      //   raw: true,
-      //   where: { projectId: el.id, join: 1 },
-      // })
-      // obj.confirmed = confirmed.count
-
-
+      const firstList = await models.projects.findAll({
+        include: {
+          model: models.users,
+          require: true,
+        },
+        raw: true,
+      })
+      firstList.map((el) => {
+        const obj = {}
+        obj.title = el.title
+        obj.projectId = el.id
+        confirmedProjectIds.push(el.id)
+        let element = lodash.cloneDeep(obj)
+        finalList.push(element)
+      })
+      //confirmed list 를 기반으로 join 1인 인원수 찾기
+      await Promise.all(
+        confirmedProjectIds.map(async (el, idx) => {
+          let confirmed = await models.project_users.findAndCountAll({
+            raw: true,
+            where: { projectId: el, join: 1 },
+          })
+          finalList[idx]['confirmed'] = confirmed.count
+        })
+      )
+      // console.log(finalList)
       res.status(200).json({ message: 'ok', list: finalList })
     },
     delete: async (req, res) => {
@@ -133,41 +129,30 @@ module.exports = {
       const projectId = req.params.projectId
       const target = await models.projects.findOne({
         where: { id: projectId },
+        raw: true,
       })
-
+      // console.log(target)
       if (!target) {
         return res.status(404).json({ message: 'Not Found' })
       } else {
-        res.json(target.dataValues)
+        const waiting = await models.project_users.findAndCountAll({
+          where: { projectId },
+        })
+        const { title, content, image, start, done, createdAt, updatedAt } =
+          target
+        res.status(200).json({
+          projectInfo: {
+            title,
+            content,
+            image,
+            start,
+            done,
+            createdAt,
+            updatedAt,
+            waiting: waiting.count,
+          },
+        })
       }
-
-      const { title, content, image } = target.dataValues
-      //1. 프로젝트 id로 해당 데이터들을 pro-user 테이블에서 찾기
-      const firstList = await models.project_users.findAll({
-        where: { projectId: projectId },
-      })
-      //2. 그 찾은 사람들 중에 join값이 0인 사람들 찾기
-      let finalList = []
-      for (let i = 0; i < firstList.length; i++) {
-        // console.log(firstList[i].dataValues)
-        if (firstList[i].dataValues.join === 0) {
-          const userInfo = await models.users.findOne({
-            where: { id: firstList[i].dataValues.userId },
-          })
-          // console.log('userInfo:' + JSON.stringify(userInfo))
-          finalList.push({ username: userInfo.username, image: userInfo.image })
-        }
-      }
-      console.log(finalList)
-
-      res.status(200).json({
-        postInfo: {
-          title: title,
-          content: content,
-          image: image,
-          waiting: finalList,
-        },
-      })
     },
   },
   private_post: {
@@ -191,21 +176,106 @@ module.exports = {
           include: [models.projects],
           where: { userId },
         })
+        console.log(inList[0]['project.title'])
+        //대기중 글 개수가 1개일 때
+        if (inList.length === 1) {
+          const { id, userId, projectId, join } = inList[0]
+          //confirmed일때
+          if (join === 1) {
+            const { start, done } = await models.projects.findOne({
+              where: { id: projectId },
+              raw: true,
+            })
+            const confirmed = await models.project_users.findAndCountAll({
+              where: { projectId, join: 1 },
+            })
+            const wishListObj = {
+              projectId,
+              title: inList[0]['project.title'],
+              confirmed: confirmed.count,
+              start,
+              done,
+            }
+            // console.log(
+            //   '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+            // )
+            // console.log(confirmed.count)
+            // console.log(
+            //   '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+            // )
+            return res.status(200).json({
+              host: { projectId: '', start: 0, done: 0 },
+              guest: {
+                //???? 위시리스트에 뭘넣어야 하는거지?
+                wishList: [],
+                confirmed: {
+                  projectId,
+                  title: inList[0]['project.title'],
+                  start,
+                  done,
+                },
+              },
+            })
+            //waiting일때
 
-        const cnt = []
-        const pending = inList.map((v) => {
-          cnt.push(v.projectId)
-          return {
-            userId: v.userId,
-            projectId: v.projectId,
-            title: v['project.title'],
+            //////만약에 confirmed 일때도 웨이팅에 꼭 뭔갈 넣어줘야한다면 waiting이랑 뭐가다르지?
+          } else {
+            const { start, done } = await models.projects.findOne({
+              where: { id: projectId },
+              raw: true,
+            })
+            const confirmed = await models.project_users.findAndCountAll({
+              where: { projectId, join: 1 },
+            })
+            const wishListObj = {
+              projectId,
+              title: inList[0]['project.title'],
+              confirmed: confirmed.count,
+              start,
+              done,
+            }
+            console.log(
+              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+            )
+            console.log(confirmed)
+            console.log(
+              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+            )
+            return res.status(200).json({
+              host: { projectId: '', start: 0, done: 0 },
+              guest: {
+                //???? 위시리스트에 뭘넣어야 하는거지?
+                wishList: [wishListObj],
+                confirmed: {},
+              },
+            })
           }
-        })
-
-        res.json({
-          ...myProjectsForm,
-          ...{ guest: { wishList: pending, confirmed: {} } },
-        })
+          //여러개일때
+        } else {
+          const projectIds = []
+          const pending = inList.map((v) => {
+            projectIds.push(v.projectId)
+            return {
+              userId: v.userId,
+              projectId: v.projectId,
+              title: v['project.title'],
+            }
+          })
+          // console.log('projectIds:', projectIds)
+          await Promise.all(
+            projectIds.map(async (el, idx) => {
+              const confirmed = await models.project_users.findAndCountAll({
+                where: { projectId: el, join: 1 },
+              })
+              // console.log('cfd:', confirmed)
+              pending[idx]['confirmed'] = confirmed.count
+            })
+          )
+          res.json({
+            ...myProjectsForm,
+            ...{ guest: { wishList: pending, confirmed: {} } },
+          })
+        }
       }
     },
   },
