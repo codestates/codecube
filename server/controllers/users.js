@@ -66,9 +66,9 @@ module.exports = {
         // 삭제요청한 유저가 가지고 있는 stackId값을 가지고옴
         const DeleteUser = await models.user_stacks.findAll({
           raw: true,
-          where: { userId: userInfo.id }
+          where: { userId: userInfo.id },
         })
-        // JOIN테이블의 유저정보를 삭제하기전 유저의 stack배열이 비었는지 확인함 
+        // JOIN테이블의 유저정보를 삭제하기전 유저의 stack배열이 비었는지 확인함
         if (DeleteUser.length !== 0) {
           await models.user_stacks.destroy({ where: { userId: userInfo.id } })
         }
@@ -116,11 +116,6 @@ module.exports = {
             id: userId,
           },
         })
-        // 클라이언트에 유저정보를 송신한다. 
-        // const solve = await users.findOne({
-        //   raw: true,
-        //   where: { id: userId },
-        // })
         res.status(200).json({
           message: 'successfully modified',
         })
@@ -131,7 +126,7 @@ module.exports = {
     get: async (req, res) => {
       //쿠키를 지운다.
       res
-        .status(205)
+        .status(200)
         .clearCookie('jwt')
         .clearCookie('id')
         .send('Logged out successfully')
@@ -158,7 +153,7 @@ module.exports = {
           description: description,
           image: image,
         })
-        // join테이블에 할당하기 위해 방금 작성한 유저정보를 구한다.(중복확인을 거친 email을 사용함) 
+        // join테이블에 할당하기 위해 방금 작성한 유저정보를 구한다.(중복확인을 거친 email을 사용함)
         // 출력예시::: { id : 2}
         const newuserInfo = await models.users.findOne({
           attributes: ['id', 'username', 'email', 'description', 'image'],
@@ -181,7 +176,12 @@ module.exports = {
           await models.user_stacks.bulkCreate(InputStackList)
         }
         //회원가입시 jwt 토큰을 만들어 cookie로 전송한다.
-        const jwt = makejwt({ id: newuserInfo.id, username, email, description })
+        const jwt = makejwt({
+          id: newuserInfo.id,
+          username,
+          email,
+          description,
+        })
 
         res
           .cookie('id', newuserInfo.id)
@@ -191,7 +191,7 @@ module.exports = {
           .status(201)
           .json({
             userInfo: newuserInfo,
-            message: 'signup successed'
+            message: 'signup successed',
           })
       } else {
         res.status(400).json({ message: '이미 있는 아이디 입니다' })
@@ -212,7 +212,7 @@ module.exports = {
           password: password,
         },
       })
-      // DB에서 회원정보가 없을경우 null값을 출력 
+      // DB에서 회원정보가 없을경우 null값을 출력
       if (!loginuser) {
         res.status(400).json({ message: 'login unsuccessed' })
       }
@@ -223,7 +223,7 @@ module.exports = {
         const { id, username, email } = loginuser
         const jwt = makejwt({ id, username, email })
 
-        // 쿠키로 Token과 id를 전달한다. 
+        // 쿠키로 Token과 id를 전달한다.
         res
           .cookie('jwt', `bearer ${jwt}`, {
             httpOnly: true,

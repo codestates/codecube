@@ -15,6 +15,7 @@ const Board = ({ isLoggedIn }) => {
   const [dashBoardInfo, setDashBoardInfo] = useState(projectInitial)
   const [hasHost, setHasHost] = useState(false)
   const [wishList, setWishList] = useState(projectInitial)
+  console.log('hasHost내가 쓴글이 있느냐 --> ', hasHost)
   return (
     <div id="board-wrapper" className="main-box">
       <Toggle

@@ -12,6 +12,7 @@ const PublicList = ({ isWish, wishList }) => {
       axios
         .get('http://localhost:4000/projects')
         .then(({ data }) => {
+          console.log(data)
           setPublicList(data.list)
         })
         .catch((err) => {

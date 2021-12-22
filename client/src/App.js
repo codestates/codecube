@@ -49,7 +49,6 @@ function App() {
       setUserinfo('')
       setisLoggedIn(false)
       navigate('/')
-      // window.location.replace('/')
     })
   }
 
@@ -84,7 +83,6 @@ function App() {
     }
   }
 
-
   return (
     <>
       <GlobalFont />
@@ -106,7 +104,6 @@ function App() {
                 changePhoto={changePhoto}
                 clearPhoto={clearPhoto}
                 File={File}
-                
               />
             ) : isSignup ? (
               <Signup

@@ -29,18 +29,19 @@ const PrivateList = ({
     }
     // TODO: API
     await axios.get('http://localhost:4000/myProjects').then(({ data }) => {
-      if (hasHost) {
+      if (havePostAsHost(data)) {
         setDashBoardInfo(data)
+        setHasHost(true)
       } else {
-        console.log('!!!!!!!!!!!!!!!!!')
         setWishList(data)
+        setHasHost(false)
       }
     })
   }, [isLoggedIn])
 
-  useEffect(() => {
-    setHasHost(havePostAsHost(dashBoardInfo))
-  }, [dashBoardInfo])
+  // useEffect(() => {
+  //   setHasHost(havePostAsHost(dashBoardInfo))
+  // }, [dashBoardInfo])
 
   return (
     <>

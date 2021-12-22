@@ -16,7 +16,7 @@ const Post = ({ projectId }) => {
     // TODO: API 유저 아이디를 기반으로
     const url = `${localhost}/projects/${projectId}`
     await axios.get(url).then(({ data }) => {
-      setThisPost(data)
+      setThisPost(data.projectInfo)
     })
   }, [])
   return (

@@ -20,7 +20,7 @@ const myProjectsForm = {
   },
 }
 
-const whoRU = function (withBearer) {
+function whoRU(withBearer) {
   const token = withBearer.split(' ')[1]
   const userInfo = solveToken(token)
   return userInfo
@@ -157,17 +157,24 @@ module.exports = {
   },
   private_post: {
     get: async (req, res) => {
+      if (!req.cookies.jwt) {
+        return res.status(302).location('/')
+      }
       const { id: userId } = whoRU(req.cookies.jwt)
+
       const target = await models.projects.findOne({
+        raw: true,
         where: { userId },
       })
 
       if (target) {
         console.log('host!!')
-        const { id: projectId, start, done } = target.dataValues
-        return res
-          .status(200)
-          .json({ ...myProjectsForm, ...{ host: { projectId, start, done } } })
+        console.log(target)
+        const { id: projectId, start, done, title } = target
+        return res.status(200).json({
+          ...myProjectsForm,
+          ...{ host: { projectId, start, done, title } },
+        })
       } else {
         console.log('guest!!')
         // * guest인 경우

@@ -19,8 +19,7 @@ const Waiting = ({ hasHost, projectId }) => {
     } else {
       // TODO: API
       axios.get(`${localhost}/members/${projectId}`).then(({ data }) => {
-        console.log(data)
-        setWaitingUsers(data)
+        setWaitingUsers(data.waiting)
       })
     }
   }, [hasHost])
