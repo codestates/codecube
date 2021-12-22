@@ -89,39 +89,37 @@ function App() {
       <GlobalStyle />
       <div id="container">
         <div className="col w40">
-          <div className="login">
-            {isLoggedIn ? (
-              <Mypage
-                Token={Token}
-                setToken={setToken}
-                userinfo={userinfo}
-                handleLogout={handleLogout}
-                setUserinfo={setUserinfo}
-                setisLoggedIn={setisLoggedIn}
-                isLoggedIn={isLoggedIn}
-                isAuthenticated={isAuthenticated}
-                // handleEdit={handleEdit}
-                changePhoto={changePhoto}
-                clearPhoto={clearPhoto}
-                File={File}
-              />
-            ) : isSignup ? (
-              <Signup
-                setUserinfo={setUserinfo}
-                userinfo={userinfo}
-                setIsSignup={setIsSignup}
-                isAuthenticated={isAuthenticated}
-              />
-            ) : (
-              <Login
-                setToken={setToken}
-                setisLoggedIn={setisLoggedIn}
-                setUserinfo={setUserinfo}
-                setIsSignup={setIsSignup}
-                isAuthenticated={isAuthenticated}
-              />
-            )}
-          </div>
+          {isLoggedIn ? (
+            <Mypage
+              Token={Token}
+              setToken={setToken}
+              userinfo={userinfo}
+              handleLogout={handleLogout}
+              setUserinfo={setUserinfo}
+              setisLoggedIn={setisLoggedIn}
+              isLoggedIn={isLoggedIn}
+              isAuthenticated={isAuthenticated}
+              // handleEdit={handleEdit}
+              changePhoto={changePhoto}
+              clearPhoto={clearPhoto}
+              File={File}
+            />
+          ) : isSignup ? (
+            <Signup
+              setUserinfo={setUserinfo}
+              userinfo={userinfo}
+              setIsSignup={setIsSignup}
+              isAuthenticated={isAuthenticated}
+            />
+          ) : (
+            <Login
+              setToken={setToken}
+              setisLoggedIn={setisLoggedIn}
+              setUserinfo={setUserinfo}
+              setIsSignup={setIsSignup}
+              isAuthenticated={isAuthenticated}
+            />
+          )}
         </div>
         <div className="col w30">
           <div className="row github-wrapper main-box">
@@ -131,7 +129,7 @@ function App() {
             <NoticeBoard />
           </div>
         </div>
-        <div className="col w30">
+        <div className="col w30 board-col">
           <Board isLoggedIn={isLoggedIn} />
         </div>
       </div>

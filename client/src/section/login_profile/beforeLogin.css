@@ -1,23 +1,25 @@
 /* ? */
+.login-button,
 .inputA {
   text-align: center;
   min-width: 17rem;
   width: 70%;
   max-width: 25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   height: 2rem;
   outline: none;
   border: none;
   border-radius: 0.5rem;
 }
 
-.inputA[type='email'],
-.inputA[type='password'] {
+.left-textarea,
+.inputA {
   box-shadow: inset 1.5px 1.5px 3px #cbced1, inset -3px -3px 15px white;
   transition: box-shadow 0.3s;
 }
-.inputA[type='email']:focus,
-.inputA[type='password']:focus {
+
+.left-textarea:focus,
+.inputA:focus {
   box-shadow: inset 3px 3px 5px #cbced1, inset -3px -3px 5px white;
   transition: box-shadow 0.3s;
 }
@@ -29,8 +31,21 @@
 
 .login-button:hover,
 .login-button:active {
+  background-color: rgb(88, 201, 201);
   box-shadow: inset 3px 3px 5px rgb(86, 179, 179), inset -3px -3px 5px var(--main-color);
   transition: box-shadow 0.3s;
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: none;
+  border-radius: 0.5rem;
+}
+.alert:hover {
+  color: #721c24;
+  background-color: #f8d7da;
+  box-shadow: none;
 }
 
 .codecubelogoA {
@@ -38,6 +53,7 @@
   justify-content: center;
   max-height: 8rem;
   box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
+  margin-bottom: 5rem;
 }
 
 .codeimageA {
@@ -53,6 +69,24 @@
   align-items: center;
 }
 
+.login-box {
+  align-self: center;
+  max-height: 45.3rem;
+  min-height: 45.3rem;
+  max-width: 23rem;
+  width: 100%;
+}
+
+.login-box,
+.signup1 {
+  margin: 0.4rem;
+  padding: 1rem;
+  flex: 1 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ? */
 
 .colA {
@@ -64,21 +98,6 @@
 .boardA {
   border: 1px solid black;
   flex: 1 0 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.loginA {
-  max-height: 45.3rem;
-  min-height: 45.3rem;
-}
-
-.loginA,
-.signup1 {
-  margin: 0.4rem;
-  padding: 5rem 1rem;
-  flex: 1 0 0;
-  text-align: center;
   display: flex;
   flex-direction: column;
 }
@@ -111,7 +130,7 @@
 .zh20A {
   flex: 2 0 0;
 }
-.zh80A {
+.user-input-box {
   flex: 8 0 0;
   margin: 0.4rem;
 }
@@ -164,7 +183,6 @@ td {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
-
   position: relative;
   padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;

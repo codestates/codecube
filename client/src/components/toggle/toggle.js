@@ -29,7 +29,7 @@ const Toggle = ({
         end="/private"
         to={leftLink}
         className={({ isActive }) =>
-          'nav-link' + (!isActive ? ' unselected' : ' selected')
+          'nav-link' + ' mypage-btn' + (!isActive ? ' unselected' : ' selected')
         }
         onClick={toggling}
       >
@@ -38,7 +38,7 @@ const Toggle = ({
       <NavLink
         to={rightLink}
         className={({ isActive }) =>
-          'nav-link' + (!isActive ? ' unselected' : ' selected')
+          'nav-link' + ' mypage-btn' + (!isActive ? ' unselected' : ' selected')
         }
         onClick={toggling}
       >

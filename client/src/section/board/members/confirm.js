@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
 
 import './confirm.css'
-import confirmUsersDummy from '../../../dummy/board/confirmUsersDummy'
 import axios from 'axios'
 import { localhost } from '../hardWord'
 
@@ -10,7 +9,6 @@ const ConfirmUsers = ({ projectId }) => {
   const [confirmUsers, setConfirmUsers] = useState([])
 
   useEffect(() => {
-    // TODO: API
     axios.get(`${localhost}/members/${projectId}`).then(({ data }) => {
       setConfirmUsers(data.confirmed)
     })

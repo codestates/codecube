@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
+
+import './signup.css'
 
 const Signup = (props) => {
   const [signupInfo, setSignupInfo] = useState({
@@ -14,8 +16,15 @@ const Signup = (props) => {
   })
 
   const [checkedStacks, setCheckedStacks] = useState([])
-  const [errorMessage, setErrorMessage] = useState('')
+  const [signupText, setSignupText] = useState('signup')
   const navigate = useNavigate()
+  const alertBox = useRef()
+
+  useEffect(() => {
+    setSignupText('signup')
+    alertBox.current.classList.remove('alert')
+  }, [signupInfo])
+
   const handleInputValue = (key) => (e) => {
     setSignupInfo({ ...signupInfo, [key]: e.target.value })
   }
@@ -42,10 +51,9 @@ const Signup = (props) => {
   const handleSignup = async () => {
     const { email, password, username, description, image } = signupInfo
     signupInfo['stacks'] = checkedStacks
-    console.log('창에 입력한 이메일이다', signupInfo)
     if (!email || !password || !username) {
-      setErrorMessage('모든 항목은 필수입니다')
-      alert(`${errorMessage}`)
+      alertBox.current.classList.add('alert')
+      setSignupText('모든 항목은 필수입니다')
     } else {
       await axios
         .post('http://localhost:4000/signup', signupInfo)
@@ -54,12 +62,10 @@ const Signup = (props) => {
           console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }
           if (res.data.message === 'signup successed') {
             props.setIsSignup(false)
-            // navigate('/')
           }
         })
         .catch((err) => {
-          console.log(err)
-          alert(err)
+          setSignupText('잠시후 다시 시도해 주세요')
         })
     }
   }
@@ -72,16 +78,12 @@ const Signup = (props) => {
   const checkboxhandler = (checked, id) => {
     if (checked) {
       setCheckedStacks([...checkedStacks, id])
-      // setUserInfoEdited[stacks] = checkedStacks
-      // console.log('스택추가되는거', userInfoEdited)
     } else {
       setCheckedStacks(checkedStacks.filter((el) => el !== id))
-      // setUserInfoEdited[stacks] = checkedStacks
-      // console.log('스택제거되는거', userInfoEdited)
     }
   }
 
-  //사진 삭제 전송 함수 
+  //사진 삭제 전송 함수
   function changeMyprofile(event) {
     props.changePhoto(event)
   }
@@ -89,49 +91,57 @@ const Signup = (props) => {
     props.clearPhoto(event)
   }
   return (
-    <div className="Signup1">
+    <div className="left-box main-box">
       <h1>회원가입</h1>
-      <button value="로그인 화면으로" onClick={backtoLogin}>
+      <button className="mypage-btn" value="로그인 화면으로" onClick={backtoLogin}>
         로그인화면으로
       </button>
-      <div className="lo01A th50A login01A">
-        <div className="zh20A codecubelogoA">
-          {props.File && (
-            <div>
-              <img src={props.File} width="250px" height="130px" />
-              <button onClick={clearMyProfile}> Clear IMG</button>
-            </div>
-          )}
-        </div>
-        <div className="zh80A">
-          <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
-            <input type="file" accept="image/*" onChange={changeMyprofile} />
-            {/* <input
-              type="file"
-              id="chooseFile"
-              name="chooseFile"
-              accept="image/*"
-              onChange={handleInputValue('image')} t
-            /> */}
-            <input
-              className="inputA"
-              type="email"
-              placeholder="email"
-              onChange={handleInputValue('email')}
-            ></input>
-            <input
-              className="inputA"
-              type="password"
-              placeholder="password"
-              onChange={handleInputValue('password')}
-            ></input>
-            <input
-              className="inputA"
-              type="username"
-              placeholder="username"
-              onChange={handleInputValue('username')}
-            ></input>
-            <h3>Stacks</h3>
+      <div id="left-image-wrapper">
+        {props.File ? (
+          <div id="left-pi-wrapper">
+            <img id="left-pi" src={props.File} />
+            <button onClick={clearMyProfile}> Clear IMG</button>
+          </div>
+        ) : (
+          <div id="left-pi-wrapper">기본 이미지</div>
+        )}
+        <input
+          id="left-profile-button"
+          className="hidden"
+          type="file"
+          accept="image/*"
+          onChange={changeMyprofile}
+        />
+        <label id="left-fake-btn" htmlFor="left-profile-button">
+          프로필
+        </label>
+        <input id="left-delete-button" className="hidden" />
+        <label id="left-fake-delete" htmlFor="left-delete-button">
+          삭제
+        </label>
+      </div>
+      <div id="left-input-wrapper">
+        <form className="form-wrapper" action="" onSubmit={(e) => e.preventDefault()}>
+          <input
+            className="inputA"
+            type="email"
+            placeholder="email"
+            onChange={handleInputValue('email')}
+          ></input>
+          <input
+            className="inputA"
+            type="password"
+            placeholder="password"
+            onChange={handleInputValue('password')}
+          ></input>
+          <input
+            className="inputA"
+            type="username"
+            placeholder="username"
+            onChange={handleInputValue('username')}
+          ></input>
+          <h3>Stacks</h3>
+          <div id="stack-wrapper">
             {stacklist.map((el) => {
               return (
                 <div key={el.id}>
@@ -140,7 +150,6 @@ const Signup = (props) => {
                     value={el.name}
                     key={el.id}
                     className={checkboxstyle}
-                    // checked={isChecked}
                     onChange={(e) => {
                       checkboxhandler(e.currentTarget.checked, el.id)
                     }}
@@ -150,21 +159,21 @@ const Signup = (props) => {
                 </div>
               )
             })}
-            <textarea
-              className="inputA"
-              type="description"
-              placeholder="description"
-              onChange={handleInputValue('description')}
-            ></textarea>
-            <input
-              className="inputA"
-              type="submit"
-              value="singup"
-              onClick={handleSignup}
-            ></input>
-            <div className="alert-boxA">{errorMessage}</div>
-          </form>
-        </div>
+          </div>
+          <textarea
+            className="left-textarea"
+            type="description"
+            placeholder="description"
+            onChange={handleInputValue('description')}
+          ></textarea>
+          <input
+            ref={alertBox}
+            className="mypage-btn"
+            type="submit"
+            value={signupText}
+            onClick={handleSignup}
+          ></input>
+        </form>
       </div>
     </div>
   )
