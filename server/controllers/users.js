@@ -112,7 +112,6 @@ module.exports = {
           })
           await models.user_stacks.bulkCreate(newarr)
         }
-
         // 전달받은 유저정보와 최신화된 스택정보를 업데이트한다.
         await models.users.update(newInfo, {
           where: {
