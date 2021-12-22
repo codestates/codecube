@@ -181,10 +181,10 @@ module.exports = {
           await models.user_stacks.bulkCreate(InputStackList)
         }
         //회원가입시 jwt 토큰을 만들어 cookie로 전송한다.
-        const jwt = makejwt({ id: newuserId, username, email, description })
+        const jwt = makejwt({ id: newuserInfo.id, username, email, description })
 
         res
-          .cookie('id', newuserId)
+          .cookie('id', newuserInfo.id)
           .cookie('jwt', `bearer ${jwt}`, {
             httpOnly: true,
           })

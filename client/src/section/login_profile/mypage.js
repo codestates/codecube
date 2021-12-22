@@ -121,21 +121,6 @@ const Mypage = (props) => {
           <div>{email}</div>
           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>
             <input type="file" accept="image/*" onChange={changeMyprofile} />
-
-            {/* <div>{email}</div>
-           <form className="loginformA" action="" onSubmit={(e) => e.preventDefault()}>  
-             <input
-              type="file"
-              id="chooseFile"
-              name="chooseFile"
-              accept="image/*"
-              onError={(e) => {
-                e.target.onerror = null
-                e.target.src = './dummy/codecubelogo.png'
-               }}
-               onChange={handleInputValue('image')}
-              ></input> */}
-
             <input
               className="inputA"
               type="password"
