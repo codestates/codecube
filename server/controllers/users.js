@@ -13,6 +13,10 @@ module.exports = {
   users: {
     get: async (req, res) => {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
+      if (!req.cookies.jwt) {
+        return res.status(401).json({ message: 'invailid authorization' })
+      }
+
       const rtoken = req.cookies.jwt
       const decoded = whoRU(rtoken)
       // 해독한 Token값중 Mypage를 구성하는 값들만 받아온다.
