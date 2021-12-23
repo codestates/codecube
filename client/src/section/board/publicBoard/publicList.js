@@ -41,7 +41,8 @@ const PublicList = ({ isWish, wishList }) => {
               <div key={v4()} className="post-card">
                 <h3>{post.title}</h3>
                 <div>
-                  {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'}
+                  {/* {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'} */}
+                  {`참여인원 ${post.confirmed}/ 4`}
                 </div>
               </div>
             )
