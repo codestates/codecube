@@ -35,7 +35,7 @@ function App() {
     // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
     console.log('로그인 요청은 성공함.')
     await axios
-      .get(REACT_APP_API__URL + '/users', {
+      .get('https://server.codecube.asia' + '/users', {
         withCredentials: true,
       })
       .then(({ data: { data } }) => {
@@ -56,7 +56,7 @@ function App() {
   //받은 authorization 코드이용 서버로 callback api 요청
   const getAccessTocken = async (authorizationCode) => {
     await axios
-      .post(REACT_APP_API__URL + '/github/callback', {
+      .post('https://server.codecube.asia' + '/github/callback', {
         authorizationCode: authorizationCode,
       })
       .then((res) => {
@@ -68,7 +68,7 @@ function App() {
 
   const getGithudInfo = async (gitAccessToken) => {
     await axios
-      .get(REACT_APP_API__URL + '/github/userInfo', {
+      .get('https://server.codecube.asia' + '/github/userInfo', {
         headers: { authorization: gitAccessToken },
       })
       .then((res) => {
@@ -85,7 +85,7 @@ function App() {
 
   const handleLogout = () => {
     axios
-      .get(REACT_APP_API__URL + '/logout', {
+      .get('https://server.codecube.asia' + '/logout', {
         withCredentials: true,
       })
       .then((res) => {

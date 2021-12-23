@@ -56,7 +56,7 @@ const Signup = (props) => {
       setSignupText('모든 항목은 필수입니다')
     } else {
       await axios
-        .post(REACT_APP_API__URL + '/signup', signupInfo)
+        .post('https://server.codecube.asia' + '/signup', signupInfo)
         .then((res) => {
           props.isAuthenticated()
           console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }

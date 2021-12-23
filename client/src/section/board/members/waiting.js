@@ -22,7 +22,7 @@ const Waiting = ({ hasHost, projectId }) => {
     } else {
       // TODO: API
       axios
-        .get(REACT_APP_API__URL + '/members/' + projectId, {
+        .get('https://server.codecube.asia' + '/members/' + projectId, {
           withCredentials: true,
         })
         .then(({ data }) => {
@@ -40,14 +40,14 @@ const Waiting = ({ hasHost, projectId }) => {
       // TODO: API
       if (type === ACCEPT) {
         axios.put(
-          REACT_APP_API__URL + '/members/join',
+          'https://server.codecube.asia' + '/members/join',
           { userId: id, projectId: proId },
           {
             withCredentials: true,
           }
         )
       } else {
-        axios.delete(REACT_APP_API__URL + '/members/' + id + '-' + proId, {
+        axios.delete('https://server.codecube.asia' + '/members/' + id + '-' + proId, {
           withCredentials: true,
         })
       }

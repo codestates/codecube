@@ -29,7 +29,7 @@ const PrivateList = ({
     }
     // TODO: API
     await axios
-      .get(REACT_APP_API__URL + '/myProjects', {
+      .get('https://server.codecube.asia' + '/myProjects', {
         withCredentials: true,
       })
       .then(({ data }) => {
