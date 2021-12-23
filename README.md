@@ -21,7 +21,7 @@
     :computer: 시스템 아키텍처 입니다 :computer:
 </h1>
 
-![](https://cdn.discordapp.com/attachments/919772630255534083/920320780972212264/unknown.png)
+![](https://cdn.discordapp.com/attachments/919772630255534083/923441157038567425/unknown.png)
     
 
 ![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black) ![css](https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=CSS3&logoColor=black) ![react](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black) ![react-router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=ReactRouter&logoColor=black) ![create-react-app](https://img.shields.io/badge/Create%20React%20App-09D3AC?style=flat-square&logo=CreateReactApp&logoColor=black) ![axios](https://img.shields.io/badge/Axios-512ad0?style=flat-square&logo=axios&logoColor=black)
