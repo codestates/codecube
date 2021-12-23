@@ -4,14 +4,14 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('users', [
       {
-        username: '김흥식',
+        username: '김식',
         email: 'aa@code.com',
         image: 'asd',
         password: '1',
         description: '나는 코딩왕이 될거야',
       },
       {
-        username: '권오윤',
+        username: '권식',
         email: 'bb@code.com',
         image: 'sss',
         password: '1',
@@ -83,6 +83,7 @@ module.exports = {
       {
         username: '김준석',
         email: 'll@code.com',
+
         image: 'asvasbasv',
         password: '1',
         description: '암온더 넥스트 레벨',
