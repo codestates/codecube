@@ -38,13 +38,9 @@ const Mypage = (props) => {
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
     await axios
-      .put(
-        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/users',
-        userInfoEdited,
-        {
-          withCredentials: true,
-        }
-      )
+      .put(REACT_APP_API__URL + '/users', userInfoEdited, {
+        withCredentials: true,
+      })
       .then((res) => {
         setEditProfileBtn(false)
         props.isAuthenticated()
@@ -62,7 +58,7 @@ const Mypage = (props) => {
 
   const handleWithdraw = () => {
     axios
-      .delete('http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/users', {
+      .delete(REACT_APP_API__URL + '/users', {
         withCredentials: true,
       })
       .then((res) => {

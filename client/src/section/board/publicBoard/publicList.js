@@ -11,7 +11,7 @@ const PublicList = ({ isWish, wishList }) => {
   useEffect(() => {
     if (!isWish) {
       axios
-        .get('http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/projects')
+        .get(REACT_APP_API__URL + '/projects')
         .then(({ data }) => {
           setPublicList(data.list)
         })

@@ -29,12 +29,9 @@ const PrivateList = ({
     }
     // TODO: API
     await axios
-      .get(
-        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/myProjects',
-        {
-          withCredentials: true,
-        }
-      )
+      .get(REACT_APP_API__URL + '/myProjects', {
+        withCredentials: true,
+      })
       .then(({ data }) => {
         if (havePostAsHost(data)) {
           // console.log('have host')

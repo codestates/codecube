@@ -35,10 +35,7 @@ const Login = (props) => {
       alertBox.current.classList.add('alert')
     } else {
       await axios
-        .post(
-          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/login',
-          loginInfo
-        )
+        .post(REACT_APP_API__URL + '/login', loginInfo)
         .then((res) => {
           props.isAuthenticated()
         })
