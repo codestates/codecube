@@ -30,7 +30,7 @@
     
 반응형
     
-![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/84060219/147211997-c1a70e7c-1863-4a4e-8b23-2a18eb2afa1c.gif)
+
     
 
 <h1 align="center">
