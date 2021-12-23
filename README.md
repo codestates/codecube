@@ -16,12 +16,37 @@
 
 코드큐브에서는 **포트폴리오 통합 관리**와 **프로젝트 동료 매칭**을 동시에 도와주는 서비스를 제공합니다.
 
+<h1 align="center">
+    :fire: 메인페이지입니다  :fire:
+</h1>
 
+메인페이지 - 로그인 전
+    
+![](https://cdn.discordapp.com/attachments/919772630255534083/923489332113854484/2021-12-23_4.51.13.png)
+    
+메인페이지 - (소셜)로그인 후
+    
+![](https://cdn.discordapp.com/attachments/919772630255534083/923489279911534622/2021-12-23_5.00.05.png)
+    
+반응형
+    
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/84060219/147211997-c1a70e7c-1863-4a4e-8b23-2a18eb2afa1c.gif)
+    
+
+<h1 align="center">
+    <br/>
+    <a href="" > :fire: UI 상세보기 :fire: </a>
+    <br/>
+    <br/>
+</h1>
+
+    
 <h1 align="center">
     :computer: 시스템 아키텍처 입니다 :computer:
 </h1>
 
 ![](https://cdn.discordapp.com/attachments/919772630255534083/923447328873013298/unknown.png)
+
     
 front-end   
 ![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black) ![css](https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=CSS3&logoColor=black) ![react](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black) ![react-router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=ReactRouter&logoColor=black) ![create-react-app](https://img.shields.io/badge/Create%20React%20App-09D3AC?style=flat-square&logo=CreateReactApp&logoColor=black) ![axios](https://img.shields.io/badge/Axios-512ad0?style=flat-square&logo=axios&logoColor=black)
