@@ -35,7 +35,7 @@
 
 <h1 align="center">
     <br/>
-    <a href="" > :fire: UI 상세보기 :fire: </a>
+    <a href="https://github.com/codestates/codecube/wiki/UI" > :fire: UI 상세보기 :fire: </a>
     <br/>
     <br/>
 </h1>
