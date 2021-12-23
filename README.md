@@ -22,6 +22,15 @@
 </h1>
 
 ![](https://cdn.discordapp.com/attachments/919772630255534083/920320780972212264/unknown.png)
+    
+
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black) ![css](https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=CSS3&logoColor=black) ![react](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black) ![react-router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=ReactRouter&logoColor=black) ![create-react-app](https://img.shields.io/badge/Create%20React%20App-09D3AC?style=flat-square&logo=CreateReactApp&logoColor=black) ![axios](https://img.shields.io/badge/Axios-512ad0?style=flat-square&logo=axios&logoColor=black)
+
+    
+![node-js](https://img.shields.io/badge/Node%20Js-339933?style=flat-square&logo=Node.Js&logoColor=black) ![nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=flat-square&logo=Nodemon&logoColor=black) ![mysql](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=black) ![jwt](https://img.shields.io/badge/JWT-FFB3C7?style=flat-square&logo=JSONWebTokens&logoColor=black) ![express](https://img.shields.io/badge/Express-EEEEEE?style=flat-square&logo=Express&logoColor=black) ![sequelize](https://img.shields.io/badge/sequelize-52B0E7?style=flat-square&logo=sequelize&logoColor=black)
+
+    
+![aws](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=AmazonAWS&logoColor=FF9900) ![s3](https://img.shields.io/badge/S3-569A31?style=flat-square&logo=AmazonS3&logoColor=black) ![ec2](https://img.shields.io/badge/EC2-FF9900?style=flat-square&logo=AmazonEC2&logoColor=black) ![rds](https://img.shields.io/badge/RDS-0078D2?style=flat-square&logo=AmazonRDS&logoColor=black)
 
 
 <h1 align="center">
