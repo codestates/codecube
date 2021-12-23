@@ -37,7 +37,7 @@ const Mypage = (props) => {
 
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
-    await axios.put('http://localhost:4000/', userInfoEdited).then((res) => {
+    await axios.put('http://localhost:4000/users', userInfoEdited).then((res) => {
       setEditProfileBtn(false)
       props.isAuthenticated()
       navigate('/')
