@@ -190,6 +190,7 @@ module.exports = {
           .cookie('id', newuserInfo.id)
           .cookie('jwt', `bearer ${jwt}`, {
             httpOnly: true,
+           sameSite:'none'
           })
           .status(201)
           .json({
@@ -230,9 +231,11 @@ module.exports = {
         res
           .cookie('jwt', `bearer ${jwt}`, {
             httpOnly: true,
+            sameSite:'none'
           })
           .cookie('id', loginuser.id, {
             httpOnly: true,
+           sameSite:'none'
           })
           .status(200)
           .json({
