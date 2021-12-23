@@ -4,7 +4,7 @@ const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
 const axios = require('axios')
 const { makejwt, solveToken } = require('./function')
-
+axios.defaults.withCredentials = true
 module.exports = {
   callback: async (req, res) => {
     if (!req.body.authorizationCode) {
@@ -38,6 +38,8 @@ module.exports = {
       })
     }
     let response = await axios.get('https://api.github.com/user', {
+      withCredentials: true
+    }, {
       headers: {
         authorization: `token ${req.headers.authorization}`,
       },
