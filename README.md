@@ -111,7 +111,10 @@ community
     :thought_balloon: 저희의 목표입니다  :thought_balloon:
 </h2>
 
-    
-[wiki - Requirements](https://github.com/codestates/codecube/wiki/requirements)
+<div align="center">
+   위키👉 https://github.com/codestates/codecube/wiki/requirements
+</div>
+
+
 
 ![footer](https://capsule-render.vercel.app/api?section=footer&type=waving&reversal=true&color=0:003362,100:034787&height=250&text=감사합니다&fontSize=40&fontAlignY=65&fontColor=423f3b)
