@@ -1,8 +1,10 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=0:003362,100:034787&height=200&width=2000&section=header&text=안녕하세요%20code%20cube%20입니다!&fontSize=40&fontAlignY=35&fontColor=423f3b&animation=fadeIn)
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:003362,100:034787&height=200&section=header&text=안녕하세요%20code%20cube%20입니다!&fontSize=40&fontAlignY=35&fontColor=423f3b&animation=fadeIn)
 
-# 안녕하세요 code cube 입니다!
 
-![](https://cdn.discordapp.com/attachments/919772630255534083/920252378769416192/unknown.png)
+<div align="center">
+    <image src="https://cdn.discordapp.com/attachments/919772630255534083/920252378769416192/unknown.png" >
+</div>
+
 
 **개발자를 꿈꾸는 당신**
 
@@ -14,28 +16,31 @@
 
 코드큐브에서는 **포트폴리오 통합 관리**와 **프로젝트 동료 매칭**을 동시에 도와주는 서비스를 제공합니다.
 
----
 
-## 프로젝트를 전지적으로 본다면 이렇습니다.
+<h1 align="center">
+    :computer: 시스템 아키텍처 입니다 :computer:
+</h1>
 
 ![](https://cdn.discordapp.com/attachments/919772630255534083/920320780972212264/unknown.png)
 
----
 
-## 팀을 소개합니다.
+<h1 align="center">
+    :wave: 팀을 소개합니다 :wave:
+</h1>
 
 |이름|포지션|깃헙|
 |:---:|:---:|:---:|
-|최재하(팀장)|Front||
-|정대희(팀원)|Front||
-|도준혁(팀원)|Back||
-|백준우(팀원)|Back||
+|최재하(팀장)|Front|[![github](https://img.shields.io/badge/최재하-181717?style=flat-square&logo=GitHub&logoColor=white)](https://github.com/cjhmoves33)|
+|정대희(팀원)|Front|[![github](https://img.shields.io/badge/정대희-181717?style=flat-square&logo=GitHub&logoColor=white)](https://github.com/jres1007)|
+|도준혁(팀원)|Back|[![github](https://img.shields.io/badge/도준혁-181717?style=flat-square&logo=GitHub&logoColor=white)](https://github.com/Jun0922)|
+|백준우(팀원)|Back|[![github](https://img.shields.io/badge/백준우-181717?style=flat-square&logo=GitHub&logoColor=white)](https://github.com/junu0810)|
 
 [detail](https://github.com/codestates/codecube/wiki/work-log)
 
----
 
-## 저희는 협업을 위한 마음가짐을 가지고 있습니다.[슬로건]
+<h1 align="center">
+    :punch: 저희는 협업을 위한 마음가짐을 가지고 있습니다[슬로건] 👊
+</h1>
 
 ### 똑같은 질문을 100번하면 100번이라도 대답해주겠어요
 
@@ -50,7 +55,6 @@
 ```
 [이곳에서 영감을 받았습니다.](https://techblog.woowahan.com/2677/)
 
----
 
 ## 팀규칙입니다
 1. 9 to 6를 정규작업 시간으로 정합니다. 휴식시간은 식사시간을 포함한 2시간 입니다.
