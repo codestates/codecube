@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=0:003362,100:034787&height=200&section=header&text=안녕하세요%20code%20cube%20입니다!&fontSize=40&fontAlignY=35&fontColor=423f3b&animation=fadeIn)
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:003362,100:034787&height=200&section=header&text=안녕하세요%20code%20cube%20입니다!&fontSize=40&fontAlignY=35&fontColor=ffffff&animation=fadeIn)
 
 
 <div align="center">
@@ -56,9 +56,14 @@
 [이곳에서 영감을 받았습니다.](https://techblog.woowahan.com/2677/)
 
 
-## 팀규칙입니다
+<h2 align="center">
+    :white_check_mark: 프로젝트 진행간 반드시 지켜주세요  :white_check_mark:
+</h2>
+
 1. 9 to 6를 정규작업 시간으로 정합니다. 휴식시간은 식사시간을 포함한 2시간 입니다.
+    - 정해진 식사 시간이 없습니다. 각자 생활 패턴에 맞게 자유롭게 2시간을 활용해주세요!
 2. 레포 merge는 오전9시, 오후6시 반드시 모든 팀원이 함께 진행합니다.
+    - 급하게 merge를 해야하는 상황이 온다면 다른 팀원들에게 반드시 말해주세요!
 3. 새벽 등 다른 팀원들과 소통이 안되는 시간대에는 자신의 작업의 영향이 자신의 PC밖을 넘어서선 안됩니다.
 4. 함께 해결해야하는 문제, 모두가 알아야하는 사실이 있다면 최대한 빠르게 팀회의를 요청합니다. 정말 중요한일, 급한일이라면 코딩보다 회의가 높은 우선순위를 가집니다.
 5. 작은 수정사항(위키의 내용 수정, 오타수정, wireframe이미지 최신화 등)은 선조치 후 바로 모두에게 알립니다.
@@ -66,18 +71,17 @@
 7. 상대방의 노력을 아낌없이 칭찬합니다. 노력을 인정받을 때 큰 성취감을 느낍니다. 아무도 생각하지 못했던 점을 누군가는 밤새 고민하고 발전시키기위해 노력했을지도 모릅니다.
 8. 말이 겹친다면 상대방에 먼저 말을 끝낼 수 있게 기다려봅니다. 온라인 커뮤니케이션 특성상 대화 배려가 빛을 발합니다!
 9. 어려운것 이해가 안되는 것이 있다면 혼자 충분히 고민후 최대한 물어봅니다. 현업을 가게된다면 이 행동에 조금더 주의를 기울여야하겠지만, 지금은 질문하고 서로 배우는 시간에 투자해보겠습니다.
-10. 똑같은 문제에 다시 직면했는데 또 모르겠더라도 반드시 다시 질문합니다. 이 과정속에서 질문자는 내가 왜 똑같은 문제를 또 이해를 못하는지에 대해 반드시 고민해봐야합니다. 질문을 받은 팀원은 질문자가 왜 똑같은 문제를 또 질문하게 됐을지에대해 반드시 고민해봐야합니다. 똑같은 질문을 했다고 절대 눈치를 주는 등의 행동을 하면 안됩니다.
+10. 똑같은 문제에 다시 직면했는데 또 모르겠더라도 반드시 다시 질문합니다. 
+    - 이 과정속에서 질문자는 내가 왜 똑같은 문제를 또 이해를 못하는지에 대해 반드시 고민해봐야합니다. 
+    - 질문을 받은 팀원은 질문자가 왜 똑같은 문제를 또 질문하게 됐을지에대해 반드시 고민해봐야합니다.
+    - 똑같은 질문을 했다고 절대 눈치를 주는 등의 행동을 하면 안됩니다.
 11. 절대 포기하지 않습니다.
 
----
+<h2 align="center">
+    :thought_balloon: 저희의 목표입니다  :thought_balloon:
+</h2>
 
-## 우리의 진짜 목표를 놓쳐선 안되겠죠?
+    
 [wiki - Requirements](https://github.com/codestates/codecube/wiki/requirements)
 
----
-
-:exclamation: :exclamation:
-
-<i>아직 완성된 README 가 아닙니다!</i>
-
-<i>프로젝트가 완성에 가까워 질 수록 README.md또한 함께 완성에 가까워 질 것입니다. </i>
+![footer](https://capsule-render.vercel.app/api?section=footer&type=waving&reversal=true&color=0:003362,100:034787&height=250&text=감사합니다&fontSize=40&fontAlignY=65&fontColor=423f3b)
