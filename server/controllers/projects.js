@@ -183,7 +183,7 @@ module.exports = {
           include: [models.projects],
           where: { userId },
         })
-        console.log(inList[0]['project.title'])
+
         //대기중 글 개수가 1개일 때
         if (inList.length === 1) {
           const { id, userId, projectId, join } = inList[0]

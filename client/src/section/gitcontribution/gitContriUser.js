@@ -12,7 +12,7 @@ const GitContributionUser = (props) => {
           className="hat"
           src="https://png2.cleanpng.com/sh/6b9917d5009eb044e9f8cb1a67bb2d20/L0KzQYi4UsA3N5Y8fJGAYUK7coW4gcNnPGQ4TJCAMUC2Q4a6WME2OWM7SagEOEa1RYq4TwBvbz==/5a28b41a3f4334.5103353815126169862591.png"
         ></img>
-        <div className="greet">Merry Github</div>
+        <div className="greet">Merry Githubmas</div>
       </div>
       {props.gitContri ? (
         <img className="empty-cont" src={props.gitContri}></img>
