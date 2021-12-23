@@ -35,7 +35,7 @@ const Login = (props) => {
       alertBox.current.classList.add('alert')
     } else {
       await axios
-        .post('https://server.codecube.asia' + '/login', loginInfo)
+        .post(REACT_APP_API__URL + '/login', loginInfo)
         .then((res) => {
           props.isAuthenticated()
         })

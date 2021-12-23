@@ -14,7 +14,7 @@ const Post = ({ projectId }) => {
   const [thisPost, setThisPost] = useState(initialPostInfo)
 
   useEffect(async () => {
-    const url = 'https://server.codecube.asia' + '/projects/' + projectId
+    const url = REACT_APP_API__URL + '/projects/' + projectId
     await axios
       .get(url, {
         withCredentials: true,

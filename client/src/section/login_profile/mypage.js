@@ -38,7 +38,7 @@ const Mypage = (props) => {
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
     await axios
-      .put('https://server.codecube.asia' + '/users', userInfoEdited, {
+      .put(REACT_APP_API__URL + '/users', userInfoEdited, {
         withCredentials: true,
       })
       .then((res) => {
@@ -58,7 +58,7 @@ const Mypage = (props) => {
 
   const handleWithdraw = () => {
     axios
-      .delete('https://server.codecube.asia' + '/users', {
+      .delete(REACT_APP_API__URL + '/users', {
         withCredentials: true,
       })
       .then((res) => {

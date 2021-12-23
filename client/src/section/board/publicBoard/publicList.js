@@ -11,7 +11,7 @@ const PublicList = ({ isWish, wishList }) => {
   useEffect(() => {
     if (!isWish) {
       axios
-        .get('https://server.codecube.asia' + '/projects')
+        .get(REACT_APP_API__URL + '/projects')
         .then(({ data }) => {
           setPublicList(data.list)
         })

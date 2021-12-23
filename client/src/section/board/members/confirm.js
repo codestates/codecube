@@ -12,7 +12,7 @@ const ConfirmUsers = ({ projectId }) => {
 
   useEffect(() => {
     axios
-      .get('https://server.codecube.asia' + '/members/' + projectId, {
+      .get(REACT_APP_API__URL + '/members/' + projectId, {
         withCredentials: true,
       })
       .then(({ data }) => {
