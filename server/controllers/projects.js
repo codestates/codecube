@@ -203,17 +203,9 @@ module.exports = {
               start,
               done,
             }
-            // console.log(
-            //   '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-            // )
-            // console.log(confirmed.count)
-            // console.log(
-            //   '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-            // )
             return res.status(200).json({
               host: { projectId: '', start: 0, done: 0 },
               guest: {
-                //???? 위시리스트에 뭘넣어야 하는거지?
                 wishList: [],
                 confirmed: {
                   projectId,
@@ -223,9 +215,6 @@ module.exports = {
                 },
               },
             })
-            //waiting일때
-
-            //////만약에 confirmed 일때도 웨이팅에 꼭 뭔갈 넣어줘야한다면 waiting이랑 뭐가다르지?
           } else {
             const { start, done } = await models.projects.findOne({
               where: { id: projectId },
@@ -241,17 +230,9 @@ module.exports = {
               start,
               done,
             }
-            console.log(
-              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-            )
-            console.log(confirmed)
-            console.log(
-              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-            )
             return res.status(200).json({
               host: { projectId: '', start: 0, done: 0 },
               guest: {
-                //???? 위시리스트에 뭘넣어야 하는거지?
                 wishList: [wishListObj],
                 confirmed: {},
               },
@@ -268,13 +249,11 @@ module.exports = {
               title: v['project.title'],
             }
           })
-          // console.log('projectIds:', projectIds)
           await Promise.all(
             projectIds.map(async (el, idx) => {
               const confirmed = await models.project_users.findAndCountAll({
                 where: { projectId: el, join: 1 },
               })
-              // console.log('cfd:', confirmed)
               pending[idx]['confirmed'] = confirmed.count
             })
           )
