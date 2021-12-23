@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+require('dotenv').config()
 const PROTOCOL = 'http'
 const DOMAIN = 'localhost'
 const PORT = 4000

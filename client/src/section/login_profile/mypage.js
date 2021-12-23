@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+require('dotenv').config()
 import './mypage.css'
 axios.defaults.withCredentials = true
 
@@ -37,7 +37,9 @@ const Mypage = (props) => {
 
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
-    await axios.put('http://localhost:4000/users', userInfoEdited).then((res) => {
+    await axios.put(process.env.REACT_APP_API_URL + '/users', userInfoEdited, {
+      withCredentials: true
+    }).then((res) => {
       setEditProfileBtn(false)
       props.isAuthenticated()
       navigate('/')
@@ -53,7 +55,9 @@ const Mypage = (props) => {
   }
 
   const handleWithdraw = () => {
-    axios.delete('http://localhost:4000/users').then((res) => {
+    axios.delete(process.env.REACT_APP_API_URL + '/users', {
+      withCredentials: true
+    }).then((res) => {
       const ㅅㄱ = confirm('정말로 탈퇴하시겠습니까?')
       ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
 

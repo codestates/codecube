@@ -4,12 +4,14 @@ import { v4 } from 'uuid'
 import './confirm.css'
 import axios from 'axios'
 import { localhost } from '../hardWord'
-
+axios.defaults.withCredentials = true
 const ConfirmUsers = ({ projectId }) => {
   const [confirmUsers, setConfirmUsers] = useState([])
 
   useEffect(() => {
-    axios.get(`${localhost}/members/${projectId}`).then(({ data }) => {
+    axios.get(`${localhost}/members/${projectId}`, {
+      withCredentials: true
+    }).then(({ data }) => {
       setConfirmUsers(data.confirmed)
     })
   }, [projectId])

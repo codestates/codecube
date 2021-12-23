@@ -6,7 +6,7 @@ import './waiting.css'
 
 import { ACCEPT, localhost, REJECT } from '../hardWord'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 const Waiting = ({ hasHost, projectId }) => {
   const [waitingUsers, setWaitingUsers] = useState([])
   const location = useLocation()
@@ -17,7 +17,9 @@ const Waiting = ({ hasHost, projectId }) => {
       navigation('/')
     } else {
       // TODO: API
-      axios.get(`${localhost}/members/${projectId}`).then(({ data }) => {
+      axios.get(`${localhost}/members/${projectId}`, {
+        withCredentials: true
+      }).then(({ data }) => {
         setWaitingUsers(data.waiting)
       })
     }
@@ -31,9 +33,13 @@ const Waiting = ({ hasHost, projectId }) => {
       setWaitingUsers(change)
       // TODO: API
       if (type === ACCEPT) {
-        axios.put(`${localhost}/members/join`, { userId: id, projectId: proId })
+        axios.put(`${localhost}/members/join`, { userId: id, projectId: proId }, {
+          withCredentials: true
+        })
       } else {
-        axios.delete(`${localhost}/members/${id}-${proId}`)
+        axios.delete(`${localhost}/members/${id}-${proId}`, {
+          withCredentials: true
+        })
       }
     },
     [waitingUsers]
