@@ -56,7 +56,10 @@ const Signup = (props) => {
       setSignupText('모든 항목은 필수입니다')
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL + '/signup', signupInfo)
+        .post(
+          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/signup',
+          signupInfo
+        )
         .then((res) => {
           props.isAuthenticated()
           console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }

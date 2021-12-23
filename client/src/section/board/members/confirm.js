@@ -12,9 +12,14 @@ const ConfirmUsers = ({ projectId }) => {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_API_URL + '/members/' + projectId, {
-        withCredentials: true,
-      })
+      .get(
+        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+          '/members/' +
+          projectId,
+        {
+          withCredentials: true,
+        }
+      )
       .then(({ data }) => {
         setConfirmUsers(data.confirmed)
       })

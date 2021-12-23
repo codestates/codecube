@@ -28,21 +28,26 @@ const PrivateList = ({
       navigation('/')
     }
     // TODO: API
-    await axios.get(process.env.REACT_APP_API_URL + '/myProjects', {
-      withCredentials: true
-    }).then(({ data }) => {
-      if (havePostAsHost(data)) {
-        // console.log('have host')
-        // console.log(data)
-        setDashBoardInfo(data)
-        setHasHost(true)
-      } else {
-        // console.log('have not host')
-        // console.log(data)
-        setWishList(data)
-        setHasHost(false)
-      }
-    })
+    await axios
+      .get(
+        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/myProjects',
+        {
+          withCredentials: true,
+        }
+      )
+      .then(({ data }) => {
+        if (havePostAsHost(data)) {
+          // console.log('have host')
+          // console.log(data)
+          setDashBoardInfo(data)
+          setHasHost(true)
+        } else {
+          // console.log('have not host')
+          // console.log(data)
+          setWishList(data)
+          setHasHost(false)
+        }
+      })
   }, [isLoggedIn])
 
   return (
