@@ -1,3 +1,5 @@
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:003362,100:034787&height=200&width=2000&section=header&text=안녕하세요%20code%20cube%20입니다!&fontSize=40&fontAlignY=35&fontColor=423f3b&animation=fadeIn)
+
 # 안녕하세요 code cube 입니다!
 
 ![](https://cdn.discordapp.com/attachments/919772630255534083/920252378769416192/unknown.png)
