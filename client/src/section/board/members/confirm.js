@@ -3,17 +3,21 @@ import { v4 } from 'uuid'
 
 import './confirm.css'
 import axios from 'axios'
-import { localhost } from '../hardWord'
+import dotenv from 'dotenv'
+dotenv.config()
+
 axios.defaults.withCredentials = true
 const ConfirmUsers = ({ projectId }) => {
   const [confirmUsers, setConfirmUsers] = useState([])
 
   useEffect(() => {
-    axios.get(`${localhost}/members/${projectId}`, {
-      withCredentials: true
-    }).then(({ data }) => {
-      setConfirmUsers(data.confirmed)
-    })
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/members/${projectId}`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        setConfirmUsers(data.confirmed)
+      })
   }, [projectId])
 
   return (

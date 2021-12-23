@@ -5,7 +5,8 @@ import ConfirmUsers from '../members/confirm'
 import PostContent from './content'
 
 import axios from 'axios'
-import { localhost } from '../hardWord'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const initialPostInfo = { title: '', content: '' }
 axios.defaults.withCredentials = true
@@ -13,12 +14,14 @@ const Post = ({ projectId }) => {
   const [thisPost, setThisPost] = useState(initialPostInfo)
 
   useEffect(async () => {
-    const url = `${localhost}/projects/${projectId}`
-    await axios.get(url, {
-      withCredentials: true
-    }).then(({ data }) => {
-      setThisPost(data.projectInfo)
-    })
+    const url = `${process.env.REACT_APP_API_URL}/projects/${projectId}`
+    await axios
+      .get(url, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        setThisPost(data.projectInfo)
+      })
   }, [])
   return (
     <div id="post-wrapper">
