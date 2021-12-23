@@ -33,9 +33,9 @@ app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
 })
 
-const multer = require('multer')
-const AWS = require('aws-sdk')
-const multerS3 = require('multer-s3')
+// const multer = require('multer')
+// const AWS = require('aws-sdk')
+// const multerS3 = require('multer-s3')
 
 module.exports = {
   app,

@@ -30,9 +30,13 @@ const PrivateList = ({
     // TODO: API
     await axios.get('http://localhost:4000/myProjects').then(({ data }) => {
       if (havePostAsHost(data)) {
+        // console.log('have host')
+        // console.log(data)
         setDashBoardInfo(data)
         setHasHost(true)
       } else {
+        // console.log('have not host')
+        // console.log(data)
         setWishList(data)
         setHasHost(false)
       }

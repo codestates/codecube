@@ -26,9 +26,9 @@ const DreamButton = ({ hasHost, postState }) => {
   }, [buttonName])
 
   return (
-    <button id="dream-button" onClick={onDream}>
+    <div id="dream-button" onClick={onDream}>
       {buttonName}
-    </button>
+    </div>
   )
 }
 

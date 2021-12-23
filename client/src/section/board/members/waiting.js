@@ -49,8 +49,12 @@ const Waiting = ({ hasHost, projectId }) => {
               <div className="waiting-username">{username}</div>
             </div>
             <div className="waiting-button-wrapper">
-              <button onClick={() => onSelect(userId, ACCEPT, projectId)}>✔️</button>
-              <button onClick={() => onSelect(userId, REJECT, projectId)}>✖️</button>
+              <button id="gotcha" onClick={() => onSelect(userId, ACCEPT, projectId)}>
+                ✔️
+              </button>
+              <button id="del" onClick={() => onSelect(userId, REJECT, projectId)}>
+                ✖️
+              </button>
             </div>
           </div>
         )
