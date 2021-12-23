@@ -17,5 +17,3 @@ export const REJECT = 'reject'
 
 const pp = window.localStorage.getItem('userinfo')
 export const mi = pp ? JSON.parse(pp).id : ''
-
-export const localhost = process.env.REACT_APP_API_URL + ''

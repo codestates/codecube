@@ -37,13 +37,19 @@ const Mypage = (props) => {
 
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
-    await axios.put(process.env.REACT_APP_API_URL + '/users', userInfoEdited, {
-      withCredentials: true
-    }).then((res) => {
-      setEditProfileBtn(false)
-      props.isAuthenticated()
-      navigate('/')
-    })
+    await axios
+      .put(
+        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/users',
+        userInfoEdited,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setEditProfileBtn(false)
+        props.isAuthenticated()
+        navigate('/')
+      })
   }
 
   //사진 삭제 전송 함수
@@ -55,16 +61,18 @@ const Mypage = (props) => {
   }
 
   const handleWithdraw = () => {
-    axios.delete(process.env.REACT_APP_API_URL + '/users', {
-      withCredentials: true
-    }).then((res) => {
-      const ㅅㄱ = confirm('정말로 탈퇴하시겠습니까?')
-      ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
+    axios
+      .delete('http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/users', {
+        withCredentials: true,
+      })
+      .then((res) => {
+        const ㅅㄱ = confirm('정말로 탈퇴하시겠습니까?')
+        ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
 
-      window.localStorage.removeItem('userinfo')
-      props.setisLoggedIn(false)
-      navigate('/')
-    })
+        window.localStorage.removeItem('userinfo')
+        props.setisLoggedIn(false)
+        navigate('/')
+      })
   }
 
   //비밀번호 매치 함수

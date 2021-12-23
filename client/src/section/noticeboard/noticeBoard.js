@@ -6,17 +6,22 @@ import { v4 } from 'uuid'
 import './noticeBoard.css'
 require('dotenv').config()
 
-
 // const openApi = process.env.REACT_APP_OPEN_API
 axios.defaults.withCredentials = true
 const NoticeBoard = () => {
   const [jobListData, setJoblistData] = useState([{}])
   const getJobList = async () => {
-    await axios.get(process.env.REACT_APP_API_URL + '/openapi/joblist', {
-      withCredentials: true
-    }).then((res) => {
-      setJoblistData(res.data)
-    })
+    await axios
+      .get(
+        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+          '/openapi/joblist',
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setJoblistData(res.data)
+      })
   }
 
   useEffect(() => {

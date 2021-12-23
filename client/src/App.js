@@ -34,29 +34,35 @@ function App() {
   const isAuthenticated = async () => {
     // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
     console.log('로그인 요청은 성공함.')
-    await axios.get(process.env.REACT_APP_API_URL + '/users', {
-      withCredentials: true
-    }).then(({ data: { data } }) => {
-      const userJSON = {
-        id: data.id,
-        username: data.username,
-        email: data.email,
-        description: data.description,
-        stacks: data.stacks,
-        image: data.image,
-      }
-      window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-      setUserinfo(data)
-      setisLoggedIn(true)
-    })
+    await axios
+      .get('http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/users', {
+        withCredentials: true,
+      })
+      .then(({ data: { data } }) => {
+        const userJSON = {
+          id: data.id,
+          username: data.username,
+          email: data.email,
+          description: data.description,
+          stacks: data.stacks,
+          image: data.image,
+        }
+        window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
+        setUserinfo(data)
+        setisLoggedIn(true)
+      })
   }
 
   //받은 authorization 코드이용 서버로 callback api 요청
   const getAccessTocken = async (authorizationCode) => {
     await axios
-      .post(process.env.REACT_APP_API_URL + '/github/callback', {
-        authorizationCode: authorizationCode,
-      })
+      .post(
+        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+          '/github/callback',
+        {
+          authorizationCode: authorizationCode,
+        }
+      )
       .then((res) => {
         setGtiAccessToken(res.data.accessToken)
         window.localStorage.setItem('accessToken', res.data.accessToken)
@@ -66,9 +72,13 @@ function App() {
 
   const getGithudInfo = async (gitAccessToken) => {
     await axios
-      .get(process.env.REACT_APP_API_URL + '/github/userInfo', {
-        headers: { authorization: gitAccessToken },
-      })
+      .get(
+        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+          '/github/userInfo',
+        {
+          headers: { authorization: gitAccessToken },
+        }
+      )
       .then((res) => {
         const { login, calendar } = res.data.userInfo
         setUserinfo({ email: login + '@github.com', username: login })
@@ -82,14 +92,16 @@ function App() {
   }, [])
 
   const handleLogout = () => {
-    axios.get(process.env.REACT_APP_API_URL + '/logout', {
-      withCredentials: true
-    }).then((res) => {
-      window.localStorage.removeItem('userinfo')
-      setUserinfo('')
-      setisLoggedIn(false)
-      navigate('/')
-    })
+    axios
+      .get('http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' + '/logout', {
+        withCredentials: true,
+      })
+      .then((res) => {
+        window.localStorage.removeItem('userinfo')
+        setUserinfo('')
+        setisLoggedIn(false)
+        navigate('/')
+      })
   }
 
   const handleEdit = () => {

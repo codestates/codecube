@@ -4,8 +4,12 @@ import { v4 } from 'uuid'
 
 import './waiting.css'
 
-import { ACCEPT, localhost, REJECT } from '../hardWord'
+import { ACCEPT, REJECT } from '../hardWord'
+
 import axios from 'axios'
+import dotenv from 'dotenv'
+dotenv.config()
+
 axios.defaults.withCredentials = true
 const Waiting = ({ hasHost, projectId }) => {
   const [waitingUsers, setWaitingUsers] = useState([])
@@ -17,11 +21,18 @@ const Waiting = ({ hasHost, projectId }) => {
       navigation('/')
     } else {
       // TODO: API
-      axios.get(`${localhost}/members/${projectId}`, {
-        withCredentials: true
-      }).then(({ data }) => {
-        setWaitingUsers(data.waiting)
-      })
+      axios
+        .get(
+          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+            '/members/' +
+            projectId,
+          {
+            withCredentials: true,
+          }
+        )
+        .then(({ data }) => {
+          setWaitingUsers(data.waiting)
+        })
     }
   }, [hasHost])
 
@@ -33,13 +44,25 @@ const Waiting = ({ hasHost, projectId }) => {
       setWaitingUsers(change)
       // TODO: API
       if (type === ACCEPT) {
-        axios.put(`${localhost}/members/join`, { userId: id, projectId: proId }, {
-          withCredentials: true
-        })
+        axios.put(
+          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+            '/members/join',
+          { userId: id, projectId: proId },
+          {
+            withCredentials: true,
+          }
+        )
       } else {
-        axios.delete(`${localhost}/members/${id}-${proId}`, {
-          withCredentials: true
-        })
+        axios.delete(
+          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
+            '/members/' +
+            id +
+            '-' +
+            proId,
+          {
+            withCredentials: true,
+          }
+        )
       }
     },
     [waitingUsers]
