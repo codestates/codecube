@@ -12,13 +12,9 @@ const NoticeBoard = () => {
   const [jobListData, setJoblistData] = useState([{}])
   const getJobList = async () => {
     await axios
-      .get(
-        'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
-          '/openapi/joblist',
-        {
-          withCredentials: true,
-        }
-      )
+      .get(REACT_APP_API__URL + '/openapi/joblist', {
+        withCredentials: true,
+      })
       .then((res) => {
         setJoblistData(res.data)
       })

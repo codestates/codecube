@@ -14,10 +14,7 @@ const Post = ({ projectId }) => {
   const [thisPost, setThisPost] = useState(initialPostInfo)
 
   useEffect(async () => {
-    const url =
-      'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
-      '/projects/' +
-      projectId
+    const url = REACT_APP_API__URL + '/projects/' + projectId
     await axios
       .get(url, {
         withCredentials: true,

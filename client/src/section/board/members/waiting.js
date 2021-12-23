@@ -22,14 +22,9 @@ const Waiting = ({ hasHost, projectId }) => {
     } else {
       // TODO: API
       axios
-        .get(
-          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
-            '/members/' +
-            projectId,
-          {
-            withCredentials: true,
-          }
-        )
+        .get(REACT_APP_API__URL + '/members/' + projectId, {
+          withCredentials: true,
+        })
         .then(({ data }) => {
           setWaitingUsers(data.waiting)
         })
@@ -45,24 +40,16 @@ const Waiting = ({ hasHost, projectId }) => {
       // TODO: API
       if (type === ACCEPT) {
         axios.put(
-          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
-            '/members/join',
+          REACT_APP_API__URL + '/members/join',
           { userId: id, projectId: proId },
           {
             withCredentials: true,
           }
         )
       } else {
-        axios.delete(
-          'http://ec2-3-35-234-157.ap-northeast-2.compute.amazonaws.com' +
-            '/members/' +
-            id +
-            '-' +
-            proId,
-          {
-            withCredentials: true,
-          }
-        )
+        axios.delete(REACT_APP_API__URL + '/members/' + id + '-' + proId, {
+          withCredentials: true,
+        })
       }
     },
     [waitingUsers]
