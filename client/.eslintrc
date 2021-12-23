@@ -21,7 +21,7 @@
     // "quotes": ["error", "single"],
     // "indent": ["error", 2],
     "indent": "off",
-    "semi": ["error", "never"],
+    // "semi": ["error", "never"],
     "react/prop-types": "off"
   }
 }
