@@ -34,9 +34,24 @@ module.exports = {
         join: 0,
       },
       {
-        userId: 6,
-        projectId: 2,
-        join: 0,
+        userId: 7,
+        projectId: 3,
+        join: 1,
+      },
+      {
+        userId: 8,
+        projectId: 4,
+        join: 1,
+      },
+      {
+        userId: 9,
+        projectId: 5,
+        join: 1,
+      },
+      {
+        userId: 10,
+        projectId: 6,
+        join: 1,
       },
     ])
   },
