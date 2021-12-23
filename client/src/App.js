@@ -11,6 +11,10 @@ import GitContributionUser from './section/gitcontribution/gitContriUser'
 import NoticeBoard from './section/noticeboard/noticeBoard'
 import axios from 'axios'
 
+require('dotenv').config()
+
+const openApi = process.env.REACT_APP_OPEN_API
+
 import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
