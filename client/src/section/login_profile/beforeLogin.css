@@ -1,0 +1,200 @@
+/* ? */
+.login-button,
+.inputA {
+  text-align: center;
+  min-width: 17rem;
+  width: 70%;
+  max-width: 25rem;
+  margin-bottom: 1.5rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.left-textarea,
+.inputA {
+  box-shadow: inset 1.5px 1.5px 3px #cbced1, inset -3px -3px 15px white;
+  transition: box-shadow 0.3s;
+}
+
+.left-textarea:focus,
+.inputA:focus {
+  box-shadow: inset 3px 3px 5px #cbced1, inset -3px -3px 5px white;
+  transition: box-shadow 0.3s;
+}
+
+.login-button {
+  background-color: var(--main-color);
+  transition: box-shadow 0.3s;
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: none;
+  border-radius: 0.5rem;
+}
+.alert:hover {
+  color: #721c24;
+  background-color: #f8d7da;
+  box-shadow: none;
+}
+
+.codecubelogoA {
+  display: flex;
+  justify-content: center;
+  max-height: 8rem;
+  box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
+  margin-bottom: 5rem;
+}
+
+.codeimageA {
+  max-height: 8rem;
+  height: 100%;
+  min-width: 17rem;
+  width: 100%;
+}
+
+.login01A {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-box {
+  align-self: center;
+  max-height: 45.3rem;
+  min-height: 45.3rem;
+  max-width: 23rem;
+  width: 100%;
+}
+
+.login-box,
+.signup1 {
+  margin: 0.4rem;
+  padding: 1rem;
+  flex: 1 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.githublogo-s {
+  width: 4rem;
+  height: 4rem;
+}
+.hat-s {
+  position: absolute;
+  width: 3.5rem;
+  height: 2.2rem;
+  top: 10.6rem;
+  left: 7.1rem;
+}
+
+/* ? */
+
+.colA {
+  border: 1px solid black;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+}
+.boardA {
+  border: 1px solid black;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rowA {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0.4rem;
+  height: 100%;
+}
+.w40A {
+  flex: 4 0 0;
+  /* add */
+  min-width: 300px;
+}
+.w30A {
+  flex: 3 0 0;
+  /* add */
+  min-width: 250px;
+}
+.h50A {
+  flex: 1 0 0;
+  margin: 0.4rem;
+}
+.th50A {
+  flex: 1 0 0;
+}
+.zh20A {
+  flex: 2 0 0;
+}
+.user-input-box {
+  flex: 8 0 0;
+  margin: 0.4rem;
+}
+.zh40A {
+  flex: 4 0 0;
+  margin: 0.4rem;
+}
+
+.login02A {
+  display: flex;
+  flex-direction: column;
+  margin: 0.4rem;
+}
+.qh90A {
+  flex: 9 0 0;
+}
+.qh10A {
+  flex: 1 0 0;
+}
+.tableA {
+  width: 100%;
+  border-top: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+th,
+td {
+  border-bottom: 1px solid black;
+  padding: 2px;
+}
+.board01A {
+  text-align: center;
+}
+
+.snslogolistA {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+}
+.zw10A {
+  flex: 1 0 0;
+}
+
+.snslogoA {
+  width: 25%;
+}
+
+.alert-boxA {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.signupA {
+  align-self: center;
+}
