@@ -16,6 +16,7 @@ body {
   font-family: 'yg-jalnan';
   letter-spacing: .1rem;
   line-height: 1.5rem;
+  color: rgb(66, 63, 59);
 }
 
 `
