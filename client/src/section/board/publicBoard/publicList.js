@@ -11,7 +11,7 @@ const PublicList = ({ isWish, wishList }) => {
   useEffect(() => {
     if (!isWish) {
       axios
-        .get(REACT_APP_API__URL + '/projects')
+        .get(process.env.REACT_APP_API_URL + '/projects')
         .then(({ data }) => {
           setPublicList(data.list)
         })

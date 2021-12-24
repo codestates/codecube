@@ -12,7 +12,7 @@ const ConfirmUsers = ({ projectId }) => {
 
   useEffect(() => {
     axios
-      .get(REACT_APP_API__URL + '/members/' + projectId, {
+      .get(process.env.REACT_APP_API_URL + '/members/' + projectId, {
         withCredentials: true,
       })
       .then(({ data }) => {

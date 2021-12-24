@@ -22,7 +22,7 @@ const Waiting = ({ hasHost, projectId }) => {
     } else {
       // TODO: API
       axios
-        .get(REACT_APP_API__URL + '/members/' + projectId, {
+        .get(process.env.REACT_APP_API_URL + '/members/' + projectId, {
           withCredentials: true,
         })
         .then(({ data }) => {
@@ -40,14 +40,14 @@ const Waiting = ({ hasHost, projectId }) => {
       // TODO: API
       if (type === ACCEPT) {
         axios.put(
-          REACT_APP_API__URL + '/members/join',
+          process.env.REACT_APP_API_URL + '/members/join',
           { userId: id, projectId: proId },
           {
             withCredentials: true,
           }
         )
       } else {
-        axios.delete(REACT_APP_API__URL + '/members/' + id + '-' + proId, {
+        axios.delete(process.env.REACT_APP_API_URL + '/members/' + id + '-' + proId, {
           withCredentials: true,
         })
       }
