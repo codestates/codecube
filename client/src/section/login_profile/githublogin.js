@@ -1,6 +1,6 @@
-import dotenv from 'dotenv'
+// import dotenv from 'dotenv'
 import React from 'react'
-dotenv.config()
+// dotenv.config()
 
 const GitHubLogin = (props) => {
   const redirectUrl = () => {

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import GitHubLogin from './githublogin'
-require('dotenv').config()
+// require('dotenv').config()
 import './beforeLogin.css'
 
 const Login = (props) => {
@@ -35,7 +35,7 @@ const Login = (props) => {
       alertBox.current.classList.add('alert')
     } else {
       await axios
-        .post(REACT_APP_API__URL + '/login', loginInfo)
+        .post(process.env.REACT_APP_API__URL + '/login', loginInfo)
         .then((res) => {
           props.isAuthenticated()
         })

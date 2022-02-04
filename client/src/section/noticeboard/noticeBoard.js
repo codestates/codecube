@@ -4,7 +4,7 @@ import axios from 'axios'
 import { v4 } from 'uuid'
 
 import './noticeBoard.css'
-require('dotenv').config()
+// require('dotenv').config()
 
 // const openApi = process.env.REACT_APP_OPEN_API
 axios.defaults.withCredentials = true
@@ -12,7 +12,7 @@ const NoticeBoard = () => {
   const [jobListData, setJoblistData] = useState([{}])
   const getJobList = async () => {
     await axios
-      .get(REACT_APP_API__URL + '/openapi/joblist', {
+      .get(process.env.REACT_APP_API__URL + '/openapi/joblist', {
         withCredentials: true,
       })
       .then((res) => {
