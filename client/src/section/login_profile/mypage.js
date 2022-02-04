@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-require('dotenv').config()
+// require('dotenv').config()
 import './mypage.css'
 axios.defaults.withCredentials = true
 
@@ -38,7 +38,7 @@ const Mypage = (props) => {
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
     await axios
-      .put(REACT_APP_API__URL + '/users', userInfoEdited, {
+      .put(process.env.REACT_APP_API__URL + '/users', userInfoEdited, {
         withCredentials: true,
       })
       .then((res) => {
@@ -58,7 +58,7 @@ const Mypage = (props) => {
 
   const handleWithdraw = () => {
     axios
-      .delete(REACT_APP_API__URL + '/users', {
+      .delete(process.env.REACT_APP_API__URL + '/users', {
         withCredentials: true,
       })
       .then((res) => {

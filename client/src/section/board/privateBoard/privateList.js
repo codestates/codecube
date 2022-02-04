@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-require('dotenv').config()
+// require('dotenv').config()
 import './privateList.css'
 import Toggle from '../../../components/toggle/toggle'
 import DreamButton from './dreamButton'
@@ -29,7 +29,7 @@ const PrivateList = ({
     }
     // TODO: API
     await axios
-      .get(REACT_APP_API__URL + '/myProjects', {
+      .get(process.env.REACT_APP_API__URL + '/myProjects', {
         withCredentials: true,
       })
       .then(({ data }) => {
