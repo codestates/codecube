@@ -11,7 +11,7 @@ router.delete('/users', controller.users.users.delete)
 router.put('/users', controller.users.changeinfo.put)
 // 로그아웃
 router.get('/logout', controller.users.logout.get)
-// 회원 가입
+// 회원 가입s
 router.post('/signup', controller.users.signup.post)
 // 로그인
 router.post('/login', controller.users.login.post)

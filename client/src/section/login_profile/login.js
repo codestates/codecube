@@ -52,7 +52,7 @@ const Login = (props) => {
           <img className="codeimageA" src="./dummy/codecubelogo.png" alt="codecubelog" />
         </div>
         <div className="user-input-box">
-          <form className="form-wrapper" action="" onSubmit={(e) => e.preventDefault()}>
+          <form className="form-wrapper" action="submit" onSubmit={(e) => e.preventDefault()}>
             <input
               className="inputA"
               type="email"

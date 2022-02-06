@@ -3,23 +3,17 @@ const { users } = require('../models')
 const { makejwt, solveToken } = require('./function')
 const { Op } = require('sequelize')
 const lodash = require('lodash')
-const whoRU = function (withBearer) {
-  const token = withBearer.split(' ')[1]
-  const userInfo = solveToken(token)
-  return userInfo
-}
+
 
 module.exports = {
   users: {
     get: async (req, res) => {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
-      if (!req.cookies.refresh_token) {
+      if (!req.cookies.authorization) {
         return res.status(401).json({ message: 'invailid authorization' })
       }
-
-      const rtoken = req.cookies.refresh_token
-      console.log(rtoken)
-      const decoded = whoRU(rtoken)
+      const rtoken = req.cookies.authorization
+      const decoded = solveToken(rtoken)
       // 해독한 Token값중 Mypage를 구성하는 값들만 받아온다.
       const solve = await users.findOne({
         attributes: ['id', 'username', 'email', 'description', 'image'],
@@ -84,15 +78,14 @@ module.exports = {
   },
   changeinfo: {
     put: async (req, res) => {
-      console.log(req)
-      const token = req.cookies.jwt
+      const token = req.cookies.authorization
       const newInfo = req.body
       //요청정보가 없을시 분기처리
       if (!newInfo) {
         res.status(400).json({ message: 'invalid userinfo' })
       }
       //Token으로 사용자의 현재 정보를 찾는다.
-      const userId = whoRU(token).id
+      const userId = solveToken(token).id
 
       //access Token이 만료될 경우
       if (!userId) {
@@ -189,7 +182,7 @@ module.exports = {
 
         res
           .cookie('id', newuserInfo.id)
-          .cookie('jwt', `bearer ${jwt}`, {
+          .cookie('authentication', `bearer ${jwt}`, {
           //   httpOnly: true,
           //  sameSite:'none'
           })
@@ -224,19 +217,18 @@ module.exports = {
       //DB에 유저정보가 있을시 jwt토큰을 cookie에 담아서보내줌
       else {
         // 찾은 회원정보로 Token을 발급한다.
-        console.log(loginuser)
         const { id, username, email } = loginuser
         const jwt = makejwt({ id, username, email })
-        console.log(jwt)
+        
         // 쿠키로 Token과 id를 전달한다.
         res
-          .cookie('jwt', `bearer ${jwt}`, {
-            httpOnly: true,
-            sameSite:'none'
+          .cookie('authorization', `bearer ${jwt}`, {
+            // httpOnly: true,
+            // sameSite:'none'
           })
           .cookie('id', loginuser.id, {
-            httpOnly: true,
-           sameSite:'none'
+          // httpOnly: true,
+          // sameSite:'none'
           })
           .status(200)
           .json({

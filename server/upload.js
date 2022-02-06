@@ -1,13 +1,11 @@
-
-   
 require('dotenv').config()
-
+const {solveToken} = require('./controllers/function')
 const multer = require('multer') 
 const multerS3 = require('multer-s3')
 const aws = require('aws-sdk')
 
 
-aws.config.loadFromPath(__dirname + '/s3multer.json')
+aws.config.loadFromPath(__dirname + '/s3.json')
 const s3 = new aws.S3()
 const upload = multer({
     storage: multerS3({
@@ -15,8 +13,9 @@ const upload = multer({
         bucket: process.env.S3_MULTER_NAME,
         acl: 'public-read',
         key: (req, file, cb) => { 
-        const uuid =  verifyToken(req.headers.authorization).uuid
-         cb(null,uuid)
+          console.log(req.cookies.authorization)
+        const id=  String(solveToken(req.cookies.authorization).id)
+         cb(null,id)
       }
     })
 })

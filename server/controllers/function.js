@@ -5,15 +5,21 @@ module.exports = {
   makejwt: (data) => {
     const key =  process.env.JWT_KEY
     const option = { expiresIn: '10d', issuer: 'codecube', subject: 'data' }
-    const token = sign(data, key, option)
+    try{
+      const token = sign(data, key, option)
+      return token
+    }
+    catch(e){
+      return (e)
+    }
 
-    return token
   },
   solveToken: (token) => {
+    token = token.split(' ')[1]
     const key = process.env.JWT_KEY
-
+    console.log(key)
     const result = verify(token, key)
-
+    console.log(result)
     return result
   },
 }
