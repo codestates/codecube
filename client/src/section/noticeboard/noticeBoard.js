@@ -1,12 +1,14 @@
+// require('dotenv').config()
 import React, { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { v4 } from 'uuid'
 
+
 import './noticeBoard.css'
 // require('dotenv').config()
 
-// const openApi = process.env.REACT_APP_OPEN_API
+// const openApi = REACT_APP_OPEN_API
 axios.defaults.withCredentials = true
 const NoticeBoard = () => {
   const [jobListData, setJoblistData] = useState([{}])

@@ -13,11 +13,12 @@ module.exports = {
   users: {
     get: async (req, res) => {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
-      if (!req.cookies.jwt) {
+      if (!req.cookies.refresh_token) {
         return res.status(401).json({ message: 'invailid authorization' })
       }
 
-      const rtoken = req.cookies.jwt
+      const rtoken = req.cookies.refresh_token
+      console.log(rtoken)
       const decoded = whoRU(rtoken)
       // 해독한 Token값중 Mypage를 구성하는 값들만 받아온다.
       const solve = await users.findOne({
@@ -25,7 +26,7 @@ module.exports = {
         raw: true,
         where: { id: decoded.id },
       })
-
+     
       // 회원을 찾을수 없는경우 401을 응답한다.
       if (!solve) {
         res.status(401).json({ message: 'invalid authorization' })
@@ -189,8 +190,8 @@ module.exports = {
         res
           .cookie('id', newuserInfo.id)
           .cookie('jwt', `bearer ${jwt}`, {
-            httpOnly: true,
-           sameSite:'none'
+          //   httpOnly: true,
+          //  sameSite:'none'
           })
           .status(201)
           .json({
@@ -226,7 +227,7 @@ module.exports = {
         console.log(loginuser)
         const { id, username, email } = loginuser
         const jwt = makejwt({ id, username, email })
-
+        console.log(jwt)
         // 쿠키로 Token과 id를 전달한다.
         res
           .cookie('jwt', `bearer ${jwt}`, {
