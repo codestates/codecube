@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
 const url = process.env.REACT_APP_SERVER;
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 function App() {
   const handleClick = () => {

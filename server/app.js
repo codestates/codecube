@@ -1,10 +1,24 @@
 const express = require("express");
+const fs = require("fs");
+const https = require("https");
 const app = express();
-const port = 80;
+const port = 443;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-app.use(cors({ origin: "http://localhost:3000" }));
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    // secure: true,
+    sameSite: "lax",
+  })
+);
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
@@ -12,9 +26,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/hello", (req, res) => {
-  res.cookie("hello", "world").send("world");
+  res.cookie("hello", "world!!!").send("world");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+https.createServer(options, app).listen(port, () => {
+  console.log(`server listening on port ${port}`);
 });
