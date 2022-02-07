@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 // require('dotenv').config()
@@ -10,6 +10,8 @@ const Mypage = (props) => {
   const navigate = useNavigate()
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
+  const [file,setFile] = useState('')
+  const [userId, setId] = useState('')
 
   const [userInfoEdited, setUserInfoEdited] = useState({
     image: image,
@@ -17,6 +19,10 @@ const Mypage = (props) => {
     username: username,
     description: description,
   })
+
+
+  // const userInfo = localStorage.getItem("userinfo")
+  // setId(userInfo.id)
 
   const checkboxhandler = (checked, id) => {
     if (checked) {
@@ -47,6 +53,25 @@ const Mypage = (props) => {
         navigate('/')
       })
   }
+
+  const saveImage = async (file) => {
+    const formData = new FormData();
+  formData.append("image",file)
+
+  await axios.post(process.env.REACT_APP_API__URL+ '/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+  }
+
+
+  const upload = async (event) => {
+    event.preventDefault()
+    await saveImage(file)
+  }
+
+  const settingFile = (event) => {
+    const file = event.target.files[0]
+    setFile(file)
+  }
+
 
   //사진 삭제 전송 함수
   function changeMyprofile(event) {
@@ -103,7 +128,10 @@ const Mypage = (props) => {
           <button className="mypage-btn" onClick={mypage}>
             내페이지
           </button>
-
+          <form onSubmit={upload} encType="multipart/form-data">
+            <input onChange={settingFile} type="file" accept="image/*" />
+            <button type="submit" >사진 업로드하기</button>
+          </form>
           <div className="mypage-email">{email}</div>
           <div id="left-image-wrapper">
             <div id="left-pi-wrapper">기본 이미지</div>
@@ -175,14 +203,9 @@ const Mypage = (props) => {
       ) : (
         <div className="main-box left-box">
           <h1>Mypage</h1>
-          {props.File && (
-            <div>
-              <img src={props.File} width="200px" height="100px" />
-              <div>
-                <button onClick={clearMyProfile}> Clear IMG</button>
-              </div>
+          <div>
+              <img src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`} width="200px" height="100px" />
             </div>
-          )}
           <div id="mypage-userInfo">
             <div>{username}</div>
             <div>{email}</div>
