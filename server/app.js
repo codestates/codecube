@@ -3,6 +3,9 @@ const app = express();
 const port = 80;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+
+app.use(logger("dev"));
 
 app.use(
   cors({
