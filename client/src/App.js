@@ -6,8 +6,11 @@ axios.defaults.withCredentials = true;
 
 function App() {
   const handleClick = () => {
-    console.log("hello");
     axios.get(`${url}/hello`).then((res) => console.log(res.data));
+  };
+
+  const handleClickWorld = () => {
+    axios.get(`${url}/world`).then((res) => console.log(res.data));
   };
 
   return (
@@ -15,6 +18,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <button onClick={handleClick}>hello</button>
+        <button onClick={handleClickWorld}>world</button>
       </header>
     </div>
   );
