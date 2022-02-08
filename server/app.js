@@ -13,10 +13,10 @@ const options = {
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://localhost:3000",
     credentials: true,
-    // secure: true,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   })
 );
 app.use(cookieParser());
