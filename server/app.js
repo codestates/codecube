@@ -17,7 +17,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/hello", (req, res) => {
-  res.cookie("hello", "world!!!").send("world");
+  res
+    .cookie("hello", "world!!!", {
+      domain: "ec2-52-79-189-93.ap-northeast-2.compute.amazonaws.com",
+      secure: false,
+    })
+    .send("world");
 });
 
 app.listen(port, () => {
