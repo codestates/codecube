@@ -12,8 +12,6 @@ app.use(
     origin: "http://codecube.tk.s3-website.ap-northeast-2.amazonaws.com/",
     credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
-    secure: true,
-    sameSite: "none",
   })
 );
 app.use(cookieParser());
