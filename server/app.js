@@ -9,7 +9,7 @@ app.use(logger("dev"));
 
 app.use(
   cors({
-    origin: "http://codecube.tk.s3-website.ap-northeast-2.amazonaws.com/",
+    origin: "http://codecube.tk.s3-website.ap-northeast-2.amazonaws.com",
     credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
   })
