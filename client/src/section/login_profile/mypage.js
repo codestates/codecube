@@ -20,9 +20,11 @@ const Mypage = (props) => {
     description: description,
   })
 
+  useEffect(() =>{
+    const userInfo = localStorage.getItem("userinfo")
+    setId(userInfo.id)
+  },[])
 
-  // const userInfo = localStorage.getItem("userinfo")
-  // setId(userInfo.id)
 
   const checkboxhandler = (checked, id) => {
     if (checked) {
@@ -72,14 +74,6 @@ const Mypage = (props) => {
     setFile(file)
   }
 
-
-  //사진 삭제 전송 함수
-  function changeMyprofile(event) {
-    props.changePhoto(event)
-  }
-  function clearMyProfile(event) {
-    props.clearPhoto(event)
-  }
 
   const handleWithdraw = () => {
     axios
@@ -135,13 +129,6 @@ const Mypage = (props) => {
           <div className="mypage-email">{email}</div>
           <div id="left-image-wrapper">
             <div id="left-pi-wrapper">기본 이미지</div>
-            <input
-              id="left-profile-button"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              onChange={changeMyprofile}
-            />
             <label id="left-fake-btn" htmlFor="left-profile-button">
               프로필
             </label>
