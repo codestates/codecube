@@ -9,7 +9,7 @@ app.use(logger("dev"));
 
 app.use(
   cors({
-    origin: "http://codecube.tk.s3-website.ap-northeast-2.amazonaws.com",
+    origin: "https://codecube.tk",
     credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
   })
@@ -25,8 +25,9 @@ app.get("/world", (req, res) => {
 app.get("/hello", (req, res) => {
   res
     .cookie("hello", "world!!!", {
-      domain: "ec2-52-79-189-93.ap-northeast-2.compute.amazonaws.com",
-      secure: false,
+      domain: "codecube.tk",
+      secure: true,
+      sameSite: "none",
     })
     .send("world");
 });
