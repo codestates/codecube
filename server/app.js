@@ -11,12 +11,14 @@ app.use(
   cors({
     origin: "http://codecube.tk.s3-website.ap-northeast-2.amazonaws.com/",
     credentials: true,
-    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
+    methods: ["GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
     secure: true,
     sameSite: "none",
   })
 );
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/world", (req, res) => {
   res.send("world!");
