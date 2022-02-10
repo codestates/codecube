@@ -19,13 +19,15 @@ const PublicList = ({ isWish, wishList }) => {
           console.error(err)
         })
     } else {
+      // console.log(wishList.guest)
+      // ! 수정 필요
       if (!wishList.guest.wishList.length) {
         setPublicList(wishList.guest.confirmed)
       } else {
         setPublicList(wishList.guest.wishList)
       }
     }
-  }, [isWish, wishList])
+  }, [])
 
   return (
     <>
@@ -40,10 +42,7 @@ const PublicList = ({ isWish, wishList }) => {
             return (
               <div key={v4()} className="post-card">
                 <h3>{post.title}</h3>
-                <div>
-                  {/* {post.confirmed ? `참여인원 ${post.confirmed}/ 4` : '자세히 보기👁‍🗨'} */}
-                  {`참여인원 ${post.confirmed}/ 4`}
-                </div>
+                <div>{`참여인원 ${post.confirmed}/ 4`}</div>
               </div>
             )
           })
