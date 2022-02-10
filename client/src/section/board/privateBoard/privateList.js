@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+// require('dotenv').config()
 import './privateList.css'
 import Toggle from '../../../components/toggle/toggle'
 import DreamButton from './dreamButton'
@@ -12,7 +12,7 @@ import { WAITING_USERS, WAITING_USERS_LINK } from '../hardWord'
 const havePostAsHost = (obj) => {
   return obj.host.projectId > 0
 }
-
+axios.defaults.withCredentials = true
 const PrivateList = ({
   setHasHost,
   hasHost,
@@ -28,19 +28,19 @@ const PrivateList = ({
       navigation('/')
     }
     // TODO: API
-    await axios.get('http://localhost:4000/myProjects').then(({ data }) => {
-      if (havePostAsHost(data)) {
-        // console.log('have host')
-        // console.log(data)
-        setDashBoardInfo(data)
-        setHasHost(true)
-      } else {
-        // console.log('have not host')
-        // console.log(data)
-        setWishList(data)
-        setHasHost(false)
-      }
-    })
+    await axios
+      .get(process.env.REACT_APP_API__URL + '/myProjects', {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        if (havePostAsHost(data)) {
+          setDashBoardInfo(data)
+          setHasHost(true)
+        } else {
+          setWishList(data)
+          setHasHost(false)
+        }
+      })
   }, [isLoggedIn])
 
   return (

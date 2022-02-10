@@ -1,8 +1,8 @@
 // export default App
+// require('dotenv').config()
 import React, { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import Board from './section/board/board'
-
 import Mypage from './section/login_profile/mypage'
 import Login from './section/login_profile/login'
 import Signup from './section/login_profile/signup'
@@ -18,6 +18,8 @@ const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
 const authorizationCode = url.searchParams.get('code')
 
+axios.defaults.withCredentials = true
+
 function App() {
   const [File, setFile] = useState('')
   const [isLoggedIn, setisLoggedIn] = useState(savedUserInfo ?? false)
@@ -30,27 +32,30 @@ function App() {
   // console.log('로그인은 했냐', isLoggedIn ? 'ㅇㅇ' : 'ㄴㄴ')
 
   const isAuthenticated = async () => {
-    // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
-    console.log('로그인 요청은 성공함.')
-    await axios.get('http://localhost:4000/users').then(({ data: { data } }) => {
-      const userJSON = {
-        id: data.id,
-        username: data.username,
-        email: data.email,
-        description: data.description,
-        stacks: data.stacks,
-        image: data.image,
-      }
-      window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-      setUserinfo(data)
-      setisLoggedIn(true)
-    })
+    // console.log('로그인 요청은 성공함.')
+    await axios
+      .get(process.env.REACT_APP_API__URL + '/users', {
+        withCredentials: true,
+      })
+      .then(({ data: { data } }) => {
+        const userJSON = {
+          id: data.id,
+          username: data.username,
+          email: data.email,
+          description: data.description,
+          stacks: data.stacks,
+          image: data.image,
+        }
+        window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
+        setUserinfo(data)
+        setisLoggedIn(true)
+      })
   }
 
   //받은 authorization 코드이용 서버로 callback api 요청
   const getAccessTocken = async (authorizationCode) => {
     await axios
-      .post('http://localhost:4000/github/callback', {
+      .post(process.env.REACT_APP_API__URL + '/github/callback', {
         authorizationCode: authorizationCode,
       })
       .then((res) => {
@@ -62,7 +67,7 @@ function App() {
 
   const getGithudInfo = async (gitAccessToken) => {
     await axios
-      .get('http://localhost:4000/github/userInfo', {
+      .get(process.env.REACT_APP_API__URL + '/github/userInfo', {
         headers: { authorization: gitAccessToken },
       })
       .then((res) => {
@@ -78,12 +83,16 @@ function App() {
   }, [])
 
   const handleLogout = () => {
-    axios.get('http://localhost:4000/logout').then((res) => {
-      window.localStorage.removeItem('userinfo')
-      setUserinfo('')
-      setisLoggedIn(false)
-      navigate('/')
-    })
+    axios
+      .get(process.env.REACT_APP_API__URL + '/logout', {
+        withCredentials: true,
+      })
+      .then((res) => {
+        window.localStorage.removeItem('userinfo')
+        setUserinfo('')
+        setisLoggedIn(false)
+        navigate('/')
+      })
   }
 
   const handleEdit = () => {
@@ -102,7 +111,7 @@ function App() {
   }
   //사진 입력
   function changePhoto(data) {
-    console.log('사진입력')
+    // console.log('사진입력')
     const {
       target: { files },
     } = event

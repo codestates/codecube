@@ -8,7 +8,7 @@ const whoRU = function (withBearer) {
 
 module.exports = {
   delete: async (req, res) => {
-    console.log(req.params)
+    // console.log(req.params)
     const userId = req.params.userId
     const proId = req.params.projectId
     const target = await models.project_users.destroy({
@@ -23,10 +23,13 @@ module.exports = {
   },
   put: async (req, res) => {
     const { userId, projectId } = req.body
-    console.log(req.body)
-    const project_users = await models.project_users.update({ join: 1 }, {
-      where: { userId: userId, projectId: projectId },
-    })
+    // console.log(req.body)
+    const project_users = await models.project_users.update(
+      { join: 1 },
+      {
+        where: { userId: userId, projectId: projectId },
+      }
+    )
     if (!project_users) {
       res.status(404).json({ message: 'Not Found' })
     } else {
@@ -64,13 +67,13 @@ module.exports = {
           acc.confirmed.push({
             userId: cur.userId,
             username: cur['user.username'],
-            projectId: cur['projectId']
+            projectId: cur['projectId'],
           })
         } else {
           acc.waiting.push({
             userId: cur.userId,
             username: cur['user.username'],
-            projectId: cur['projectId']
+            projectId: cur['projectId'],
           })
         }
         return acc

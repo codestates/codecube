@@ -1,20 +1,25 @@
+// require('dotenv').config()
 import React, { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { v4 } from 'uuid'
 
+
 import './noticeBoard.css'
-require('dotenv').config()
+// require('dotenv').config()
 
+// const openApi = REACT_APP_OPEN_API
 axios.defaults.withCredentials = true
-// const openApi = process.env.REACT_APP_OPEN_API
-
 const NoticeBoard = () => {
   const [jobListData, setJoblistData] = useState([{}])
   const getJobList = async () => {
-    await axios.get('http://localhost:4000/openapi/joblist').then((res) => {
-      setJoblistData(res.data)
-    })
+    await axios
+      .get(process.env.REACT_APP_API__URL + '/openapi/joblist', {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setJoblistData(res.data)
+      })
   }
 
   useEffect(() => {

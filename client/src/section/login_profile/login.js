@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import GitHubLogin from './githublogin'
-
+// require('dotenv').config()
 import './beforeLogin.css'
 
 const Login = (props) => {
@@ -35,7 +35,7 @@ const Login = (props) => {
       alertBox.current.classList.add('alert')
     } else {
       await axios
-        .post('http://localhost:4000/login', loginInfo)
+        .post(process.env.REACT_APP_API__URL + '/login', loginInfo)
         .then((res) => {
           props.isAuthenticated()
         })
@@ -52,7 +52,7 @@ const Login = (props) => {
           <img className="codeimageA" src="./dummy/codecubelogo.png" alt="codecubelog" />
         </div>
         <div className="user-input-box">
-          <form className="form-wrapper" action="" onSubmit={(e) => e.preventDefault()}>
+          <form className="form-wrapper" action="submit" onSubmit={(e) => e.preventDefault()}>
             <input
               className="inputA"
               type="email"

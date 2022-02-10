@@ -18,12 +18,13 @@
   },
   "homepage": "https://github.com/codestates/codecube#readme",
   "dependencies": {
-    "aws-sdk": "^2.1048.0",
-    "axios": "^0.24.0",
+    "aws-sdk": "^2.1068.0",
+    "axios": "^0.25.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.1",
+    "g": "^2.0.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
@@ -31,12 +32,13 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
-    "sequelize": "^6.12.0-beta.3",
-    "sequelize-cli": "^6.3.0",
-    "sharp": "^0.29.3"
+    "npm": "^8.4.1",
+    "sequelize": "^6.15.0",
+    "sequelize-cli": "^6.4.1",
+    "sharp": "^0.30.0"
   },
   "devDependencies": {
-    "eslint": "^8.4.1",
+    "eslint": "^8.8.0",
     "jsonwebtoken": "^8.5.1",
     "prettier": "^2.5.1"
   }

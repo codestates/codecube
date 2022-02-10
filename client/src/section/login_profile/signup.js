@@ -1,8 +1,9 @@
+// require('dotenv').config()
 import React, { useEffect, useRef, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
-
+// require('dotenv').config()
 import './signup.css'
 
 const Signup = (props) => {
@@ -56,10 +57,10 @@ const Signup = (props) => {
       setSignupText('모든 항목은 필수입니다')
     } else {
       await axios
-        .post('http://localhost:4000/signup', signupInfo)
+        .post(process.env.REACT_APP_API__URL + '/signup', signupInfo)
         .then((res) => {
           props.isAuthenticated()
-          console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }
+          // console.log('사인업후 받아온데이터 ', res) //사인업후 받아온데이터  { message: 'ok' }
           if (res.data.message === 'signup successed') {
             props.setIsSignup(false)
           }

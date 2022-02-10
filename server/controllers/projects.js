@@ -63,7 +63,7 @@ module.exports = {
     },
     delete: async (req, res) => {
       //1. 일단 게시글 지우기
-      console.log(req.params)
+      // console.log(req.params)
       const projectId = req.params.projectId
       const target = await models.projects.findOne({
         where: { id: projectId },
@@ -169,7 +169,7 @@ module.exports = {
 
       if (target) {
         console.log('host!!')
-        console.log(target)
+        // console.log(target)
         const { id: projectId, start, done, title } = target
         return res.status(200).json({
           ...myProjectsForm,

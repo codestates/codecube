@@ -83,13 +83,7 @@
 .githublogo-s {
   width: 4rem;
   height: 4rem;
-}
-.hat-s {
-  position: absolute;
-  width: 3.5rem;
-  height: 2.2rem;
-  top: 10.6rem;
-  left: 7.1rem;
+  background-color: lightgray;
 }
 
 /* ? */

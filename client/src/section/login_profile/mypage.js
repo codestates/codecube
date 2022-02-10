@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+// require('dotenv').config()
 import './mypage.css'
 axios.defaults.withCredentials = true
 
@@ -10,6 +10,8 @@ const Mypage = (props) => {
   const navigate = useNavigate()
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
+  const [file,setFile] = useState('')
+  const [userId, setId] = useState('')
 
   const [userInfoEdited, setUserInfoEdited] = useState({
     image: image,
@@ -17,6 +19,12 @@ const Mypage = (props) => {
     username: username,
     description: description,
   })
+
+  useEffect(() =>{
+    const userInfo = localStorage.getItem("userinfo")
+    setId(userInfo.id)
+  },[])
+
 
   const checkboxhandler = (checked, id) => {
     if (checked) {
@@ -37,30 +45,49 @@ const Mypage = (props) => {
 
   const handleSave = async () => {
     userInfoEdited['stacks'] = checkedStacks
-    await axios.put('http://localhost:4000/users', userInfoEdited).then((res) => {
-      setEditProfileBtn(false)
-      props.isAuthenticated()
-      navigate('/')
-    })
+    await axios
+      .put(process.env.REACT_APP_API__URL + '/users', userInfoEdited, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setEditProfileBtn(false)
+        props.isAuthenticated()
+        navigate('/')
+      })
   }
 
-  //사진 삭제 전송 함수
-  function changeMyprofile(event) {
-    props.changePhoto(event)
+  const saveImage = async (file) => {
+    const formData = new FormData();
+  formData.append("image",file)
+
+  await axios.post(process.env.REACT_APP_API__URL+ '/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
-  function clearMyProfile(event) {
-    props.clearPhoto(event)
+
+
+  const upload = async (event) => {
+    event.preventDefault()
+    await saveImage(file)
   }
+
+  const settingFile = (event) => {
+    const file = event.target.files[0]
+    setFile(file)
+  }
+
 
   const handleWithdraw = () => {
-    axios.delete('http://localhost:4000/users').then((res) => {
-      const ㅅㄱ = confirm('정말로 탈퇴하시겠습니까?')
-      ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
+    axios
+      .delete(process.env.REACT_APP_API__URL + '/users', {
+        withCredentials: true,
+      })
+      .then((res) => {
+        const ㅅㄱ = confirm('정말로 탈퇴하시겠습니까?')
+        ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
 
-      window.localStorage.removeItem('userinfo')
-      props.setisLoggedIn(false)
-      navigate('/')
-    })
+        window.localStorage.removeItem('userinfo')
+        props.setisLoggedIn(false)
+        navigate('/')
+      })
   }
 
   //비밀번호 매치 함수
@@ -95,17 +122,13 @@ const Mypage = (props) => {
           <button className="mypage-btn" onClick={mypage}>
             내페이지
           </button>
-
+          <form onSubmit={upload} encType="multipart/form-data">
+            <input onChange={settingFile} type="file" accept="image/*" />
+            <button type="submit" >사진 업로드하기</button>
+          </form>
           <div className="mypage-email">{email}</div>
           <div id="left-image-wrapper">
             <div id="left-pi-wrapper">기본 이미지</div>
-            <input
-              id="left-profile-button"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              onChange={changeMyprofile}
-            />
             <label id="left-fake-btn" htmlFor="left-profile-button">
               프로필
             </label>
@@ -167,14 +190,9 @@ const Mypage = (props) => {
       ) : (
         <div className="main-box left-box">
           <h1>Mypage</h1>
-          {props.File && (
-            <div>
-              <img src={props.File} width="200px" height="100px" />
-              <div>
-                <button onClick={clearMyProfile}> Clear IMG</button>
-              </div>
+          <div>
+              <img src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`} width="200px" height="100px" />
             </div>
-          )}
           <div id="mypage-userInfo">
             <div>{username}</div>
             <div>{email}</div>

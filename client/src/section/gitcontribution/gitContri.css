@@ -22,13 +22,7 @@
 .githublogo {
   width: 6rem;
   height: 100%;
-}
-
-.hat {
-  top: 1rem;
-  position: absolute;
-  width: 8rem;
-  height: 25%;
+  background-color: lightgray;
 }
 
 .greet {
