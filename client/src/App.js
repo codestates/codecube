@@ -32,8 +32,7 @@ function App() {
   // console.log('로그인은 했냐', isLoggedIn ? 'ㅇㅇ' : 'ㄴㄴ')
 
   const isAuthenticated = async () => {
-    // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
-    console.log('로그인 요청은 성공함.')
+    // console.log('로그인 요청은 성공함.')
     await axios
       .get(process.env.REACT_APP_API__URL + '/users', {
         withCredentials: true,
@@ -112,7 +111,7 @@ function App() {
   }
   //사진 입력
   function changePhoto(data) {
-    console.log('사진입력')
+    // console.log('사진입력')
     const {
       target: { files },
     } = event

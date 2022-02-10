@@ -8,8 +8,6 @@ const sequelize = require('./models').sequelize
 const cookieParser = require('cookie-parser')
 const indexRouter = require('./routes')
 
-
-
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
@@ -17,7 +15,7 @@ app.use(morgan('dev'))
 app.use(
   cors({
     credentials: true,
- origin: process.env.ORIGIN,
+    origin: process.env.ORIGIN,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   })
 )

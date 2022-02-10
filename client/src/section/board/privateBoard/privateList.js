@@ -34,13 +34,9 @@ const PrivateList = ({
       })
       .then(({ data }) => {
         if (havePostAsHost(data)) {
-          // console.log('have host')
-          // console.log(data)
           setDashBoardInfo(data)
           setHasHost(true)
         } else {
-          // console.log('have not host')
-          // console.log(data)
           setWishList(data)
           setHasHost(false)
         }

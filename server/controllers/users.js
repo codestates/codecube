@@ -4,7 +4,6 @@ const { makejwt, solveToken } = require('./function')
 const { Op } = require('sequelize')
 const lodash = require('lodash')
 
-
 module.exports = {
   users: {
     get: async (req, res) => {
@@ -20,7 +19,7 @@ module.exports = {
         raw: true,
         where: { id: decoded.id },
       })
-     
+
       // 회원을 찾을수 없는경우 401을 응답한다.
       if (!solve) {
         res.status(401).json({ message: 'invalid authorization' })
@@ -167,7 +166,7 @@ module.exports = {
             let element = lodash.cloneDeep(stackobj)
             //출력예시 ::: InputStackList = [{userId: 1 , stackId: 3} , { userId:1 , stackId:5}]
             InputStackList.push(element)
-            console.log(InputStackList)
+            // console.log(InputStackList)
           })
           //JOIN테이블에 일괄 생성
           await models.user_stacks.bulkCreate(InputStackList)
@@ -183,8 +182,8 @@ module.exports = {
         res
           .cookie('id', newuserInfo.id)
           .cookie('authentication', `bearer ${jwt}`, {
-          //   httpOnly: true,
-          //  sameSite:'none'
+            //   httpOnly: true,
+            //  sameSite:'none'
           })
           .status(201)
           .json({
@@ -219,7 +218,7 @@ module.exports = {
         // 찾은 회원정보로 Token을 발급한다.
         const { id, username, email } = loginuser
         const jwt = makejwt({ id, username, email })
-        
+
         // 쿠키로 Token과 id를 전달한다.
         res
           .cookie('authorization', `bearer ${jwt}`, {
@@ -227,8 +226,8 @@ module.exports = {
             // sameSite:'none'
           })
           .cookie('id', loginuser.id, {
-          // httpOnly: true,
-          // sameSite:'none'
+            // httpOnly: true,
+            // sameSite:'none'
           })
           .status(200)
           .json({
