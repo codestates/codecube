@@ -1,0 +1,67 @@
+#mypage-userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  align-self: center;
+  height: 20rem;
+  width: 70%;
+}
+
+#mypage-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mypage-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin: 0.4rem;
+  height: 45.3rem;
+}
+.mypage-wrapper > h1 {
+  margin-bottom: 2rem;
+}
+
+.mypage-btn {
+  align-self: center;
+  width: 50%;
+  height: 2.5rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 5px #cbced1, -3px -3px 5px white;
+}
+
+.mypage-email {
+  text-align: center;
+}
+
+#stack-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem 0.4rem;
+  padding: 0.3rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  white-space: nowrap;
+  overflow: scroll;
+  background-color: var(--main-color);
+  width: 80%;
+  height: 7rem;
+}
+
+.alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+.alert:hover {
+  color: #721c24;
+  background-color: #f8d7da;
+  box-shadow: none;
+}

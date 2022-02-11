@@ -1,0 +1,76 @@
+#waiting-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(0, 50, 98, 0.2);
+  box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
+  border-radius: 0.5rem;
+  align-content: flex-start;
+  justify-content: center;
+  overflow-y: scroll;
+  height: 100%;
+  padding: 1rem;
+}
+
+.waiting-card {
+  display: flex;
+  background: hsl(0deg 0% 100%);
+  box-shadow: 0 6px 12px -6px rgba(66, 63, 59, 0.3);
+  border-radius: 0.5rem;
+  justify-content: space-between;
+  height: 5rem;
+  width: 40%;
+  min-width: 14rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 5px;
+  font-size: 0.7rem;
+  line-height: 1.1rem;
+}
+
+.waiting-profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 55%;
+}
+
+.waiting-dummy-image {
+  width: 50%;
+  height: 100%;
+  background-color: steelblue;
+}
+
+.waiting-button-wrapper {
+  width: 45%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#del,
+#gotcha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 60%;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+#gotcha:focus,
+#gotcha:active,
+#gotcha:hover {
+  background-color: rgb(116, 182, 102);
+  transition: background-color 0.2s;
+}
+
+#del:active,
+#del:hover,
+#del:focus {
+  background-color: rgb(254, 46, 46);
+  transition: background-color 0.2s;
+}
