@@ -27,12 +27,16 @@ const PrivateList = ({
     if (!isLoggedIn) {
       navigation('/')
     }
-    // TODO: API
+    // console.log(process.env.REACT_APP_API__URL + '/myProjects')
+    // ! 수정 필요
+    // ! http://localhost:4000/myProjects 로 GET요청을 보내고있는데, 서버에 myProjects를 받는 라우터가 없음
+
     await axios
       .get(process.env.REACT_APP_API__URL + '/myProjects', {
         withCredentials: true,
       })
       .then(({ data }) => {
+        console.log('/myProject 요청주고받음')
         if (havePostAsHost(data)) {
           setDashBoardInfo(data)
           setHasHost(true)
@@ -41,7 +45,7 @@ const PrivateList = ({
           setHasHost(false)
         }
       })
-  }, [isLoggedIn])
+  }, [])
 
   return (
     <>

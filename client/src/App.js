@@ -1,5 +1,3 @@
-// export default App
-// require('dotenv').config()
 import React, { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import Board from './section/board/board'
@@ -29,10 +27,8 @@ function App() {
   const [gitAccessToken, setGtiAccessToken] = useState()
   const [gitContri, setGitContri] = useState('')
   const navigate = useNavigate()
-  // console.log('로그인은 했냐', isLoggedIn ? 'ㅇㅇ' : 'ㄴㄴ')
 
   const isAuthenticated = async () => {
-    // console.log('로그인 요청은 성공함.')
     await axios
       .get(process.env.REACT_APP_API__URL + '/users', {
         withCredentials: true,
