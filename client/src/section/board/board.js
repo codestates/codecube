@@ -15,7 +15,7 @@ const Board = ({ isLoggedIn }) => {
   const [dashBoardInfo, setDashBoardInfo] = useState(projectInitial)
   const [hasHost, setHasHost] = useState(false)
   const [wishList, setWishList] = useState(projectInitial)
-
+  // console.log(hasHost)
   return (
     <div id="board-wrapper" className="main-box">
       <Toggle
