@@ -4,7 +4,7 @@ import Board from './section/board/board'
 import Mypage from './section/login_profile/mypage'
 import Login from './section/login_profile/login'
 import Signup from './section/login_profile/signup'
-import GitContribution from './section/gitcontribution/gitContri'
+// import GitContribution from './section/gitcontribution/gitContri'
 import GitContributionUser from './section/gitcontribution/gitContriUser'
 import NoticeBoard from './section/noticeboard/noticeBoard'
 import axios from 'axios'
@@ -102,11 +102,7 @@ function App() {
         </div>
         <div className="col w30">
           <div className="row main-box github-wrapper">
-            {isLoggedIn ? (
-              <GitContributionUser gitContri={gitContri} />
-            ) : (
-              <GitContribution />
-            )}
+            <GitContributionUser gitContri={gitContri} />
           </div>
           <div className="row main-box notice-wrapper">
             <NoticeBoard />
