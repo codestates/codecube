@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-// require('dotenv').config()
 import './mypage.css'
 axios.defaults.withCredentials = true
 
 const Mypage = (props) => {
-  const { username, stacks, description, image, email } = props.userinfo
-  const navigate = useNavigate()
+  const { username, stacks, description, image, email } = JSON.parse(
+    window.localStorage.getItem('userinfo')
+  )
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
-  const [file,setFile] = useState('')
-  const [userId, setId] = useState('')
+  const [file, setFile] = useState('')
 
   const [userInfoEdited, setUserInfoEdited] = useState({
-    image: image,
-    email: email,
-    username: username,
-    description: description,
+    image,
+    email,
+    username,
+    description,
   })
 
-  useEffect(() =>{
-    const userInfo = localStorage.getItem("userinfo")
-    setId(userInfo.id)
-  },[])
-
+  const navigate = useNavigate()
 
   const checkboxhandler = (checked, id) => {
     if (checked) {
@@ -57,12 +52,13 @@ const Mypage = (props) => {
   }
 
   const saveImage = async (file) => {
-    const formData = new FormData();
-  formData.append("image",file)
+    const formData = new FormData()
+    formData.append('image', file)
 
-  await axios.post(process.env.REACT_APP_API__URL+ '/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+    await axios.post(process.env.REACT_APP_API__URL + '/image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
   }
-
 
   const upload = async (event) => {
     event.preventDefault()
@@ -73,7 +69,6 @@ const Mypage = (props) => {
     const file = event.target.files[0]
     setFile(file)
   }
-
 
   const handleWithdraw = () => {
     axios
@@ -124,7 +119,7 @@ const Mypage = (props) => {
           </button>
           <form onSubmit={upload} encType="multipart/form-data">
             <input onChange={settingFile} type="file" accept="image/*" />
-            <button type="submit" >사진 업로드하기</button>
+            <button type="submit">사진 업로드하기</button>
           </form>
           <div className="mypage-email">{email}</div>
           <div id="left-image-wrapper">
@@ -191,8 +186,12 @@ const Mypage = (props) => {
         <div className="main-box left-box">
           <h1>Mypage</h1>
           <div>
-              <img src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`} width="200px" height="100px" />
-            </div>
+            <img
+              src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`}
+              width="200px"
+              height="100px"
+            />
+          </div>
           <div id="mypage-userInfo">
             <div>{username}</div>
             <div>{email}</div>

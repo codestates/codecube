@@ -2,6 +2,7 @@
   --main-border-radius: 1rem;
   --main-color: rgba(0, 50, 98, 0.5);
 }
+
 /* ?  */
 
 #container {
@@ -14,7 +15,6 @@
 
 .main-box {
   background-color: #ecf0f3;
-  /* background-color: rgba(100, 203, 203, 0.057); */
   border-radius: var(--main-border-radius);
   box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
 }

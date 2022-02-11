@@ -91,6 +91,7 @@ const Signup = (props) => {
   function clearMyProfile(event) {
     props.clearPhoto(event)
   }
+
   return (
     <div className="left-box main-box">
       <h1>회원가입</h1>
