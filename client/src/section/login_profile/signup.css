@@ -1,0 +1,72 @@
+.left-box {
+  display: flex;
+  flex-direction: column;
+  margin: 0.4rem;
+  padding: 1rem 0;
+  align-self: center;
+  min-height: 45.3rem;
+  max-width: 26rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#left-image-wrapper {
+  display: flex;
+  align-self: center;
+  width: 70%;
+  height: 5.5rem;
+  border-radius: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#left-image-wrapper > label,
+#left-image-wrapper > div {
+  font-size: 0.7rem;
+  border-radius: 0.5rem;
+}
+
+#left-pi-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(128, 128, 128, 0.543);
+  width: 40%;
+  height: 100%;
+}
+
+#left-pi {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+#left-fake-delete,
+#left-fake-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-color);
+  width: 4rem;
+  height: 3rem;
+}
+
+#left-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.left-textarea {
+  resize: none;
+  width: 80%;
+  height: 5rem;
+  overflow: scroll;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
