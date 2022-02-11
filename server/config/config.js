@@ -5,9 +5,9 @@ module.exports = {
     username: process.env.RDS_DATABASE_USERNAME,
     password: process.env.RDS_DATABASE_PASSWORD,
     database: process.env.RDS_DATABASE_NAME,
-    host: '127.0.0.1',
+    host: process.env.RDS_DATABASE_HOST,
     dialect: 'mysql',
-    // port: process.env.RDS_DATABASE_PORT,
+    port: process.env.RDS_DATABASE_PORT,
   },
   test: {
     username: process.env.RDS_DATABASE_USERNAME,
