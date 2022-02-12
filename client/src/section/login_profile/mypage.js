@@ -208,7 +208,7 @@ const Mypage = (props) => {
               edit profile
             </button>
             <button className="mypage-btn" onClick={handleWithdraw}>
-              Account Withdraw(회원탈퇴)
+              회원탈퇴
             </button>
           </div>
         </div>

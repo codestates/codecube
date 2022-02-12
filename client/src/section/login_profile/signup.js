@@ -1,9 +1,7 @@
-// require('dotenv').config()
 import React, { useEffect, useRef, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
-// require('dotenv').config()
 import './signup.css'
 
 const Signup = (props) => {

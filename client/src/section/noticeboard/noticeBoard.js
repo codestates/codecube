@@ -22,7 +22,7 @@ const NoticeBoard = () => {
   }
 
   useEffect(() => {
-    getJobList()
+    // getJobList()
   }, [])
 
   return (
