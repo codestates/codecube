@@ -12,12 +12,11 @@ import axios from 'axios'
 import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
-const savedUserInfo = window.localStorage.getItem('userinfo')
-
 // const url = new URL(window.location.href)
 // const authorizationCode = url.searchParams.get('code')
 
 axios.defaults.withCredentials = true
+const savedUserInfo = window.localStorage.getItem('userinfo')
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(savedUserInfo ? true : false)
