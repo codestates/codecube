@@ -1,48 +1,35 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { PRIVATE_BOARD } from '../../section/board/hardWord'
 
 import './toggle.css'
 
-const Toggle = ({
-  isLoggedIn,
-  leftName,
-  rightName,
-  leftLink,
-  rightLink,
-  privateClass,
-}) => {
+const Toggle = ({ isLoggedIn }) => {
   // ! 로그인 여부에 따라 개인 게시판 선택 유무를 클래스로만 나눴기 때문에 수정필요!
-  const toggling = useCallback(
-    (e) => {
-      if (!isLoggedIn && rightName === PRIVATE_BOARD) {
-        e.preventDefault()
-      }
-    },
-    [isLoggedIn]
-  )
+  const toggling = (e) => {
+    if (!isLoggedIn) e.preventDefault()
+  }
 
   return (
-    <div className={`toggle-wrapper ${privateClass}`}>
+    <div className="toggle-wrapper">
       <NavLink
         defaultChecked
         end="/private"
-        to={leftLink}
+        to=""
         className={({ isActive }) =>
           'nav-link' + ' mypage-btn' + (!isActive ? ' unselected' : ' selected')
         }
         onClick={toggling}
       >
-        {leftName}
+        공개 게시판
       </NavLink>
       <NavLink
-        to={rightLink}
+        to="/private"
         className={({ isActive }) =>
           'nav-link' + ' mypage-btn' + (!isActive ? ' unselected' : ' selected')
         }
         onClick={toggling}
       >
-        {rightName}
+        개인 게시판
       </NavLink>
     </div>
   )

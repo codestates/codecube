@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
-import { WISH_LIST } from '../hardWord'
+import { CONFIRM_WAITING } from '../../../extra/hardWord'
 import axios from 'axios'
 
 import './postCard.css'
 
-const PublicList = ({ isWish, wishList }) => {
+const ProjectList = ({ isWishPage, wishList }) => {
   const [publicList, setPublicList] = useState([{}])
 
   useEffect(() => {
-    if (!isWish) {
+    if (!isWishPage) {
       axios
         .get(process.env.REACT_APP_API__URL + '/projects')
         .then(({ data }) => {
@@ -19,7 +19,6 @@ const PublicList = ({ isWish, wishList }) => {
           console.error(err)
         })
     } else {
-      // console.log(wishList.guest)
       // ! 수정 필요
       if (!wishList.guest.wishList.length) {
         setPublicList(wishList.guest.confirmed)
@@ -27,13 +26,13 @@ const PublicList = ({ isWish, wishList }) => {
         setPublicList(wishList.guest.wishList)
       }
     }
-  }, [])
+  }, [wishList])
 
   return (
     <>
-      {isWish && Array.isArray(publicList) ? (
+      {isWishPage && Array.isArray(publicList) ? (
         <div id="wish-list">
-          <h2>{WISH_LIST}</h2>
+          <h2>{CONFIRM_WAITING}</h2>
         </div>
       ) : null}
       <div id="post-card-wrapper">
@@ -60,4 +59,4 @@ const PublicList = ({ isWish, wishList }) => {
   )
 }
 
-export default PublicList
+export default ProjectList
