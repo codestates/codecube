@@ -4,7 +4,6 @@ import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { v4 } from 'uuid'
 
-
 import './noticeBoard.css'
 // require('dotenv').config()
 
@@ -23,7 +22,7 @@ const NoticeBoard = () => {
   }
 
   useEffect(() => {
-    getJobList()
+    // getJobList()
   }, [])
 
   return (

@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 80
 const morgan = require('morgan')
 const sequelize = require('./models').sequelize
 const cookieParser = require('cookie-parser')

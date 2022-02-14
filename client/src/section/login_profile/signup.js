@@ -1,9 +1,7 @@
-// require('dotenv').config()
 import React, { useEffect, useRef, useState } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
-// require('dotenv').config()
 import './signup.css'
 
 const Signup = (props) => {
@@ -91,6 +89,7 @@ const Signup = (props) => {
   function clearMyProfile(event) {
     props.clearPhoto(event)
   }
+
   return (
     <div className="left-box main-box">
       <h1>회원가입</h1>
