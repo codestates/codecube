@@ -13,6 +13,7 @@ import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
+
 // const url = new URL(window.location.href)
 // const authorizationCode = url.searchParams.get('code')
 

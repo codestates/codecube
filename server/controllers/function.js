@@ -15,9 +15,7 @@ module.exports = {
   solveToken: (token) => {
     token = token.split(' ')[1]
     const key = process.env.JWT_KEY
-    // console.log(key)
     const result = verify(token, key)
-    // console.log(result)
     return result
   },
 }

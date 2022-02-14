@@ -20,11 +20,11 @@ const myProjectsForm = {
   },
 }
 
-function whoRU(withBearer) {
-  const token = withBearer.split(' ')[1]
-  const userInfo = solveToken(token)
-  return userInfo
-}
+// function whoRU(withBearer) {
+//   const token = withBearer.split(' ')[1]
+//   const userInfo = solveToken(token)
+//   return userInfo
+// }
 
 module.exports = {
   project: {
@@ -157,10 +157,11 @@ module.exports = {
   },
   private_post: {
     get: async (req, res) => {
-      if (!req.cookies.jwt) {
-        return res.status(302).location('/')
+      if (!req.cookies.authorization) {
+        return res.status(400).end('un authorization')
       }
-      const { id: userId } = whoRU(req.cookies.jwt)
+      // !
+      const { id: userId } = solveToken(req.cookies.authorization)
 
       const target = await models.projects.findOne({
         raw: true,
@@ -168,15 +169,12 @@ module.exports = {
       })
 
       if (target) {
-        console.log('host!!')
-        // console.log(target)
         const { id: projectId, start, done, title } = target
         return res.status(200).json({
           ...myProjectsForm,
           ...{ host: { projectId, start, done, title } },
         })
       } else {
-        console.log('guest!!')
         // * guest인 경우
         const inList = await models.project_users.findAll({
           raw: true,
