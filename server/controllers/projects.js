@@ -59,7 +59,7 @@ module.exports = {
         })
       )
       // console.log(finalList)
-      res.status(200).json({ message: 'ok', list: finalList })
+      res.status(200).json({ message: 'helloWorld', list: finalList })
     },
     delete: async (req, res) => {
       //1. 일단 게시글 지우기
