@@ -3,42 +3,32 @@ import { Route, Routes } from 'react-router-dom'
 
 import './board.css'
 import Toggle from '../../components/toggle/toggle'
-import PublicList from './publicBoard/publicList'
-import PrivateList from './privateBoard/privateList'
+import ProjectList from './projectList/projectList'
+import PrivateList from './projectList/privateList'
 import Post from './post/post'
 import Waiting from './members/waiting'
 
-import { PRIVATE_BOARD, PRIVATE_LINK, PUBLIC_BOARD } from './hardWord'
-import projectInitial from './projectInitial'
+import projectInitial from '../../extra/projectInitial'
 
 const Board = ({ isLoggedIn }) => {
   const [dashBoardInfo, setDashBoardInfo] = useState(projectInitial)
   const [hasHost, setHasHost] = useState(false)
-  const [wishList, setWishList] = useState(projectInitial)
 
   return (
     <div id="board-wrapper" className="main-box">
-      <Toggle
-        isLoggedIn={isLoggedIn}
-        leftName={PUBLIC_BOARD}
-        rightName={PRIVATE_BOARD}
-        leftLink=""
-        rightLink={PRIVATE_LINK}
-        privateClass=""
-      />
+      <Toggle isLoggedIn={isLoggedIn} />
       <div id="board-list">
         <Routes>
-          <Route index path="/" element={<PublicList isWish={false} />} />
+          <Route index path="/" element={<ProjectList isWishPage={false} />} />
           <Route
             path="/private/*"
             element={
               <PrivateList
+                isLoggedIn={isLoggedIn}
                 hasHost={hasHost}
                 setHasHost={setHasHost}
-                isLoggedIn={isLoggedIn}
                 dashBoardInfo={dashBoardInfo}
                 setDashBoardInfo={setDashBoardInfo}
-                setWishList={setWishList}
               />
             }
           >
@@ -48,7 +38,7 @@ const Board = ({ isLoggedIn }) => {
                 hasHost ? (
                   <Post projectId={dashBoardInfo.host.projectId} />
                 ) : (
-                  <PublicList isWish={true} wishList={wishList} />
+                  <ProjectList isWishPage={true} wishList={dashBoardInfo} />
                 )
               }
             ></Route>

@@ -4,11 +4,9 @@ import { v4 } from 'uuid'
 
 import './waiting.css'
 
-import { ACCEPT, REJECT } from '../hardWord'
+import { ACCEPT, REJECT } from '../../../extra/hardWord'
 
 import axios from 'axios'
-// import dotenv from 'dotenv'
-// dotenv.config()
 
 axios.defaults.withCredentials = true
 const Waiting = ({ hasHost, projectId }) => {
@@ -17,18 +15,18 @@ const Waiting = ({ hasHost, projectId }) => {
   const navigation = useNavigate()
 
   useEffect(() => {
-    if (!hasHost && location.pathname.includes('/waiting')) {
-      navigation('/')
-    } else {
-      // TODO: API
-      axios
-        .get(process.env.REACT_APP_API__URL + '/members/' + projectId, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setWaitingUsers(data.waiting)
-        })
-    }
+    // ! 수정 필요함. 여기서 hasHost를 true로 만든것과 같은 결과가 나와야함.
+    // if (!hasHost && location.pathname.includes('/waiting')) {
+    //   navigation('/')
+    // } else {
+    //   axios
+    //     .get(process.env.REACT_APP_API__URL + '/members/' + projectId, {
+    //       withCredentials: true,
+    //     })
+    //     .then(({ data }) => {
+    //       setWaitingUsers(data.waiting)
+    //     })
+    // }
   }, [hasHost])
 
   const onSelect = useCallback(
@@ -37,7 +35,6 @@ const Waiting = ({ hasHost, projectId }) => {
         return user.userId !== id
       })
       setWaitingUsers(change)
-      // TODO: API
       if (type === ACCEPT) {
         axios.put(
           process.env.REACT_APP_API__URL + '/members/join',
