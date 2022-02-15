@@ -180,8 +180,13 @@ module.exports = {
         })
 
         res
-          .cookie('id', newuserInfo.id)
+          .cookie('id', newuserInfo.id, {
+            domain: 'codecube.tk',
+            secure: true,
+            sameSite: 'none',
+          })
           .cookie('authentication', `bearer ${jwt}`, {
+            domain: 'codecube.tk',
             secure: true,
             sameSite: 'none',
           })
@@ -222,10 +227,12 @@ module.exports = {
         // 쿠키로 Token과 id를 전달한다.
         res
           .cookie('jwt', `bearer ${jwt}`, {
+            domain: 'codecube.tk',
             secure: true,
             sameSite: 'none',
           })
           .cookie('id', loginuser.id, {
+            domain: 'codecube.tk',
             secure: true,
             sameSite: 'none',
           })
