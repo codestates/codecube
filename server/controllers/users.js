@@ -70,8 +70,19 @@ module.exports = {
           await models.user_stacks.destroy({ where: { userId: userInfo.id } })
         }
         await models.users.destroy({ where: { id: userInfo.id } })
-        res.clearCookie('id')
-        res.status(200).clearCookie('jwt').json({ message: 'byebye' })
+        res.clearCookie('id', {
+          domain: process.env.DOMAIN,
+          secure: true,
+          sameSite: 'none',
+        })
+        res
+          .status(200)
+          .clearCookie('jwt', {
+            domain: process.env.DOMAIN,
+            secure: true,
+            sameSite: 'none',
+          })
+          .json({ message: 'byebye' })
       }
     },
   },
@@ -122,9 +133,21 @@ module.exports = {
       //쿠키를 지운다.
       res
         .status(200)
-        .clearCookie('jwt')
-        .clearCookie('id')
-        .clearCookie('__gads')
+        .clearCookie('jwt', {
+          domain: process.env.DOMAIN,
+          secure: true,
+          sameSite: 'none',
+        })
+        .clearCookie('id', {
+          domain: process.env.DOMAIN,
+          secure: true,
+          sameSite: 'none',
+        })
+        .clearCookie('__gads', {
+          domain: process.env.DOMAIN,
+          secure: true,
+          sameSite: 'none',
+        })
         .send('Logged out successfully')
     },
   },
