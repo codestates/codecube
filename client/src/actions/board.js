@@ -27,12 +27,18 @@ const myProject = (data) => {
 }
 
 export const getMyProject = () => async (dispatch) => {
-  await axios
-    .get(process.env.REACT_APP_API__URL + '/myProjects', {
-      withCredentials: true,
-    })
-    .then(({ data }) => {
-      dispatch(myProject(data))
-      dispatch(handleSetIsHost())
-    })
+  const isHost = (obj) => {
+    return obj.host.projectId > 0
+  }
+
+  const { data } = await axios.get(process.env.REACT_APP_API__URL + '/myProjects', {
+    withCredentials: true,
+  })
+
+  dispatch(myProject(data))
+  if (isHost(data)) {
+    dispatch(handleSetIsHost())
+  } else {
+    dispatch(handleSetIsNotHost())
+  }
 }
