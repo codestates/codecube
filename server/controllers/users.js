@@ -8,10 +8,11 @@ module.exports = {
   users: {
     get: async (req, res) => {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
-      if (!req.cookies.authorization) {
+      console.log(req.headers)
+      if (!req.cookies.jwt) {
         return res.status(401).json({ message: 'invailid authorization' })
       }
-      const rtoken = req.cookies.authorization
+      const rtoken = req.cookies.jwt
       const decoded = solveToken(rtoken)
       // 해독한 Token값중 Mypage를 구성하는 값들만 받아온다.
       const solve = await users.findOne({
@@ -182,8 +183,8 @@ module.exports = {
         res
           .cookie('id', newuserInfo.id)
           .cookie('authentication', `bearer ${jwt}`, {
-            //   httpOnly: true,
-            //  sameSite:'none'
+            secure: true,
+            sameSite: 'none',
           })
           .status(201)
           .json({
@@ -221,13 +222,13 @@ module.exports = {
 
         // 쿠키로 Token과 id를 전달한다.
         res
-          .cookie('authorization', `bearer ${jwt}`, {
-            // httpOnly: true,
-            // sameSite:'none'
+          .cookie('jwt', `bearer ${jwt}`, {
+            secure: true,
+            sameSite: 'none',
           })
           .cookie('id', loginuser.id, {
-            // httpOnly: true,
-            // sameSite:'none'
+            secure: true,
+            sameSite: 'none',
           })
           .status(200)
           .json({
