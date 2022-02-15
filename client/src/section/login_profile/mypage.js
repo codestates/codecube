@@ -80,7 +80,7 @@ const Mypage = (props) => {
         ㅅㄱ ? alert('회원가입이 탈퇴되었습니다') : alert('이미 늦음 ㅅㄱ')
 
         window.localStorage.removeItem('userinfo')
-        props.setisLoggedIn(false)
+        // props.setisLoggedIn(false)
         navigate('/')
       })
   }
@@ -201,7 +201,7 @@ const Mypage = (props) => {
             <div className="description">{description}</div>
           </div>
           <div id="mypage-btn-wrapper">
-            <button className="mypage-btn" onClick={props.handleLogout}>
+            <button className="mypage-btn" onClick={props.onLogout}>
               logout
             </button>
             <button className="mypage-btn" onClick={handleEdit}>
