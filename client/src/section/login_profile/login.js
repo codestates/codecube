@@ -26,7 +26,7 @@ const Login = (props) => {
     navigate('/')
   }
 
-  const handleLogin = async () => {
+  const onLogin = async () => {
     const { email, password } = loginInfo
     alertBox.current.classList.remove('hidden')
     if (!email || !password) {
@@ -73,7 +73,7 @@ const Login = (props) => {
               className="login-button"
               type="submit"
               value={loginText}
-              onClick={handleLogin}
+              onClick={onLogin}
             ></input>
             <GitHubLogin></GitHubLogin>
           </form>
