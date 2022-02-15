@@ -1,19 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const P_CREATE = '프로잭트 생성'
 const P_START = '프로젝트 시작'
 const P_DONE = '프로젝트 종료'
 
-const DreamButton = ({ hasHost, postState }) => {
+const DreamButton = ({ postState }) => {
+  const { isHost } = useSelector((state) => state.boardReducer)
   const [buttonName, setButtonName] = useState(P_CREATE)
 
   useEffect(() => {
-    if (hasHost && postState >= 1) {
+    if (isHost && postState >= 1) {
       setButtonName(P_DONE)
-    } else if (hasHost && postState >= 0) {
+    } else if (isHost && postState >= 0) {
       setButtonName(P_START)
     }
-  }, [hasHost, postState])
+  }, [isHost, postState])
 
   const onDream = useCallback(() => {
     if (buttonName === P_CREATE) {

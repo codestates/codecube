@@ -1,10 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import './toggle.css'
 
-const Toggle = ({ isLoggedIn }) => {
-  // ! 로그인 여부에 따라 개인 게시판 선택 유무를 클래스로만 나눴기 때문에 수정필요!
+const Toggle = () => {
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
+
   const toggling = (e) => {
     if (!isLoggedIn) e.preventDefault()
   }

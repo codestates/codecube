@@ -3,8 +3,6 @@ import { v4 } from 'uuid'
 
 import './confirm.css'
 import axios from 'axios'
-// import dotenv from 'dotenv'
-// dotenv.config()
 
 axios.defaults.withCredentials = true
 const ConfirmUsers = ({ projectId }) => {

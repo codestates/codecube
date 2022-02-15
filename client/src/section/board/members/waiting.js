@@ -7,9 +7,12 @@ import './waiting.css'
 import { ACCEPT, REJECT } from '../../../extra/hardWord'
 
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 axios.defaults.withCredentials = true
-const Waiting = ({ hasHost, projectId }) => {
+const Waiting = ({ projectId }) => {
+  const { isHost } = useSelector((state) => state.boardReducer)
+
   const [waitingUsers, setWaitingUsers] = useState([])
   const location = useLocation()
   const navigation = useNavigate()
@@ -27,7 +30,7 @@ const Waiting = ({ hasHost, projectId }) => {
     //       setWaitingUsers(data.waiting)
     //     })
     // }
-  }, [hasHost])
+  }, [isHost])
 
   const onSelect = useCallback(
     (id, type, proId) => {
