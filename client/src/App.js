@@ -4,25 +4,27 @@ import Board from './section/board/board'
 import Mypage from './section/login_profile/mypage'
 import Login from './section/login_profile/login'
 import Signup from './section/login_profile/signup'
-// import GitContribution from './section/gitcontribution/gitContri'
 import GitContributionUser from './section/gitcontribution/gitContriUser'
 import NoticeBoard from './section/noticeboard/noticeBoard'
 import axios from 'axios'
 
+import { useSelector, useDispatch } from 'react-redux'
+
 import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
-// const url = new URL(window.location.href)
-// const authorizationCode = url.searchParams.get('code')
+import { handleLogin, handleLogout } from './actions'
 
 axios.defaults.withCredentials = true
-const savedUserInfo = window.localStorage.getItem('userinfo')
 
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(savedUserInfo ? true : false)
   const [isSignup, setIsSignup] = useState(false)
   const [gitAccessToken, setGtiAccessToken] = useState()
   const [gitContri, setGitContri] = useState('')
+
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const dispatch = useDispatch()
+
   const navigate = useNavigate()
 
   const isAuthenticated = async () => {
@@ -40,42 +42,12 @@ function App() {
           image: data.image,
         }
         window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-        setisLoggedIn(true)
+        dispatch(handleLogin())
       })
   }
 
-  //받은 authorization 코드이용 서버로 callback api 요청
-  // const getAccessTocken = async (authorizationCode) => {
-  //   await axios
-  //     .post(process.env.REACT_APP_API__URL + '/github/callback', {
-  //       authorizationCode: authorizationCode,
-  //     })
-  //     .then((res) => {
-  //       setGtiAccessToken(res.data.accessToken)
-  //       window.localStorage.setItem('accessToken', res.data.accessToken)
-  //       getGithudInfo(res.data.accessToken)
-  //     })
-  // }
-
-  // const getGithudInfo = async (gitAccessToken) => {
-  //   await axios
-  //     .get(process.env.REACT_APP_API__URL + '/github/userInfo', {
-  //       headers: { authorization: gitAccessToken },
-  //     })
-  //     .then((res) => {
-  //       const { login, calendar } = res.data.userInfo
-  //       setUserinfo({ email: login + '@github.com', username: login })
-  //       setGitContri(calendar)
-  //       setisLoggedIn(true)
-  //     })
-  // }
-
-  // useEffect(() => {
-  //   getAccessTocken(authorizationCode)
-  // }, [])
-
-  const handleLogout = async () => {
-    setisLoggedIn(false)
+  const onLogout = async () => {
+    dispatch(handleLogout())
     window.localStorage.removeItem('userinfo')
     navigate('/')
 
@@ -93,7 +65,7 @@ function App() {
       <div id="container">
         <div className="col w40">
           {isLoggedIn ? (
-            <Mypage handleLogout={handleLogout} isAuthenticated={isAuthenticated} />
+            <Mypage onLogout={onLogout} isAuthenticated={isAuthenticated} />
           ) : isSignup ? (
             <Signup setIsSignup={setIsSignup} isAuthenticated={isAuthenticated} />
           ) : (
