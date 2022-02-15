@@ -8,7 +8,6 @@ module.exports = {
   users: {
     get: async (req, res) => {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
-      console.log(req.headers)
       if (!req.cookies.jwt) {
         return res.status(401).json({ message: 'invailid authorization' })
       }
