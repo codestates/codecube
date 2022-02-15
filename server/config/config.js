@@ -8,6 +8,7 @@ module.exports = {
     host: process.env.RDS_DATABASE_HOST,
     dialect: 'mysql',
     port: process.env.RDS_DATABASE_PORT,
+    logging: false,
   },
   test: {
     username: process.env.RDS_DATABASE_USERNAME,
@@ -15,6 +16,7 @@ module.exports = {
     database: process.env.RDS_DATABASE_NAME,
     host: '127.0.0.1',
     dialect: 'mysql',
+    logging: false,
     // port: process.env.RDS_DATABASE_PORT,
   },
   production: {
@@ -23,6 +25,7 @@ module.exports = {
     database: process.env.RDS_DATABASE_NAME,
     host: '127.0.0.1',
     dialect: 'mysql',
+    logging: false,
     // port: process.env.RDS_DATABASE_PORT,
   },
 }
