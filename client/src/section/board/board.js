@@ -9,14 +9,16 @@ import Post from './post/post'
 import Waiting from './members/waiting'
 
 import projectInitial from '../../extra/projectInitial'
+import { useSelector } from 'react-redux'
 
-const Board = ({ isLoggedIn }) => {
+const Board = () => {
+  const { isHost, myProject } = useSelector((state) => state.boardReducer)
+
   const [dashBoardInfo, setDashBoardInfo] = useState(projectInitial)
-  const [hasHost, setHasHost] = useState(false)
 
   return (
     <div id="board-wrapper" className="main-box">
-      <Toggle isLoggedIn={isLoggedIn} />
+      <Toggle />
       <div id="board-list">
         <Routes>
           <Route index path="/" element={<ProjectList isWishPage={false} />} />
@@ -24,9 +26,6 @@ const Board = ({ isLoggedIn }) => {
             path="/private/*"
             element={
               <PrivateList
-                isLoggedIn={isLoggedIn}
-                hasHost={hasHost}
-                setHasHost={setHasHost}
                 dashBoardInfo={dashBoardInfo}
                 setDashBoardInfo={setDashBoardInfo}
               />
@@ -35,7 +34,7 @@ const Board = ({ isLoggedIn }) => {
             <Route
               path=""
               element={
-                hasHost ? (
+                isHost ? (
                   <Post projectId={dashBoardInfo.host.projectId} />
                 ) : (
                   <ProjectList isWishPage={true} wishList={dashBoardInfo} />
@@ -44,9 +43,7 @@ const Board = ({ isLoggedIn }) => {
             ></Route>
             <Route
               path="waiting"
-              element={
-                <Waiting hasHost={hasHost} projectId={dashBoardInfo.host.projectId} />
-              }
+              element={<Waiting projectId={dashBoardInfo.host.projectId} />}
             />
           </Route>
         </Routes>

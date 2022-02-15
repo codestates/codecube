@@ -81,7 +81,7 @@ function App() {
           </div>
         </div>
         <div className="col w30 board-col">
-          <Board isLoggedIn={isLoggedIn} />
+          <Board />
         </div>
       </div>
     </>
