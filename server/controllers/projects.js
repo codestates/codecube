@@ -157,11 +157,11 @@ module.exports = {
   },
   private_post: {
     get: async (req, res) => {
-      if (!req.cookies.authorization) {
+      if (!req.cookies.jwt) {
         return res.status(400).end('un authorization')
       }
       // !
-      const { id: userId } = solveToken(req.cookies.authorization)
+      const { id: userId } = solveToken(req.cookies.jwt)
 
       const target = await models.projects.findOne({
         raw: true,

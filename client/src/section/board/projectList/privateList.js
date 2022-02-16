@@ -4,40 +4,40 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import axios from 'axios'
 
-import './privateList.css'
+import ProjectButton from './projectButton'
+import { getMyProject } from '../../../actions/board'
+import styled from 'styled-components'
 
-import DreamButton from './dreamButton'
-import { getMyProject, handleSetIsHost } from '../../../actions/board'
-
-const havePostAsHost = (obj) => {
-  return obj.host.projectId > 0
-}
 axios.defaults.withCredentials = true
-const PrivateList = ({ dashBoardInfo, setDashBoardInfo }) => {
-  const dispatch = useDispatch()
+
+const PrivateWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+`
+
+const PrivateList = () => {
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const { myProject } = useSelector((state) => state.boardReducer)
+
+  const dispatch = useDispatch()
   const navigation = useNavigate()
 
   useEffect(async () => {
-    if (!isLoggedIn) navigation('/')
-    // dispatch(getMyProject())
-
-    await axios
-      .get(process.env.REACT_APP_API__URL + '/myProjects', {
-        withCredentials: true,
-      })
-      .then(({ data }) => {
-        setDashBoardInfo(data)
-        if (havePostAsHost(data)) dispatch(handleSetIsHost())
-      })
-  }, [])
+    if (!isLoggedIn) {
+      navigation('/')
+    } else {
+      dispatch(getMyProject())
+    }
+  }, [isLoggedIn])
 
   return (
     <>
-      <DreamButton postState={dashBoardInfo.host.start + dashBoardInfo.host.done} />
-      <div id="private-wrapper">
+      <ProjectButton postState={myProject.host.start + myProject.host.done} />
+      <PrivateWrapper>
         <Outlet />
-      </div>
+      </PrivateWrapper>
     </>
   )
 }

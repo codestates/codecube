@@ -1,54 +1,55 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import './board.css'
 import Toggle from '../../components/toggle/toggle'
-import ProjectList from './projectList/projectList'
+import PublicList from './projectList/publciList'
 import PrivateList from './projectList/privateList'
 import Post from './post/post'
 import Waiting from './members/waiting'
 
-import projectInitial from '../../extra/projectInitial'
 import { useSelector } from 'react-redux'
+import WishList from './projectList/wishList'
+import styled from 'styled-components'
+
+const BoardWrapper = styled.div`
+  display: flex;
+  position: relative;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.4rem;
+  padding: 2rem 1rem;
+  height: 100%;
+`
+
+const BoardList = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 100%;
+  max-width: 35rem;
+  padding: 1rem;
+  padding-top: 2rem;
+  height: 38.2rem;
+`
 
 const Board = () => {
-  const { isHost, myProject } = useSelector((state) => state.boardReducer)
-
-  const [dashBoardInfo, setDashBoardInfo] = useState(projectInitial)
+  const { isHost } = useSelector((state) => state.boardReducer)
 
   return (
-    <div id="board-wrapper" className="main-box">
+    <BoardWrapper className="main-box">
       <Toggle />
-      <div id="board-list">
+      <BoardList>
         <Routes>
-          <Route index path="/" element={<ProjectList isWishPage={false} />} />
-          <Route
-            path="/private/*"
-            element={
-              <PrivateList
-                dashBoardInfo={dashBoardInfo}
-                setDashBoardInfo={setDashBoardInfo}
-              />
-            }
-          >
-            <Route
-              path=""
-              element={
-                isHost ? (
-                  <Post projectId={dashBoardInfo.host.projectId} />
-                ) : (
-                  <ProjectList isWishPage={true} wishList={dashBoardInfo} />
-                )
-              }
-            ></Route>
-            <Route
-              path="waiting"
-              element={<Waiting projectId={dashBoardInfo.host.projectId} />}
-            />
+          <Route index path="/" element={<PublicList />} />
+          <Route path="private" element={<PrivateList />}>
+            <Route path="" element={isHost ? <Post /> : <WishList />}></Route>
+            <Route path="waiting" element={<Waiting />} />
           </Route>
         </Routes>
-      </div>
-    </div>
+      </BoardList>
+    </BoardWrapper>
   )
 }
 
