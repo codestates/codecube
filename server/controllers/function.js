@@ -1,12 +1,21 @@
 require('dotenv').config()
+const fs = require('fs')
+const path = require('path')
 const { sign, verify } = require('jsonwebtoken')
 
 module.exports = {
   makejwt: (data) => {
-    const key = process.env.JWT_KEY
-    const option = { expiresIn: '10d', issuer: 'codecube', subject: 'data' }
+    const private = fs.readFileSync(
+      path.resolve(__dirname, '../certs/private.key')
+    )
+    const option = {
+      expiresIn: '10d',
+      issuer: 'codecube',
+      subject: 'data',
+      algorithm: 'RS256',
+    }
     try {
-      const token = sign(data, key, option)
+      const token = sign(data, private, option)
       return token
     } catch (e) {
       return e
@@ -14,8 +23,10 @@ module.exports = {
   },
   solveToken: (token) => {
     token = token.split(' ')[1]
-    const key = process.env.JWT_KEY
-    const result = verify(token, key)
+    const solveCert = fs.readFileSync(
+      path.resolve(__dirname, '../certs/public.key')
+    )
+    const result = verify(token, solveCert, { algorithm: 'RS256' })
     return result
   },
 }
