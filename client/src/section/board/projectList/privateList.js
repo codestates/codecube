@@ -7,34 +7,28 @@ import axios from 'axios'
 import './privateList.css'
 
 import DreamButton from './dreamButton'
-import { getMyProject, handleSetIsHost } from '../../../actions/board'
+import { getMyProject } from '../../../actions/board'
 
-const havePostAsHost = (obj) => {
-  return obj.host.projectId > 0
-}
 axios.defaults.withCredentials = true
-const PrivateList = ({ dashBoardInfo, setDashBoardInfo }) => {
-  const dispatch = useDispatch()
+const PrivateList = () => {
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const { myProject } = useSelector((state) => state.boardReducer)
+
+  const dispatch = useDispatch()
   const navigation = useNavigate()
 
   useEffect(async () => {
     if (!isLoggedIn) navigation('/')
-    // dispatch(getMyProject())
+    // console.log('동기지만')
+    // console.log('await를 만나는순간')
+    dispatch(getMyProject())
 
-    await axios
-      .get(process.env.REACT_APP_API__URL + '/myProjects', {
-        withCredentials: true,
-      })
-      .then(({ data }) => {
-        setDashBoardInfo(data)
-        if (havePostAsHost(data)) dispatch(handleSetIsHost())
-      })
+    // console.log('제어권을 넘김')
   }, [])
 
   return (
     <>
-      <DreamButton postState={dashBoardInfo.host.start + dashBoardInfo.host.done} />
+      <DreamButton postState={myProject.host.start + myProject.host.done} />
       <div id="private-wrapper">
         <Outlet />
       </div>
