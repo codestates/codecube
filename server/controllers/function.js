@@ -5,9 +5,7 @@ const { sign, verify } = require('jsonwebtoken')
 
 module.exports = {
   makejwt: (data) => {
-    const private = fs.readFileSync(
-      path.resolve(__dirname, '../certs/private.key')
-    )
+    const private = fs.readFileSync(path.resolve(__dirname, '../certs/rsa.key'))
     const option = {
       expiresIn: '10d',
       issuer: 'codecube',
@@ -24,7 +22,7 @@ module.exports = {
   solveToken: (token) => {
     token = token.split(' ')[1]
     const solveCert = fs.readFileSync(
-      path.resolve(__dirname, '../certs/public.key')
+      path.resolve(__dirname, '../certs/rsa.key.pub')
     )
     const result = verify(token, solveCert, { algorithm: 'RS256' })
     return result
