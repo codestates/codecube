@@ -6,6 +6,14 @@ h1 {
   text-align: center;
 }
 
+body {
+  overflow: hidden;
+}
+
+#root {
+  overflow: scroll;
+}
+
 #container {
   display: flex;
   justify-content: space-around;
