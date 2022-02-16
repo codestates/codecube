@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import './board.css'
@@ -13,10 +13,6 @@ import WishList from './projectList/wishList'
 
 const Board = () => {
   const { isHost, myProject } = useSelector((state) => state.boardReducer)
-
-  useEffect(() => {
-    // console.log('여기로')
-  }, [])
 
   return (
     <div id="board-wrapper" className="main-box">

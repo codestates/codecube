@@ -19,11 +19,7 @@ const PrivateList = () => {
 
   useEffect(async () => {
     if (!isLoggedIn) navigation('/')
-    // console.log('동기지만')
-    // console.log('await를 만나는순간')
     dispatch(getMyProject())
-
-    // console.log('제어권을 넘김')
   }, [])
 
   return (
