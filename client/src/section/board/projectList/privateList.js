@@ -18,9 +18,12 @@ const PrivateList = () => {
   const navigation = useNavigate()
 
   useEffect(async () => {
-    if (!isLoggedIn) navigation('/')
-    dispatch(getMyProject())
-  }, [])
+    if (!isLoggedIn) {
+      navigation('/')
+    } else {
+      dispatch(getMyProject())
+    }
+  }, [isLoggedIn])
 
   return (
     <>

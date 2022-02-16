@@ -14,6 +14,7 @@ import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
 import { handleLogin, handleLogout } from './actions'
+import { clearMyProject } from './actions/board'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
@@ -52,6 +53,8 @@ function App() {
 
   const onLogout = async () => {
     dispatch(handleLogout())
+    dispatch(clearMyProject())
+
     window.localStorage.removeItem('userinfo')
     navigate('/')
 

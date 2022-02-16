@@ -42,3 +42,16 @@ export const getMyProject = () => async (dispatch) => {
     dispatch(handleSetIsNotHost())
   }
 }
+
+export const clearMyProject = () => (dispatch) => {
+  dispatch(handleSetIsNotHost())
+  dispatch(
+    myProject({
+      host: {},
+      guest: {
+        confirmed: {},
+        wishList: [{}],
+      },
+    })
+  )
+}

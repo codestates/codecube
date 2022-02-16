@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
-import { CONFIRM_WAITING } from '../../../extra/hardWord'
 
 import './postCard.css'
 import { useSelector } from 'react-redux'
