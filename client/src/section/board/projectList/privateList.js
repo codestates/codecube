@@ -4,12 +4,19 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import axios from 'axios'
 
-import './privateList.css'
-
-import DreamButton from './dreamButton'
+import ProjectButton from './projectButton'
 import { getMyProject } from '../../../actions/board'
+import styled from 'styled-components'
 
 axios.defaults.withCredentials = true
+
+const PrivateWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+`
+
 const PrivateList = () => {
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
   const { myProject } = useSelector((state) => state.boardReducer)
@@ -27,10 +34,10 @@ const PrivateList = () => {
 
   return (
     <>
-      <DreamButton postState={myProject.host.start + myProject.host.done} />
-      <div id="private-wrapper">
+      <ProjectButton postState={myProject.host.start + myProject.host.done} />
+      <PrivateWrapper>
         <Outlet />
-      </div>
+      </PrivateWrapper>
     </>
   )
 }

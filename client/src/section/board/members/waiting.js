@@ -4,10 +4,82 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { v4 } from 'uuid'
 
-import './waiting.css'
 import { ACCEPT, REJECT } from '../../../extra/hardWord'
+import styled from 'styled-components'
 
 axios.defaults.withCredentials = true
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(0, 50, 98, 0.2);
+  box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
+  border-radius: 0.5rem;
+  align-content: flex-start;
+  justify-content: center;
+  overflow-y: scroll;
+
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+`
+
+const Card = styled.div`
+  display: flex;
+  background: hsl(0deg 0% 100%);
+  box-shadow: 0 6px 12px -6px rgba(66, 63, 59, 0.3);
+  border-radius: 0.5rem;
+  justify-content: space-between;
+  height: 5rem;
+  width: 40%;
+  min-width: 14rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 5px;
+  font-size: 0.7rem;
+  line-height: 1.1rem;
+`
+
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 55%;
+`
+
+const TemporaryProfileImage = styled.div`
+  width: 50%;
+  height: 100%;
+  background-color: steelblue;
+`
+
+const ButtonWrapper = styled.div`
+  width: 45%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 60%;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+
+  &:focus,
+  &:active,
+  &:hover {
+    background-color: ${(props) =>
+      props.reject ? 'rgb(254, 46, 46)' : 'rgb(116, 182, 102)'};
+  }
+  transition: background-color 0.2s;
+`
+
 const Waiting = () => {
   const { isHost, myProject } = useSelector((state) => state.boardReducer)
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
@@ -53,30 +125,28 @@ const Waiting = () => {
   }, [])
 
   return (
-    <div id="waiting-wrapper">
+    <Wrapper>
       {!isHost ? (
         <div>작성한 게시글이 없습니다</div>
       ) : (
         waitingUsers.map(({ username, userId, projectId }) => {
           return (
-            <div key={v4()} className="waiting-card">
-              <div className="waiting-profile">
-                <div className="waiting-dummy-image"></div>
-                <div className="waiting-username">{username}</div>
-              </div>
-              <div className="waiting-button-wrapper">
-                <button id="gotcha" onClick={() => onSelect(userId, ACCEPT, projectId)}>
-                  ✔️
-                </button>
-                <button id="del" onClick={() => onSelect(userId, REJECT, projectId)}>
+            <Card key={v4()}>
+              <Profile>
+                <TemporaryProfileImage />
+                {username}
+              </Profile>
+              <ButtonWrapper>
+                <Button onClick={() => onSelect(userId, ACCEPT, projectId)}>✔️</Button>
+                <Button reject onClick={() => onSelect(userId, REJECT, projectId)}>
                   ✖️
-                </button>
-              </div>
-            </div>
+                </Button>
+              </ButtonWrapper>
+            </Card>
           )
         })
       )}
-    </div>
+    </Wrapper>
   )
 }
 
