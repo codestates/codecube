@@ -1,16 +1,3 @@
-h1 {
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  padding: 1rem 0;
-  border-bottom: 1px solid gray;
-}
-
-#post-wrapper {
-  width: 100%;
-  height: 100%;
-}
-
 .content-wrapper {
   background-color: rgba(0, 50, 98, 0.2);
   box-shadow: -7px -7px 10px white, 7px 7px 10px #cbced1;
@@ -21,9 +8,8 @@ h1 {
   overflow-y: scroll;
   border-radius: 0.5rem;
 }
-.content-wrapper h1 {
-  font-size: max(1.5rem);
-  /* font-size: 1.5rem; */
+.content-wrapper > h1 {
+  font-size: 1.5rem;
   margin: 0.4rem 0 1rem 0;
 }
 .content {

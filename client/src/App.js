@@ -4,7 +4,7 @@ import Board from './section/board/board'
 import Mypage from './section/login_profile/mypage'
 import Login from './section/login_profile/login'
 import Signup from './section/login_profile/signup'
-import GitContributionUser from './section/gitcontribution/gitContriUser'
+import GithubContribution from './section/gitcontribution/githubContribution'
 import NoticeBoard from './section/noticeboard/noticeBoard'
 import axios from 'axios'
 
@@ -14,6 +14,7 @@ import GlobalFont from './styles/globalFont'
 import GlobalStyle from './styles/globalStyle'
 
 import { handleLogin, handleLogout } from './actions'
+import { clearMyProject } from './actions/board'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
@@ -52,6 +53,8 @@ function App() {
 
   const onLogout = async () => {
     dispatch(handleLogout())
+    dispatch(clearMyProject())
+
     window.localStorage.removeItem('userinfo')
     navigate('/')
 
@@ -121,7 +124,7 @@ function App() {
         </div>
         <div className="col w30">
           <div className="row main-box github-wrapper">
-            <GitContributionUser gitContri={gitContri} />
+            <GithubContribution gitContri={gitContri} />
           </div>
           <div className="row main-box notice-wrapper">
             <NoticeBoard />
