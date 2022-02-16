@@ -74,6 +74,9 @@ function App() {
         window.localStorage.setItem('accessToken', res.data.accessToken)
         getGithudInfo(res.data.accessToken)
       })
+      .catch((err) => {
+        console.log('깃토큰 없음')
+      })
   }
 
   const getGithudInfo = async (gitAccessToken) => {
