@@ -60,6 +60,7 @@ const UserProfile = styled.div`
 const ConfirmUsers = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [confirmUsers, setConfirmUsers] = useState([])
+  
 
   const handleExclude = (user) => {
     //클릭하면 1. 타겟을 셀렉트함
@@ -85,6 +86,7 @@ const ConfirmUsers = () => {
         withCredentials: true,
       })
       .then(({ data }) => {
+        console.log(data)
         setConfirmUsers(data.confirmed)
       })
   }, [])
@@ -98,7 +100,8 @@ const ConfirmUsers = () => {
               제외
             </Out>
             <div className="hover">{user.username}</div>
-            {/* <UserProfile>{user.image}</UserProfile> */}
+            <UserProfile>
+            </UserProfile>
           </UserWrapper>
         )
       })}

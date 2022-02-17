@@ -149,7 +149,15 @@ const Waiting = () => {
           return (
             <Card key={v4()}>
               <Profile>
-                <TemporaryProfileImage />
+                {/* <TemporaryProfileImage /> */}
+                <div>
+                <src 
+                src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`}
+                width="200px"
+                height="100px"
+                onError={() => (require('../../../default.jpeg'))}
+                 />
+                </div>
                 {username}
               </Profile>
               <ButtonWrapper>
