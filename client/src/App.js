@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Board from './section/board/board'
 import Mypage from './section/login_profile/mypage'
 import Login from './section/login_profile/login'
@@ -19,13 +19,14 @@ import { clearMyProject } from './actions/board'
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
 const authorizationCode = url.searchParams.get('code')
+const Savedcalendar = window.localStorage.getItem('usercalendar')
 
 axios.defaults.withCredentials = true
 
 function App() {
   const [isSignup, setIsSignup] = useState(false)
   const [gitAccessToken, setGtiAccessToken] = useState()
-  const [gitContri, setGitContri] = useState('')
+  const [gitContri, setGitContri] = useState(JSON.parse(Savedcalendar) ?? '')
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
   const dispatch = useDispatch()
@@ -52,10 +53,12 @@ function App() {
   }
 
   const onLogout = async () => {
+    setGitContri('')
     dispatch(handleLogout())
     dispatch(clearMyProject())
 
     window.localStorage.removeItem('userinfo')
+    window.localStorage.removeItem('usercalendar')
     navigate('/')
 
     await axios
@@ -72,7 +75,6 @@ function App() {
         authorizationCode: authorizationCode,
       })
       .then((res) => {
-        console.log(res.data.accessToken)
         setGtiAccessToken(res.data.accessToken)
         window.localStorage.setItem('accessToken', res.data.accessToken)
         getGithudInfo(res.data.accessToken)
@@ -88,7 +90,6 @@ function App() {
         headers: { authorization: gitAccessToken },
       })
       .then((res) => {
-        console.log(res.data.userInfo)
         const { login, calendar } = res.data.userInfo
         setUserinfo({ email: login + '@github.com', username: login })
         const userJSON = {
@@ -96,7 +97,9 @@ function App() {
           email: login + '@github.com',
         }
         window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-        setGitContri(calendar)
+        const userCalendarJSON = calendar
+        window.localStorage.setItem('usercalendar', JSON.stringify(userCalendarJSON))
+        setGitContri(JSON.parse(window.localStorage.getItem('usercalendar')))
         dispatch(handleLogin())
       })
       .catch((err) => {

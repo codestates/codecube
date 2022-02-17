@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true
 
 const Content = styled.div`
   overflow: scroll;
-  height: 50%;
+  height: 18rem;
   width: 100%;
 `
 
@@ -47,7 +47,7 @@ const NoticeBoard = () => {
   }
 
   useEffect(() => {
-    // getJobList()
+    getJobList()
   }, [])
 
   return (

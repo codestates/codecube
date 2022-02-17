@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import GitHubLogin from './githublogin'
+import { GitHubLogin, NaverLogin, KakaoLogin } from './snslogin'
 import './beforeLogin.css'
 
 const Login = (props) => {
@@ -76,6 +76,8 @@ const Login = (props) => {
               onClick={onLogin}
             ></input>
             <GitHubLogin></GitHubLogin>
+            <NaverLogin></NaverLogin>
+            <KakaoLogin></KakaoLogin>
           </form>
         </div>
       </div>

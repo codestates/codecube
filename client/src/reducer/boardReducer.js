@@ -22,7 +22,7 @@ const initialState = {
         start: 0,
         done: 0,
       },
-      wishList: [{}],
+      wishList: [],
     },
   },
 }

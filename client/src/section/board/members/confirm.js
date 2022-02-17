@@ -21,24 +21,63 @@ const Wrapper = styled.div`
 `
 
 const UserWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
   background-color: rgb(107, 130, 168);
   border-radius: 0.5rem;
-  max-width: 5rem;
-  min-width: 5rem;
+  width: 5rem;
   height: 100%;
-  text-align: center;
+
   margin: 0 0.8rem;
-  font-size: 0.7rem;
+
+  .hover {
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+  }
+
+  &:hover {
+    .hover {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+`
+
+const Out = styled.button`
+  width: 3.5rem;
+  height: 2rem;
+  cursor: pointer;
 `
 
 const UserProfile = styled.div`
   width: 100%;
-  height: 67.5%;
 `
 
 const ConfirmUsers = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [confirmUsers, setConfirmUsers] = useState([])
+
+  const handleExclude = (user) => {
+    //클릭하면 1. 타겟을 셀렉트함
+    const { userId, projectId } = user
+    //2. axios요청으로 join부분을 1 -> 0으로 바꿔야함
+    axios
+      .put(
+        process.env.REACT_APP_API__URL + '/members/exclude',
+        { userId, projectId },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((data) =>
+        setConfirmUsers((prevState) => prevState.filter((user) => user.userId !== userId))
+      )
+    //2. 요청이 잘 완료됐다면 confirmUsers에서 필터로 줄여줘야함
+  }
 
   useEffect(async () => {
     await axios
@@ -55,9 +94,11 @@ const ConfirmUsers = () => {
       {confirmUsers.map((user) => {
         return (
           <UserWrapper key={v4()}>
-            {/* <img className="user-profile" src={user.img}></img> */}
-            <UserProfile>{user.image}</UserProfile>
-            <div>{user.username}</div>
+            <Out onClick={() => handleExclude(user)} className="hover">
+              제외
+            </Out>
+            <div className="hover">{user.username}</div>
+            {/* <UserProfile>{user.image}</UserProfile> */}
           </UserWrapper>
         )
       })}

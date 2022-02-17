@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import './post.css'
 import ConfirmUsers from '../members/confirm'
 import PostContent from './content'
 
@@ -37,7 +36,6 @@ const WaitingUserPage = styled(Link)`
 const Post = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [thisPost, setThisPost] = useState({ title: '', content: '' })
-
   useEffect(async () => {
     const url = process.env.REACT_APP_API__URL + '/projects/' + myProject.host.projectId
     await axios
@@ -51,7 +49,7 @@ const Post = () => {
   return (
     <PostWrapper>
       <PostContent thisPost={thisPost} />
-      <ConfirmUsers projectId={myProject.host.projectId} />
+      <ConfirmUsers />
 
       <WaitingUserPage to="waiting">신청 현황</WaitingUserPage>
     </PostWrapper>
