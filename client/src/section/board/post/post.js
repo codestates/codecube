@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import styled from 'styled-components'
 
-import './post.css'
 import ConfirmUsers from '../members/confirm'
 import PostContent from './content'
 
@@ -50,7 +49,7 @@ const Post = () => {
   return (
     <PostWrapper>
       <PostContent thisPost={thisPost} />
-      <ConfirmUsers projectId={myProject.host.projectId} />
+      <ConfirmUsers />
 
       <WaitingUserPage to="waiting">신청 현황</WaitingUserPage>
     </PostWrapper>
