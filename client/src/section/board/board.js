@@ -51,7 +51,6 @@ const Board = () => {
           </Route>
           <Route path="private" element={<PrivateList />}>
             <Route path="" element={isHost ? <Post /> : <WishList />}></Route>
-            {/* <Route path="" element={isHost ? <Post /> : <div></div>}></Route> */}
             <Route path="waiting" element={<Waiting />} />
           </Route>
         </Routes>
