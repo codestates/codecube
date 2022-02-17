@@ -60,6 +60,7 @@ const UserProfile = styled.div`
 const ConfirmUsers = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [confirmUsers, setConfirmUsers] = useState([])
+  
 
   const handleExclude = (user) => {
     //클릭하면 1. 타겟을 셀렉트함
@@ -85,20 +86,36 @@ const ConfirmUsers = () => {
         withCredentials: true,
       })
       .then(({ data }) => {
+        console.log(data)
         setConfirmUsers(data.confirmed)
       })
   }, [])
+
+
+  const handleImgError = (e) => {
+    e.target.src = require('../../../default.jpeg')
+  }
+  const image = `https://codecube-image.s3.ap-northeast-2.amazonaws.com/`
 
   return (
     <Wrapper>
       {confirmUsers.map((user) => {
         return (
           <UserWrapper key={v4()}>
+            <div>
+                <img 
+                src={image+user.userId}
+                width="40px"
+                height="30px"
+                onError={handleImgError}
+                 />
+                </div>
             <Out onClick={() => handleExclude(user)} className="hover">
               제외
             </Out>
             <div className="hover">{user.username}</div>
-            {/* <UserProfile>{user.image}</UserProfile> */}
+            <UserProfile>
+            </UserProfile>
           </UserWrapper>
         )
       })}
