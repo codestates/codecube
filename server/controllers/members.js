@@ -8,7 +8,6 @@ const whoRU = function (withBearer) {
 
 module.exports = {
   delete: async (req, res) => {
-    // console.log(req.params)
     const userId = req.params.userId
     const proId = req.params.projectId
     const target = await models.project_users.destroy({
@@ -47,7 +46,6 @@ module.exports = {
       }
     },
     exclude: async (req, res) => {
-      console.log(req.body)
       const { userId, projectId } = req.body
       const project_users = await models.project_users.update(
         { join: 0 },
