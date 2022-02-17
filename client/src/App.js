@@ -75,7 +75,6 @@ function App() {
         authorizationCode: authorizationCode,
       })
       .then((res) => {
-        // console.log(res.data.accessToken)
         setGtiAccessToken(res.data.accessToken)
         window.localStorage.setItem('accessToken', res.data.accessToken)
         getGithudInfo(res.data.accessToken)
@@ -91,7 +90,6 @@ function App() {
         headers: { authorization: gitAccessToken },
       })
       .then((res) => {
-        // console.log(res.data.userInfo)
         const { login, calendar } = res.data.userInfo
         setUserinfo({ email: login + '@github.com', username: login })
         const userJSON = {
