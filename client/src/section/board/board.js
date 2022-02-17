@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Toggle from '../../components/toggle/toggle'
@@ -10,6 +10,7 @@ import Waiting from './members/waiting'
 import { useSelector } from 'react-redux'
 import WishList from './projectList/wishList'
 import styled from 'styled-components'
+import Modal from '../../components/modal/modal'
 
 const BoardWrapper = styled.div`
   display: flex;
@@ -27,24 +28,30 @@ const BoardList = styled.div`
   align-items: center;
   flex-direction: column;
   overflow-y: scroll;
+
   width: 100%;
+  height: 38.2rem;
   max-width: 35rem;
+
   padding: 1rem;
   padding-top: 2rem;
-  height: 38.2rem;
 `
 
 const Board = () => {
   const { isHost } = useSelector((state) => state.boardReducer)
+  const [postPath, _] = useState('/1') // ! 테스트용 상태입니다.
 
   return (
     <BoardWrapper className="main-box">
       <Toggle />
       <BoardList>
         <Routes>
-          <Route index path="/" element={<PublicList />} />
+          <Route path="/" element={<PublicList />}>
+            <Route path={`post${postPath}`} element={<Modal></Modal>}></Route>
+          </Route>
           <Route path="private" element={<PrivateList />}>
             <Route path="" element={isHost ? <Post /> : <WishList />}></Route>
+            {/* <Route path="" element={isHost ? <Post /> : <div></div>}></Route> */}
             <Route path="waiting" element={<Waiting />} />
           </Route>
         </Routes>
