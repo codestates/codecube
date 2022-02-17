@@ -40,6 +40,24 @@ const ConfirmUsers = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [confirmUsers, setConfirmUsers] = useState([])
 
+  const handleExclude = (user) => {
+    //클릭하면 1. 타겟을 셀렉트함
+    const { userId, projectId } = user
+    //2. axios요청으로 join부분을 1 -> 0으로 바꿔야함
+    axios
+      .put(
+        process.env.REACT_APP_API__URL + '/members/exclude',
+        { userId, projectId },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((data) =>
+        setConfirmUsers((prevState) => prevState.filter((user) => user.userId !== userId))
+      )
+    //2. 요청이 잘 완료됐다면 confirmUsers에서 필터로 줄여줘야함
+  }
+
   useEffect(async () => {
     await axios
       .get(process.env.REACT_APP_API__URL + '/members/' + myProject.host.projectId, {
@@ -56,6 +74,7 @@ const ConfirmUsers = () => {
         return (
           <UserWrapper key={v4()}>
             {/* <img className="user-profile" src={user.img}></img> */}
+            <button onClick={() => handleExclude(user)}>제외</button>
             <UserProfile>{user.image}</UserProfile>
             <div>{user.username}</div>
           </UserWrapper>

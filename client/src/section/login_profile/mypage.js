@@ -13,6 +13,7 @@ const Mypage = (props) => {
   const [file, setFile] = useState('')
 
   const [userInfoEdited, setUserInfoEdited] = useState({
+    id,
     image,
     email,
     username,
@@ -187,7 +188,7 @@ const Mypage = (props) => {
           <h1>Mypage</h1>
           <div>
             <img
-              src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`}
+              src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${id}`}
               width="200px"
               height="100px"
             />
