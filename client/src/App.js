@@ -109,7 +109,7 @@ function App() {
 
   useEffect(() => {
     getAccessTocken(authorizationCode)
-  }, [])
+  }, [authorizationCode])
 
   return (
     <>
