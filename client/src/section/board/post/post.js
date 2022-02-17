@@ -37,7 +37,6 @@ const WaitingUserPage = styled(Link)`
 const Post = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [thisPost, setThisPost] = useState({ title: '', content: '' })
-
   useEffect(async () => {
     const url = process.env.REACT_APP_API__URL + '/projects/' + myProject.host.projectId
     await axios

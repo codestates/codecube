@@ -21,20 +21,44 @@ module.exports = {
       await res.status(204).json({ message: 'member rejected' })
     }
   },
-  put: async (req, res) => {
-    const { userId, projectId } = req.body
-    // console.log(req.body)
-    const project_users = await models.project_users.update(
-      { join: 1 },
-      {
-        where: { userId: userId, projectId: projectId },
+  put: {
+    join: async (req, res) => {
+      const { userId, projectId } = req.body
+      //우선 현재 프로젝트 참여 인원이 몇명인지 확인하고 4명 이상이면 다찼다고 보내기
+      const members = await models.project_users.findAndCountAll({
+        where: {
+          join: 1,
+          projectId,
+        },
+      })
+      if (members.count >= 4) {
+        return res.status(400).json({ message: 'maximum member count' })
       }
-    )
-    if (!project_users) {
-      res.status(404).json({ message: 'Not Found' })
-    } else {
-      res.status(204).json({ message: 'member accepted' })
-    }
+      const project_users = await models.project_users.update(
+        { join: 1 },
+        {
+          where: { userId: userId, projectId: projectId },
+        }
+      )
+      if (!project_users) {
+        return res.status(404).json({ message: 'Not Found' })
+      } else {
+        return res.status(204).json({ message: 'member accepted' })
+      }
+    },
+    exclude: async (req, res) => {
+      console.log(req.body)
+      const { userId, projectId } = req.body
+      const project_users = await models.project_users.update(
+        { join: 0 },
+        { where: { userId, projectId } }
+      )
+      if (!project_users) {
+        return res.status(404).json({ message: 'Not Found' })
+      } else {
+        return res.status(204).json({ message: 'member moved to waiting list' })
+      }
+    },
   },
   post: async (req, res) => {
     const projectId = req.body.projectId

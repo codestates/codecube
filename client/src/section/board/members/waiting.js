@@ -104,23 +104,37 @@ const Waiting = () => {
   }, [isHost, isLoggedIn])
 
   const onSelect = useCallback((userId, type, projectId) => {
-    setWaitingUsers((prevState) => prevState.filter((user) => user.userId !== userId))
-
     if (type === ACCEPT) {
-      axios.put(
-        process.env.REACT_APP_API__URL + '/members/join',
-        { userId, projectId },
-        {
-          withCredentials: true,
-        }
-      )
+      axios
+        .put(
+          process.env.REACT_APP_API__URL + '/members/join',
+          { userId, projectId },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((data) =>
+          setWaitingUsers((prevState) =>
+            prevState.filter((user) => user.userId !== userId)
+          )
+        )
+        .catch((err) => {
+          if (err.response.status === 400) {
+            alert('참가인원이 최대입니다')
+          } else {
+            console.log(err)
+          }
+        })
     } else {
-      axios.delete(
-        process.env.REACT_APP_API__URL + '/members/' + userId + '-' + projectId,
-        {
+      axios
+        .delete(process.env.REACT_APP_API__URL + '/members/' + userId + '-' + projectId, {
           withCredentials: true,
-        }
-      )
+        })
+        .then((data) =>
+          setWaitingUsers((prevState) =>
+            prevState.filter((user) => user.userId !== userId)
+          )
+        )
     }
   }, [])
 
@@ -128,6 +142,8 @@ const Waiting = () => {
     <Wrapper>
       {!isHost ? (
         <div>작성한 게시글이 없습니다</div>
+      ) : waitingUsers.length === 0 ? (
+        <div>대기중인 인원이 없습니다</div>
       ) : (
         waitingUsers.map(({ username, userId, projectId }) => {
           return (
