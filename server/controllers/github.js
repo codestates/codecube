@@ -39,7 +39,7 @@ module.exports = {
       })
     }
     if (req.headers.authorization) {
-      let response = await axios
+      await axios
         .get(
           'https://api.github.com/user',
           // {
@@ -51,24 +51,20 @@ module.exports = {
             },
           }
         )
-        .then((response) => {
-          // console.log(response.data)
-          // res.send(response.data)
-          console.log('에러0!!!')
+        .then(async (response) => {
           const { name, login, html_url, public_repos } = response.data
           const calendar = `https://ghchart.rshah.org/219138/${login}`
           const userInfo = { login, html_url, public_repos, calendar }
-          const isExist = models.users.findOne({
+          const isExist = await models.users.findOne({
             where: { username: login },
             raw: true,
           })
-          // console.log(isExist)
+
           if (isExist) {
-            console.log('에러1!!!')
             const { id, username, email, description, image } = isExist
-            console.log('에러1-0!!!')
+
             const jwt = makejwt({ id, username, email })
-            console.log('에러1-1!!!')
+
             return res
               .cookie('jwt', `bearer ${jwt}`, {
                 httpOnly: true,
@@ -79,24 +75,26 @@ module.exports = {
               .status(200)
               .json({ message: 'LogIn success', userInfo })
           }
-          console.log('에러2!!!')
-          const signUp = models.users.create({
-            username: login,
-            email: `${login}@github.com`,
-            password: req.headers.authorization,
-          })
-          // console.log(signUp.dataValues)
-          const { id, username, email, description, image } = signUp.dataValues
-          const jwt = makejwt({ id, username, email })
-          res
-            .cookie('jwt', `bearer ${jwt}`, {
-              httpOnly: true,
+          if (!isExist) {
+            const signUp = models.users.create({
+              username: login,
+              email: `${login}@github.com`,
+              password: req.headers.authorization,
             })
-            .cookie('id', id, {
-              httpOnly: true,
-            })
-            .status(201)
-            .send({ message: 'Created', userInfo })
+            // console.log(signUp.dataValues)
+            const { id, username, email, description, image } =
+              signUp.dataValues
+            const jwt = makejwt({ id, username, email })
+            res
+              .cookie('jwt', `bearer ${jwt}`, {
+                httpOnly: true,
+              })
+              .cookie('id', id, {
+                httpOnly: true,
+              })
+              .status(201)
+              .send({ message: 'Created', userInfo })
+          }
         })
         .catch((err) => {
           console.log('에러발생!!!')
