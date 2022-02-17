@@ -19,13 +19,14 @@ import { clearMyProject } from './actions/board'
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
 const authorizationCode = url.searchParams.get('code')
+const Savedcalendar = window.localStorage.getItem('usercalendar')
 
 axios.defaults.withCredentials = true
 
 function App() {
   const [isSignup, setIsSignup] = useState(false)
   const [gitAccessToken, setGtiAccessToken] = useState()
-  const [gitContri, setGitContri] = useState('')
+  const [gitContri, setGitContri] = useState(JSON.parse(Savedcalendar) ?? '')
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
   const dispatch = useDispatch()
@@ -52,10 +53,12 @@ function App() {
   }
 
   const onLogout = async () => {
+    setGitContri('')
     dispatch(handleLogout())
     dispatch(clearMyProject())
 
     window.localStorage.removeItem('userinfo')
+    window.localStorage.removeItem('usercalendar')
     navigate('/')
 
     await axios
@@ -96,7 +99,9 @@ function App() {
           email: login + '@github.com',
         }
         window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-        setGitContri(calendar)
+        const userCalendarJSON = calendar
+        window.localStorage.setItem('usercalendar', JSON.stringify(userCalendarJSON))
+        setGitContri(JSON.parse(window.localStorage.getItem('usercalendar')))
         dispatch(handleLogin())
       })
       .catch((err) => {

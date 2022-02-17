@@ -27,3 +27,8 @@ s3.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 알고리즘 
+.key.*
+.key
+.pub

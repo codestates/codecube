@@ -54,6 +54,7 @@ module.exports = {
         .then((response) => {
           // console.log(response.data)
           // res.send(response.data)
+          console.log('에러0!!!')
           const { name, login, html_url, public_repos } = response.data
           const calendar = `https://ghchart.rshah.org/219138/${login}`
           const userInfo = { login, html_url, public_repos, calendar }
@@ -63,8 +64,11 @@ module.exports = {
           })
           // console.log(isExist)
           if (isExist) {
+            console.log('에러1!!!')
             const { id, username, email, description, image } = isExist
+            console.log('에러1-0!!!')
             const jwt = makejwt({ id, username, email })
+            console.log('에러1-1!!!')
             return res
               .cookie('jwt', `bearer ${jwt}`, {
                 httpOnly: true,
@@ -75,6 +79,7 @@ module.exports = {
               .status(200)
               .json({ message: 'LogIn success', userInfo })
           }
+          console.log('에러2!!!')
           const signUp = models.users.create({
             username: login,
             email: `${login}@github.com`,
