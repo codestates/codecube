@@ -7,7 +7,6 @@ const { makejwt, solveToken } = require('./function')
 axios.defaults.withCredentials = true
 module.exports = {
   callback: async (req, res) => {
-    // console.log(req.body) // *
     if (!req.body.authorizationCode) {
       return res.status(302).location('/')
     }
@@ -81,7 +80,6 @@ module.exports = {
               email: `${login}@github.com`,
               password: req.headers.authorization,
             })
-            // console.log(signUp.dataValues)
             const { id, username, email, description, image } =
               signUp.dataValues
             const jwt = makejwt({ id, username, email })

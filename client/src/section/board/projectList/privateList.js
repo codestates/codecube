@@ -34,7 +34,7 @@ const PrivateList = () => {
 
   return (
     <>
-      <ProjectButton postState={myProject.host.start + myProject.host.done} />
+      <ProjectButton />
       <PrivateWrapper>
         <Outlet />
       </PrivateWrapper>

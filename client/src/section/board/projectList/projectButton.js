@@ -1,6 +1,9 @@
+import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMyProject } from '../../../actions/board.js'
 import styled from 'styled-components'
+const serverUrl = process.env.REACT_APP_API__URL
 
 const P_CREATE = '프로잭트 생성'
 const P_START = '프로젝트 시작'
@@ -23,25 +26,38 @@ const Button = styled.div`
   cursor: pointer;
 `
 
-const ProjectButton = ({ postState }) => {
-  const { isHost } = useSelector((state) => state.boardReducer)
+const ProjectButton = () => {
+  const { isHost, myProject } = useSelector((state) => state.boardReducer)
   const [buttonName, setButtonName] = useState(P_CREATE)
-
+  const dispatch = useDispatch()
+  console.log(myProject)
   useEffect(() => {
-    if (isHost && postState >= 1) {
+    if (isHost && myProject.host.start >= 1) {
       setButtonName(P_DONE)
-    } else if (isHost && postState >= 0) {
+    } else if (isHost && myProject.host.start >= 0) {
       setButtonName(P_START)
     }
-  }, [isHost, postState])
+  }, [isHost, myProject])
 
   const onDream = useCallback(() => {
     if (buttonName === P_CREATE) {
-      // console.log('creating!')
+      console.log('creating!')
     } else if (buttonName === P_START) {
-      // console.log('starting!')
+      axios
+        .put(serverUrl + '/projects/' + myProject.host.projectId + '/start')
+        .then((data) => {
+          dispatch(getMyProject())
+          alert('프로젝트가 시작되었습니다')
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            alert('이미 시작된 프로젝트 입니다')
+          } else {
+            console.log(err)
+          }
+        })
     } else {
-      // console.log('done!!')
+      console.log('done!!')
     }
   }, [buttonName])
 

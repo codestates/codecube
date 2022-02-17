@@ -4,7 +4,9 @@ const controller = require('../controllers')
 //게시글 삭제
 router.delete('/:projectId', controller.projects.project.delete)
 //게시글 수정
-router.put('/:projectId', controller.projects.project.put)
+router.put('/:projectId', controller.projects.project.put.changeContent)
+//프로젝트 스타트 요청
+router.put('/:projectId/start', controller.projects.project.put.start)
 //게시글 작성
 router.post('/', controller.projects.post.post)
 //특정 게시글 요청
