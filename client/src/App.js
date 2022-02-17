@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Board from './section/board/board'
 import Mypage from './section/login_profile/mypage'
 import Login from './section/login_profile/login'
