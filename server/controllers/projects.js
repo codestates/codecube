@@ -82,20 +82,44 @@ module.exports = {
       }
       res.status(200).json({ message: 'successfully deleted' })
     },
-    put: async (req, res) => {
-      // console.log(req.body)
-      const { title, content, image } = req.body
-      // !!
-      const userId = whoRU(req.headers.authorization)
-      // !!
-      if (!userId) {
-        return res.status(401).json({ message: 'invalid authorization' })
-      }
-      const project = await models.projects.findOne({
-        where: { userId: userId },
-      })
-      await project.update({ title: title, content: content, image: image })
-      res.status(200).json({ message: 'successfully modified' })
+    put: {
+      changeContent: async (req, res) => {
+        // console.log(req.body)
+        const { title, content, image } = req.body
+        // !!
+        console.log(req.cookies.jwt)
+        const userId = solveToken(req.cookies.jwt)
+        // !!
+        if (!userId) {
+          return res.status(401).json({ message: 'invalid authorization' })
+        }
+        const project = await models.projects.findOne({
+          where: { userId: userId },
+        })
+        await project.update({ title: title, content: content, image: image })
+        res.status(200).json({ message: 'successfully modified' })
+      },
+      start: async (req, res) => {
+        const projectId = req.params.projectId
+        //우선 들어온 프로젝트 번호가 start인지 아닌지 구분하기
+        const project = await models.projects.findOne({
+          where: { id: projectId },
+          raw: true,
+        })
+        // console.log(project)
+        if (project.start === 1 || project.done === 1) {
+          return res
+            .status(400)
+            .json({ message: 'This project has already been started or done' })
+        }
+        const newProject = await models.projects.update(
+          { start: 1 },
+          { where: { id: projectId }, raw: true }
+        )
+        return res.status(200).json({ message: 'project started' })
+        //프로젝트에서 해당 게시글 찾아서 update하기
+        //response주기
+      },
     },
   },
   post: {
