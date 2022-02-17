@@ -15,6 +15,8 @@ const WishListWrapper = styled.div`
 `
 
 const WishList = () => {
+  const [postPath, _set] = useState('/1') // ! 테스트용 상태입니다.
+
   const { myProject } = useSelector((state) => state.boardReducer)
   const [_, setState] = useState(false)
 
@@ -30,7 +32,7 @@ const WishList = () => {
           {myProject.guest.wishList.length
             ? myProject.guest.wishList.map((post) => {
                 return (
-                  <PostCard key={v4()}>
+                  <PostCard to={`/post${postPath}`} key={v4()}>
                     <h3>{post.title}</h3>
                     <div>{`참여인원 ${post.confirmed}/ 4`}</div>
                   </PostCard>
@@ -41,7 +43,7 @@ const WishList = () => {
       ) : (
         <WishListWrapper>
           <h2>참가중인 프로젝트</h2>
-          <PostCard>
+          <PostCard to={`/post${postPath}`}>
             <div>{myProject.guest.confirmed.title}</div>
             자세히 보기👁‍🗨
           </PostCard>
