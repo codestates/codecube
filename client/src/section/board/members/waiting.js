@@ -154,7 +154,6 @@ const Waiting = () => {
           return (
             <Card key={v4()}>
               <Profile>
-<<<<<<< HEAD
                 <TemporaryProfileImage />
                 <div>
                 <img 
@@ -162,15 +161,6 @@ const Waiting = () => {
                 width="50px"
                 height="50px"
                 onError={handleImgError}
-=======
-                {/* <TemporaryProfileImage /> */}
-                <div>
-                <src 
-                src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`}
-                width="200px"
-                height="100px"
-                onError={() => (require('../../../default.jpeg'))}
->>>>>>> 7bd7fb44bd1bbb74766857f2eba1bc5e94eed189
                  />
                 </div>
                 {username}
