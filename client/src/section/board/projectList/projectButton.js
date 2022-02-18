@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyProject, handleSetIsNotHost } from '../../../actions/board.js'
 import styled from 'styled-components'
@@ -9,7 +10,7 @@ const P_CREATE = '프로잭트 생성'
 const P_START = '프로젝트 시작'
 const P_DONE = '프로젝트 종료'
 
-const Button = styled.div`
+const Button = styled(Link)`
   position: absolute;
 
   width: 7rem;
@@ -24,6 +25,9 @@ const Button = styled.div`
   font-size: 0.7rem;
 
   cursor: pointer;
+
+  text-decoration: none;
+  color: inherit;
 `
 
 const ProjectButton = () => {
@@ -77,7 +81,11 @@ const ProjectButton = () => {
     }
   }, [buttonName])
 
-  return <Button onClick={onDream}>{buttonName}</Button>
+  return (
+    <Button to="/post/1" onClick={onDream}>
+      {buttonName}
+    </Button>
+  )
 }
 
 export default ProjectButton
