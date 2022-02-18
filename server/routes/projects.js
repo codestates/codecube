@@ -7,6 +7,8 @@ router.delete('/:projectId', controller.projects.project.delete)
 router.put('/:projectId', controller.projects.project.put.changeContent)
 //프로젝트 스타트 요청
 router.put('/:projectId/start', controller.projects.project.put.start)
+//프로젝트 종료 요청
+router.put('/:projectId/done', controller.projects.project.put.done)
 //게시글 작성
 router.post('/', controller.projects.post.post)
 //특정 게시글 요청
