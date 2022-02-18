@@ -4,5 +4,4 @@ module.exports = {
   users: require('./users'),
   github: require('./github'),
   openapi: require('./openapi'),
-  sns: require('./sns'),
 }

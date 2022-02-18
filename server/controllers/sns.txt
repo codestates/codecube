@@ -1,12 +1,11 @@
 require('dotenv').config()
 const models = require('../models')
-const client_id = process.env.GITHUB_CLIENT_ID
-const client_secret = process.env.GITHUB_CLIENT_SECRET
 const axios = require('axios')
 const { makejwt, solveToken } = require('./function')
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
+
 module.exports = {
-  callback: async (req, res) => {
+  snscallback: async (req, res) => {
     if (!req.body.authorizationCode) {
       return res.status(302).location('/')
     }
@@ -73,7 +72,7 @@ module.exports = {
       // res.send('응답이다')
     }
   },
-  userInfo: async (req, res) => {
+  snsuserInfo: async (req, res) => {
     if (!req.cookies.naveraccesstoken && !req.cookies.kakaoaccesstoken) {
       return res.status(403).send({
         message: 'no permission to access resources',
