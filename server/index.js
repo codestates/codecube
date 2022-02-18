@@ -25,6 +25,7 @@ app.use('/members', indexRouter.members)
 app.use('/projects', indexRouter.projects)
 app.use('/github', indexRouter.github)
 app.use('/openapi', indexRouter.openapi)
+app.use('/sns', indexRouter.sns)
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
