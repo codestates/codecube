@@ -5,14 +5,15 @@ import './mypage.css'
 axios.defaults.withCredentials = true
 
 const Mypage = (props) => {
-  const { username, stacks, description, image, email } = JSON.parse(
+  const { id, username, stacks, description, image, email } = JSON.parse(
     window.localStorage.getItem('userinfo')
   )
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
   const [file, setFile] = useState('')
-
+  const [getURL,setImageURL] = useState(`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${id}`)
   const [userInfoEdited, setUserInfoEdited] = useState({
+    id,
     image,
     email,
     username,
@@ -187,9 +188,10 @@ const Mypage = (props) => {
           <h1>Mypage</h1>
           <div>
             <img
-              src={`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${1}`}
+              src={getURL}
               width="200px"
               height="100px"
+              onError={() => setImageURL(require('../../default.jpeg'))}
             />
           </div>
           <div id="mypage-userInfo">
