@@ -20,6 +20,7 @@ const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
 const authorizationCode = url.searchParams.get('code')
 const Savedcalendar = window.localStorage.getItem('usercalendar')
+const stateCode = url.searchParams.get('state')
 
 axios.defaults.withCredentials = true
 
