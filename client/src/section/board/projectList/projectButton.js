@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyProject } from '../../../actions/board.js'
+import { getMyProject, handleSetIsNotHost } from '../../../actions/board.js'
 import styled from 'styled-components'
 const serverUrl = process.env.REACT_APP_API__URL
 
@@ -30,7 +30,6 @@ const ProjectButton = () => {
   const { isHost, myProject } = useSelector((state) => state.boardReducer)
   const [buttonName, setButtonName] = useState(P_CREATE)
   const dispatch = useDispatch()
-  console.log(myProject)
   useEffect(() => {
     if (isHost && myProject.host.start >= 1) {
       setButtonName(P_DONE)
@@ -57,7 +56,24 @@ const ProjectButton = () => {
           }
         })
     } else {
-      console.log('done!!')
+      axios
+        .put(serverUrl + '/projects/' + myProject.host.projectId + '/done')
+        .then((data) => {
+          dispatch(handleSetIsNotHost())
+          alert('프로젝트가 종료되었습니다')
+        })
+        .catch((err) => {
+          if (err.response.data.message === 'This project has to be started first') {
+            console.log(err.response)
+            alert('아직 시작 전인 프로젝트입니다')
+          } else if (err.response.data.message === 'This project has already been done') {
+            console.log(err.response)
+            dispatch(handleSetIsNotHost())
+            alert('이미 종료된 프로젝트입니다')
+          } else {
+            console.log(err)
+          }
+        })
     }
   }, [buttonName])
 
