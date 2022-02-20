@@ -47,7 +47,7 @@ const Board = () => {
       <BoardList>
         <Routes>
           <Route path="/" element={<PublicList />}>
-            <Route path={`post${postPath}`} element={<Modal></Modal>}></Route>
+            <Route path={`post/*`} element={<Modal></Modal>}></Route>
           </Route>
           <Route path="private" element={<PrivateList />}>
             <Route path="" element={isHost ? <Post /> : <WishList />}></Route>

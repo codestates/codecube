@@ -1,5 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 const BackDrop = styled(Link)`
@@ -20,7 +21,7 @@ const BackDrop = styled(Link)`
   color: inherit;
 `
 
-const Content = styled.div`
+const Wrapper = styled.div`
   background-color: white;
 
   width: 60vw;
@@ -30,12 +31,36 @@ const Content = styled.div`
   text-align: center;
 `
 
+const H1 = styled.h1`
+  font-size: 2rem;
+  line-height: 2.5rem;
+  margin: 2rem 0;
+`
+
+const Content = styled.div`
+  padding: 0 1rem;
+`
+
 const Modal = () => {
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const location = useLocation()
+
+  useEffect(() => {
+    const postId = location.pathname.split('/')[2]
+
+    axios.get(process.env.REACT_APP_API__URL + `/projects/${postId}`).then(({ data }) => {
+      setTitle(data.projectInfo.title)
+      setContent(data.projectInfo.content)
+    })
+  }, [])
+
   return (
     <BackDrop to="/">
-      <Content onClick={(e) => e.preventDefault()}>
-        <h1>모달창 테스트</h1>
-      </Content>
+      <Wrapper onClick={(e) => e.preventDefault()}>
+        <H1>{title}</H1>
+        <Content>{content}</Content>
+      </Wrapper>
     </BackDrop>
   )
 }
