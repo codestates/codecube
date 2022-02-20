@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import { v4 } from 'uuid'
 import axios from 'axios'
 
 import styled from 'styled-components'
+import { getPublicList } from '../../../actions/board'
 
 export const PostCardWrapper = styled.div`
   display: flex;
@@ -41,18 +43,11 @@ export const PostCard = styled(Link)`
 `
 
 const PublicList = () => {
-  const [publicList, setPublicList] = useState([{}])
-  const [postPath, _] = useState('/1') // ! 테스트용 상태입니다.
+  const { publicList } = useSelector((state) => state.boardReducer)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API__URL + '/projects')
-      .then(({ data }) => {
-        setPublicList(data.list)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
+    dispatch(getPublicList())
   }, [])
 
   return (
@@ -60,7 +55,7 @@ const PublicList = () => {
       <PostCardWrapper>
         {publicList.map((post) => {
           return (
-            <PostCard to={`post${postPath}`} key={v4()}>
+            <PostCard to={`post/${post.projectId}`} key={v4()}>
               <h3>{post.title}</h3>
               <div>{`참여인원 ${post.confirmed}/ 4`}</div>
             </PostCard>
