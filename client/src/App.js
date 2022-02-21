@@ -47,7 +47,6 @@ function App() {
           email: data.email,
           description: data.description,
           stacks: data.stacks,
-          image: data.image,
         }
         window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
         dispatch(handleLogin())

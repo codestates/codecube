@@ -15,6 +15,7 @@ module.exports = {
       const decoded = solveToken(token)
       // 해독한 Token값중 Mypage를 구성하는 값들만 받아온다.
       const solve = await users.findOne({
+        attributes: ['id', 'username', 'email', 'oauth', 'description'],
         raw: true,
         where: { id: decoded.id },
       })
@@ -46,6 +47,7 @@ module.exports = {
         } else {
           solve.stacks = []
         }
+        console.log('클라이언트에 보내는 값', solve)
         res.status(200).json({ data: solve })
       }
     },
@@ -70,16 +72,6 @@ module.exports = {
         res
           .status(200)
           .clearCookie('jwt', {
-            domain: process.env.DOMAIN,
-            secure: true,
-            sameSite: 'none',
-          })
-          .clearCookie('id', {
-            domain: process.env.DOMAIN,
-            secure: true,
-            sameSite: 'none',
-          })
-          .clearCookie('oauth', {
             domain: process.env.DOMAIN,
             secure: true,
             sameSite: 'none',
@@ -140,28 +132,13 @@ module.exports = {
           secure: true,
           sameSite: 'none',
         })
-        .clearCookie('id', {
-          domain: process.env.DOMAIN,
-          secure: true,
-          sameSite: 'none',
-        })
-        .clearCookie('oauth', {
-          domain: process.env.DOMAIN,
-          secure: true,
-          sameSite: 'none',
-        })
-        .clearCookie('__gads', {
-          domain: process.env.DOMAIN,
-          secure: true,
-          sameSite: 'none',
-        })
         .send('Logged out successfully')
     },
   },
   signup: {
     post: async (req, res) => {
       //req.body를 통해 가입정보를 구조분해를 통해 나눔
-      const { email, password, username, description, image, stacks } = req.body
+      const { email, password, username, description, stacks } = req.body
 
       //email이 겹치는 요소 users테이블에서 확인
       const IDcheck = await models.users.findOne({
@@ -177,12 +154,12 @@ module.exports = {
           password: password,
           username: username,
           description: description,
-          image: image,
           oauth: 0,
         })
         // join테이블에 할당하기 위해 방금 작성한 유저정보를 구한다.(중복확인을 거친 email을 사용함)
         // 출력예시::: { id : 2}
         const newuserInfo = await models.users.findOne({
+          attributes: ['id', 'username', 'email', 'oauth', 'description'],
           raw: true,
           where: { email },
         })
@@ -205,17 +182,8 @@ module.exports = {
           id: newuserInfo.id,
           username,
           email,
-          // ! 회원가입시에는 desc를 담은 정보를 jwt 로 구성하는데 아래 로그인에서는 안쓴다..?
-          // description,
-          // oauth: newuserInfo.oauth,
         })
-
         res
-          .cookie('id', newuserInfo.id, {
-            domain: process.env.DOMAIN,
-            secure: true,
-            sameSite: 'none',
-          })
           .cookie('jwt', `bearer ${jwt}`, {
             domain: process.env.DOMAIN,
             secure: true,
@@ -223,7 +191,6 @@ module.exports = {
           })
           .status(201)
           .json({
-            userInfo: newuserInfo,
             message: 'signup successed',
           })
       } else {
@@ -257,16 +224,6 @@ module.exports = {
         // 쿠키로 Token과 id를 전달한다.
         res
           .cookie('jwt', `bearer ${jwt}`, {
-            domain: process.env.DOMAIN,
-            secure: true,
-            sameSite: 'none',
-          })
-          .cookie('id', loginuser.id, {
-            domain: process.env.DOMAIN,
-            secure: true,
-            sameSite: 'none',
-          })
-          .cookie('oauth', loginuser.oauth, {
             domain: process.env.DOMAIN,
             secure: true,
             sameSite: 'none',
