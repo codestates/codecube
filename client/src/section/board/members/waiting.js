@@ -83,7 +83,6 @@ const Button = styled.button`
 const Waiting = () => {
   const { isHost, myProject } = useSelector((state) => state.boardReducer)
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
-  
   const [waitingUsers, setWaitingUsers] = useState([])
   const navigation = useNavigate()
 
@@ -150,18 +149,17 @@ const Waiting = () => {
         <div>대기중인 인원이 없습니다</div>
       ) : (
         waitingUsers.map(({ username, userId, projectId }) => {
-          
           return (
             <Card key={v4()}>
               <Profile>
                 <TemporaryProfileImage />
                 <div>
-                <img 
-                src={image+userId}
-                width="50px"
-                height="50px"
-                onError={handleImgError}
-                 />
+                  <img
+                    src={image + userId}
+                    width="50px"
+                    height="50px"
+                    onError={handleImgError}
+                  />
                 </div>
                 {username}
               </Profile>

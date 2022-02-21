@@ -36,9 +36,9 @@ module.exports = {
       const firstList = await models.projects.findAll({
         include: {
           model: models.users,
-          require: true,
         },
         raw: true,
+        where: { done: 0 },
       })
       firstList.map((el) => {
         const obj = {}
@@ -58,12 +58,10 @@ module.exports = {
           finalList[idx]['confirmed'] = confirmed.count
         })
       )
-      // console.log(finalList)
-      res.status(200).json({ message: 'helloWorld', list: finalList })
+      res.status(200).json({ message: 'ok', list: finalList })
     },
     delete: async (req, res) => {
       //1. 일단 게시글 지우기
-      // console.log(req.params)
       const projectId = req.params.projectId
       const target = await models.projects.findOne({
         where: { id: projectId },
@@ -84,12 +82,8 @@ module.exports = {
     },
     put: {
       changeContent: async (req, res) => {
-        // console.log(req.body)
         const { title, content, image } = req.body
-        // !!
-        console.log(req.cookies.jwt)
         const userId = solveToken(req.cookies.jwt)
-        // !!
         if (!userId) {
           return res.status(401).json({ message: 'invalid authorization' })
         }
@@ -101,12 +95,10 @@ module.exports = {
       },
       start: async (req, res) => {
         const projectId = req.params.projectId
-        //우선 들어온 프로젝트 번호가 start인지 아닌지 구분하기
         const project = await models.projects.findOne({
           where: { id: projectId },
           raw: true,
         })
-        // console.log(project)
         if (project.start === 1 || project.done === 1) {
           return res
             .status(400)
@@ -117,8 +109,28 @@ module.exports = {
           { where: { id: projectId }, raw: true }
         )
         return res.status(200).json({ message: 'project started' })
-        //프로젝트에서 해당 게시글 찾아서 update하기
-        //response주기
+      },
+      done: async (req, res) => {
+        const projectId = req.params.projectId
+        const project = await models.projects.findOne({
+          where: { id: projectId },
+          raw: true,
+        })
+        if (project.start !== 1) {
+          return res
+            .status(400)
+            .json({ message: 'This project has to be started first' })
+        }
+        if (project.done === 1) {
+          return res
+            .status(400)
+            .json({ message: 'This project has already been done' })
+        }
+        const newProject = await models.projects.update(
+          { done: 1 },
+          { where: { id: projectId }, raw: true }
+        )
+        return res.status(200).json({ message: 'project done' })
       },
     },
   },
@@ -155,7 +167,6 @@ module.exports = {
         where: { id: projectId },
         raw: true,
       })
-      // console.log(target)
       if (!target) {
         return res.status(404).json({ message: 'Not Found' })
       } else {
@@ -189,7 +200,7 @@ module.exports = {
 
       const target = await models.projects.findOne({
         raw: true,
-        where: { userId },
+        where: { userId, done: 0 },
       })
 
       if (target) {
@@ -202,10 +213,14 @@ module.exports = {
         // * guest인 경우
         const inList = await models.project_users.findAll({
           raw: true,
-          include: [models.projects],
+          include: {
+            model: models.projects,
+            where: {
+              done: 0,
+            },
+          },
           where: { userId },
         })
-
         //대기중 글 개수가 1개일 때
         if (inList.length === 1) {
           const { id, userId, projectId, join } = inList[0]

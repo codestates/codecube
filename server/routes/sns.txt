@@ -1,0 +1,7 @@
+const router = require('express').Router()
+const controller = require('../controllers')
+
+router.post('/snscallback', controller.sns.snscallback)
+router.get('/snsuserInfo', controller.sns.snsuserInfo)
+
+module.exports = router

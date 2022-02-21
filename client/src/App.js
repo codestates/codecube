@@ -20,6 +20,8 @@ const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
 const authorizationCode = url.searchParams.get('code')
 const Savedcalendar = window.localStorage.getItem('usercalendar')
+const stateCode = url.searchParams.get('state')
+const gitcode = window.localStorage.getItem('gitcode')
 
 axios.defaults.withCredentials = true
 
@@ -56,7 +58,7 @@ function App() {
     setGitContri('')
     dispatch(handleLogout())
     dispatch(clearMyProject())
-
+    window.localStorage.removeItem('codedistinguisher')
     window.localStorage.removeItem('userinfo')
     window.localStorage.removeItem('usercalendar')
     navigate('/')
@@ -73,10 +75,14 @@ function App() {
     await axios
       .post(process.env.REACT_APP_API__URL + '/github/callback', {
         authorizationCode: authorizationCode,
+        gitcode: gitcode,
+        stateCode: stateCode,
       })
       .then((res) => {
+        // console.log('깃토큰', res.data)
         setGtiAccessToken(res.data.accessToken)
         window.localStorage.setItem('accessToken', res.data.accessToken)
+
         getGithudInfo(res.data.accessToken)
       })
       .catch((err) => {
@@ -87,20 +93,28 @@ function App() {
   const getGithudInfo = async (gitAccessToken) => {
     await axios
       .get(process.env.REACT_APP_API__URL + '/github/userInfo', {
-        headers: { authorization: gitAccessToken },
+        headers: {
+          authorization: gitAccessToken,
+          gitcode: window.localStorage.getItem('gitcode'),
+        },
       })
       .then((res) => {
-        const { login, calendar } = res.data.userInfo
-        setUserinfo({ email: login + '@github.com', username: login })
-        const userJSON = {
-          username: login,
-          email: login + '@github.com',
+        if (gitcode === 'git') {
+          const { login, calendar } = res.data.userInfo
+          setUserinfo({ email: login + '@github.com', username: login })
+          const userJSON = {
+            username: login,
+            email: login + '@github.com',
+          }
+          window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
+          const userCalendarJSON = calendar
+          window.localStorage.setItem('usercalendar', JSON.stringify(userCalendarJSON))
+          setGitContri(JSON.parse(window.localStorage.getItem('usercalendar')))
+          dispatch(handleLogin())
         }
-        window.localStorage.setItem('userinfo', JSON.stringify(userJSON))
-        const userCalendarJSON = calendar
-        window.localStorage.setItem('usercalendar', JSON.stringify(userCalendarJSON))
-        setGitContri(JSON.parse(window.localStorage.getItem('usercalendar')))
-        dispatch(handleLogin())
+        if (gitcode === 'nonegit') {
+          console.log(res.data)
+        }
       })
       .catch((err) => {
         console.log('이상있음')
@@ -109,7 +123,7 @@ function App() {
 
   useEffect(() => {
     getAccessTocken(authorizationCode)
-  }, [])
+  }, [authorizationCode])
 
   return (
     <>

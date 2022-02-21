@@ -1,4 +1,4 @@
-import { IS_HOST, IS_NOT_HOST, MY_PROJECT } from '../actions/board'
+import { IS_HOST, IS_NOT_HOST, MY_PROJECT, PUBLIC_LIST } from '../actions/board'
 
 const initialState = {
   isHost: false,
@@ -25,6 +25,7 @@ const initialState = {
       wishList: [],
     },
   },
+  publicList: [],
 }
 
 export default (state = initialState, action) => {
@@ -43,6 +44,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         myProject: action.payload.data,
+      }
+    case PUBLIC_LIST:
+      return {
+        ...state,
+        publicList: action.payload.list,
       }
     default:
       return state

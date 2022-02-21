@@ -60,12 +60,9 @@ const UserProfile = styled.div`
 const ConfirmUsers = () => {
   const { myProject } = useSelector((state) => state.boardReducer)
   const [confirmUsers, setConfirmUsers] = useState([])
-  
 
   const handleExclude = (user) => {
-    //클릭하면 1. 타겟을 셀렉트함
     const { userId, projectId } = user
-    //2. axios요청으로 join부분을 1 -> 0으로 바꿔야함
     axios
       .put(
         process.env.REACT_APP_API__URL + '/members/exclude',
@@ -77,7 +74,6 @@ const ConfirmUsers = () => {
       .then((data) =>
         setConfirmUsers((prevState) => prevState.filter((user) => user.userId !== userId))
       )
-    //2. 요청이 잘 완료됐다면 confirmUsers에서 필터로 줄여줘야함
   }
 
   useEffect(async () => {
@@ -86,11 +82,11 @@ const ConfirmUsers = () => {
         withCredentials: true,
       })
       .then(({ data }) => {
-        console.log(data)
-        setConfirmUsers(data.confirmed)
+        const hostUserId = JSON.parse(window.localStorage.getItem('userinfo')).id
+        const confirmed = data.confirmed.filter((el) => el.userId !== hostUserId)
+        setConfirmUsers(confirmed)
       })
   }, [])
-
 
   const handleImgError = (e) => {
     e.target.src = require('../../../default.jpeg')
@@ -103,19 +99,18 @@ const ConfirmUsers = () => {
         return (
           <UserWrapper key={v4()}>
             <div>
-                <img 
-                src={image+user.userId}
+              <img
+                src={image + user.userId}
                 width="40px"
                 height="30px"
                 onError={handleImgError}
-                 />
-                </div>
+              />
+            </div>
             <Out onClick={() => handleExclude(user)} className="hover">
               제외
             </Out>
             <div className="hover">{user.username}</div>
-            <UserProfile>
-            </UserProfile>
+            <UserProfile></UserProfile>
           </UserWrapper>
         )
       })}

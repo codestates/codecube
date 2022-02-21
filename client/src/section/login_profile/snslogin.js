@@ -2,6 +2,7 @@ import React from 'react'
 
 const GitHubLogin = (props) => {
   const redirectUrl = () => {
+    window.localStorage.setItem('gitcode', 'git')
     window.location.replace(
       `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`
     )
@@ -17,8 +18,9 @@ const GitHubLogin = (props) => {
 
 const NaverLogin = (props) => {
   const redirectUrl = () => {
+    window.localStorage.setItem('gitcode', 'nonegit')
     window.location.replace(
-      `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`
+      `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.REACT_APP_SNS}`
     )
   }
   return (
@@ -32,8 +34,9 @@ const NaverLogin = (props) => {
 
 const KakaoLogin = (props) => {
   const redirectUrl = () => {
+    window.localStorage.setItem('gitcode', 'nonegit')
     window.location.replace(
-      `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`
+      `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.REACT_APP_SNS}&response_type=code`
     )
   }
   return (
