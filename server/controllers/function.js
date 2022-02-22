@@ -15,8 +15,9 @@ module.exports = {
     try {
       const token = sign(data, private, option)
       return token
-    } catch (e) {
-      return e
+    } catch (err) {
+      console.log('\n❗️ makejwt err:\n', err)
+      return err
     }
   },
   solveToken: (token) => {
@@ -24,7 +25,11 @@ module.exports = {
     const solveCert = fs.readFileSync(
       path.resolve(__dirname, '../certs/rsa.key.pub')
     )
-    const result = verify(token, solveCert, { algorithm: 'RS256' })
-    return result
+    try {
+      const result = verify(token, solveCert, { algorithm: 'RS256' })
+      return result
+    } catch (err) {
+      console.log('\n❗️ solveToken err:\n', err)
+    }
   },
 }
