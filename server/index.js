@@ -27,7 +27,11 @@ app.use('/github', indexRouter.github)
 app.use('/openapi', indexRouter.openapi)
 
 app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`)
+  if (PORT !== 80) {
+    console.log(`      🚀 server listening thru local env on port ${PORT}`)
+  } else {
+    console.log(`      🚀 server listening thru deploy env on port ${PORT}`)
+  }
 })
 
 module.exports = app
