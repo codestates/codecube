@@ -9,6 +9,7 @@ module.exports = {
     get: async (req, res) => {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
       if (!req.cookies.jwt) {
+        console.log('\n❗️ users(userInfo):\n 토큰정보를 확인할 수 없습니다.\n')
         return res.status(401).json({ message: 'invailid authorization' })
       }
       const token = req.cookies.jwt
@@ -19,9 +20,9 @@ module.exports = {
         raw: true,
         where: { id: decoded.id },
       })
-
       // 회원을 찾을수 없는경우 401을 응답한다.
       if (!solve) {
+        console.log('\n❗️ users(userInfo):\n 잘못된 토큰입니다.\n')
         res.status(401).json({ message: 'invalid authorization' })
       }
       //아니면 유저정보를 보내준다.
@@ -47,7 +48,9 @@ module.exports = {
         } else {
           solve.stacks = []
         }
-        console.log('클라이언트에 보내는 값', solve)
+        console.log(
+          `\n👍 users(userInfo):\n userId: ${solve.id} ${solve.username}님의 정보를 전송하였습니다.\n`
+        )
         res.status(200).json({ data: solve })
       }
     },
@@ -56,7 +59,14 @@ module.exports = {
       const Token = req.cookies.jwt
       const userInfo = solveToken(Token)
       // 탈퇴하려는 가입정보가 Null일경우 분기
+      if (!Token) {
+        console.log('\n❗️ users(회원탈퇴):\n 토큰정보를 확인할 수 없습니다.\n')
+        res.status(401).json({ message: 'invalid token' })
+      }
       if (!userInfo) {
+        console.log(
+          '\n❗️ users(회원탈퇴):\n 토큰에 해당하는 유저를 확인할 수 없습니다.\n'
+        )
         res.status(401).json({ message: 'User not found' })
       } else {
         // 삭제요청한 유저가 가지고 있는 stackId값을 가지고옴
@@ -67,8 +77,14 @@ module.exports = {
         // JOIN테이블의 유저정보를 삭제하기전 유저의 stack배열이 비었는지 확인함
         if (DeleteUser.length !== 0) {
           await models.user_stacks.destroy({ where: { userId: userInfo.id } })
+          console.log(
+            `\n👍 users(회원탈퇴):\n userId: ${userInfo.id}의 기술스택 데이터가 삭제되었습니다.\n`
+          )
         }
         await models.users.destroy({ where: { id: userInfo.id } })
+        console.log(
+          `\n👍 users(회원탈퇴):\n userId: ${userInfo.id}의 유저정보 데이터가 삭제되었습니다.\n`
+        )
         res
           .status(200)
           .clearCookie('jwt', {
