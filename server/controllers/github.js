@@ -144,10 +144,11 @@ module.exports = {
               .json({ message: 'LogIn success', userInfo })
           }
           if (!isExist) {
-            const signUp = models.users.create({
+            const signUp = await models.users.create({
               username: login,
               email: `${login}@github.com`,
               password: req.headers.authorization,
+              oauth: 1,
             })
             const { id, username, email, description, image } =
               signUp.dataValues
@@ -156,15 +157,12 @@ module.exports = {
               .cookie('jwt', `bearer ${jwt}`, {
                 httpOnly: true,
               })
-              .cookie('id', id, {
-                httpOnly: true,
-              })
               .status(201)
               .send({ message: 'Created', userInfo })
           }
         })
         .catch((err) => {
-          console.log('에러발생!!!')
+          console.log('에러발생!!!', err)
         })
     } else if (req.headers.gitcode === 'nonegit') {
       const { naveraccesstoken, kakaoaccesstoken } = req.cookies
