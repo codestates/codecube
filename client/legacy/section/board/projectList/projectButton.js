@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyProject, handleSetIsNotHost } from '../../../actions/board.js'
+import { getMyProject, handleSetIsNotHost } from '../../../../src/actions/board.js'
 import styled from 'styled-components'
 const serverUrl = process.env.REACT_APP_API__URL
 
