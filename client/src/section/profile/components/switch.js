@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { IconContext } from 'react-icons/lib'
 import { SiTinder as ICON_tinder } from 'react-icons/si'
 import { RiMessage3Fill as ICON_message } from 'react-icons/ri'
+import { handleChatMode, handleStateMode } from '../../../actions/profile'
 
 const Wrapper = styled.div`
   position: relative;
@@ -13,8 +15,6 @@ const Wrapper = styled.div`
   justify-content: center;
 
   flex: 1 0 0%;
-
-  /* transform: translateY(12.5%); */
 `
 
 const Ul = styled.ul`
@@ -40,11 +40,9 @@ const Li = styled.li`
   width: 3.4rem;
   margin: 0 0.3rem;
 
+  cursor: pointer;
   svg {
     color: gray;
-  }
-
-  cursor: pointer;
   }
 `
 
@@ -90,33 +88,31 @@ const Back = styled.div`
 `
 
 const Switch = () => {
-  const [backIndex, setBackIndex] = useState(0)
   const ulRef = useRef(null)
 
-  const onSwitching = (idx) => {
-    setBackIndex(idx)
-  }
+  const state = useSelector((state) => state.profileReducer)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const target = ulRef.current.children[backIndex]
+    const target = ulRef.current.children[state.index]
     target.classList.add('active')
 
     return () => {
-      console.log('useEffect cleanup!')
+      target.classList.remove('active')
     }
-  }, [backIndex])
+  }, [state])
 
   return (
     <IconContext.Provider value={{ size: '1.8rem' }}>
       <Wrapper>
-        <Ul ref={ulRef} active={backIndex}>
-          <Li onClick={() => onSwitching(0)}>
+        <Ul ref={ulRef} active={state.index}>
+          <Li onClick={() => dispatch(handleStateMode())}>
             <ICON_tinder />
           </Li>
-          <Li onClick={() => onSwitching(1)}>
+          <Li onClick={() => dispatch(handleChatMode())}>
             <ICON_message />
           </Li>
-          <Back idx={backIndex} />
+          <Back idx={state.index} />
         </Ul>
       </Wrapper>
     </IconContext.Provider>
