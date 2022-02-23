@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-import jalnan from '../assets/fonts/AnyConv.com__Jalnan.woff'
+import jalnan from '../fonts/AnyConv.com__Jalnan.woff'
 
 export default createGlobalStyle`
   @font-face {

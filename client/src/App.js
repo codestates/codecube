@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import Board from './section/board/board'
-import Mypage from './section/login_profile/mypage'
-import Login from './section/login_profile/login'
-import Signup from './section/login_profile/signup'
-import GithubContribution from './section/gitcontribution/githubContribution'
-import NoticeBoard from './section/noticeboard/noticeBoard'
-import axios from 'axios'
-
 import { useSelector, useDispatch } from 'react-redux'
-
-import GlobalFont from './styles/globalFont'
-import GlobalStyle from './styles/globalStyle'
+import axios from 'axios'
 
 import { handleLogin, handleLogout } from './actions'
 import { clearMyProject } from './actions/board'
+
+import Profile from './section/profile'
+import Board from './section/board'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
@@ -126,30 +119,8 @@ function App() {
 
   return (
     <>
-      <GlobalFont />
-      <GlobalStyle />
-      <div id="container">
-        <div className="col w40">
-          {isLoggedIn ? (
-            <Mypage onLogout={onLogout} isAuthenticated={isAuthenticated} />
-          ) : isSignup ? (
-            <Signup setIsSignup={setIsSignup} isAuthenticated={isAuthenticated} />
-          ) : (
-            <Login setIsSignup={setIsSignup} isAuthenticated={isAuthenticated} />
-          )}
-        </div>
-        <div className="col w30">
-          <div className="row main-box github-wrapper">
-            <GithubContribution gitContri={gitContri} />
-          </div>
-          <div className="row main-box notice-wrapper">
-            <NoticeBoard />
-          </div>
-        </div>
-        <div className="col w30 board-col">
-          <Board />
-        </div>
-      </div>
+      <Profile></Profile>
+      <Board></Board>
     </>
   )
 }

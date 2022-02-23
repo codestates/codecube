@@ -8,15 +8,22 @@ ${reset}
 }
 
 body {
-  background-color: rgb(248, 249, 250);
-  min-width: 25rem;
-  margin: 0;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'yg-jalnan';
-  letter-spacing: .1rem;
-  line-height: 1.5rem;
+  letter-spacing: 1px;
   color: rgb(66, 63, 59);
 }
+
+#root {
+  height: 100vh;
+  overflow: scroll;
+
+  display: flex;
+  background-color: #f8fbff;
+  padding: 1rem;
+}
+
 
 `
