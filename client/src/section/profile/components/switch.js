@@ -13,6 +13,8 @@ const Wrapper = styled.div`
   justify-content: center;
 
   flex: 1 0 0%;
+
+  transform: translateY(12.5%);
 `
 
 const Ul = styled.ul`
@@ -48,7 +50,7 @@ const Back = styled.div`
 
   background-color: #1458a4;
   width: 60px;
-  height: 70px;
+  height: 100%;
   margin: 0 0.3rem;
   border-radius: 10px 10px 0 0;
 
@@ -58,24 +60,24 @@ const Back = styled.div`
   &:before {
     content: '';
     position: absolute;
-    top: 27.5px;
+    top: 36.5%;
 
-    left: -30px;
+    left: -50%;
 
     width: 30px;
     height: 30px;
     background-color: transparent;
     border-radius: 50%;
 
-    box-shadow: 14px 15px #1458a4;
+    box-shadow: 17px 15px #1458a4;
   }
 
   &:after {
     content: '';
     position: absolute;
-    top: 27.5px;
+    top: 36.5%;
 
-    right: -30px;
+    right: -50%;
 
     width: 30px;
     height: 30px;
