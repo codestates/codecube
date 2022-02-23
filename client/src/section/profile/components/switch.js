@@ -19,6 +19,14 @@ const Wrapper = styled.div`
 
 const Ul = styled.ul`
   display: flex;
+
+  li:nth-of-type(${(props) => props.active + 1}) {
+    svg {
+      color: white;
+      transition-delay: 0.2s;
+      transition-duration: 0.3s;
+    }
+  }
 `
 
 const Li = styled.li`
@@ -99,12 +107,16 @@ const Switch = () => {
   useEffect(() => {
     const target = ulRef.current.children[backIndex]
     target.classList.add('active')
+
+    return () => {
+      console.log('useEffect cleanup!')
+    }
   }, [backIndex])
 
   return (
     <IconContext.Provider value={{ size: '2.2rem' }}>
       <Wrapper>
-        <Ul ref={ulRef}>
+        <Ul ref={ulRef} active={backIndex}>
           <Li onClick={() => onSwitching(0)}>
             <ICON_tinder />
           </Li>
