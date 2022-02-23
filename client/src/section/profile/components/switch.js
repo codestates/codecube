@@ -14,11 +14,12 @@ const Wrapper = styled.div`
 
   flex: 1 0 0%;
 
-  transform: translateY(12.5%);
+  /* transform: translateY(12.5%); */
 `
 
 const Ul = styled.ul`
   display: flex;
+  height: 100%;
 
   li:nth-of-type(${(props) => props.active + 1}) {
     svg {
@@ -35,8 +36,8 @@ const Li = styled.li`
 
   display: flex;
   justify-content: center;
-
-  width: 60px;
+  align-items: center;
+  width: 3.4rem;
   margin: 0 0.3rem;
 
   svg {
@@ -44,12 +45,6 @@ const Li = styled.li`
   }
 
   cursor: pointer;
-
-  &.active {
-    /* cursor: default; */
-    svg {
-      /* color: white; */
-    }
   }
 `
 
@@ -57,42 +52,40 @@ const Back = styled.div`
   position: absolute;
 
   background-color: #1458a4;
-  width: 60px;
+  width: 3.4rem;
   height: 100%;
   margin: 0 0.3rem;
   border-radius: 10px 10px 0 0;
 
-  transform: translate(calc(${(props) => props.idx} * (60px + 0.6rem)), -20%);
+  transform: translate(calc(${(props) => props.idx} * (3.4rem + 0.6rem)), 0);
   transition: 0.3s;
 
   &:before {
     content: '';
     position: absolute;
-    top: 36.5%;
+    top: 45%;
+    left: -60%;
 
-    left: -50%;
-
-    width: 30px;
-    height: 30px;
+    width: 60%;
+    height: 55%;
     background-color: transparent;
-    border-radius: 50%;
+    border-radius: 40%;
 
-    box-shadow: 17px 15px #1458a4;
+    box-shadow: 16px 16px #1458a4;
   }
 
   &:after {
     content: '';
     position: absolute;
-    top: 36.5%;
+    top: 45%;
+    right: -60%;
 
-    right: -50%;
-
-    width: 30px;
-    height: 30px;
+    width: 60%;
+    height: 55%;
     background-color: transparent;
-    border-radius: 50%;
+    border-radius: 40%;
 
-    box-shadow: -14px 15px #1458a4;
+    box-shadow: -13px 16px #1458a4;
   }
 `
 
@@ -114,7 +107,7 @@ const Switch = () => {
   }, [backIndex])
 
   return (
-    <IconContext.Provider value={{ size: '2.2rem' }}>
+    <IconContext.Provider value={{ size: '1.8rem' }}>
       <Wrapper>
         <Ul ref={ulRef} active={backIndex}>
           <Li onClick={() => onSwitching(0)}>
