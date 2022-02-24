@@ -8,6 +8,7 @@ import axios from 'axios'
 
 import Profile from './section/profile'
 import Board from './section/board'
+import LandingPage from './section/landing'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
@@ -24,8 +25,7 @@ function App() {
   const [gitContri, setGitContri] = useState(JSON.parse(Savedcalendar) ?? '')
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
   // const { isLoggedIn } = useSelector((state) => state.loginReducer)
-  // const dispatch = useDispatch()
-
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   // const isAuthenticated = async () => {
@@ -117,7 +117,11 @@ function App() {
   //   getAccessTocken(authorizationCode)
   // }, [authorizationCode])
 
-  return (
+  const { isLanding } = useSelector((state) => state.startReducer)
+
+  return isLanding ? (
+    <LandingPage />
+  ) : (
     <>
       <Profile></Profile>
       <Board></Board>
