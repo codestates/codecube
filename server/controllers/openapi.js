@@ -13,8 +13,16 @@ module.exports = {
         JOBCLASS_DIV_CD: 133301,
       },
     })
-    // console.log('fewrw@#################', response.data.EmplmntInfoStus[1].row)
-
-    res.status(200).send(response.data.EmplmntInfoStus[1].row)
+    if (!response) {
+      console.log(
+        '\n❗️ openapi/joblist:\n joblist를 받아오는데 실패하였습니다.\n'
+      )
+    }
+    console.log(
+      '\n👍 openapi/joblist:\n 총',
+      response.data.EmplmntInfoStus[1].row.length,
+      '개의 joblist를 받아왔습니다.\n'
+    )
+    return res.status(200).send(response.data.EmplmntInfoStus[1].row)
   },
 }
