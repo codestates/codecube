@@ -1,13 +1,15 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
   padding: 0 1rem;
 
-  flex: 1 0 0%;
+  flex: 0.7 0 0%;
 `
-const style = (isActive) => {
+const style = (isActive, isFiltering) => {
+  isActive = isActive || isFiltering
+
   return {
     color: isActive ? '#00B0FF' : 'lightgray',
     fontSize: '1.5rem',
@@ -18,9 +20,11 @@ const style = (isActive) => {
 }
 
 const Tab = () => {
+  const location = useLocation()
+  const isFiltering = location.pathname.split('/')[1] === 'filter'
   return (
     <Wrapper>
-      <NavLink to="/" style={({ isActive }) => style(isActive)}>
+      <NavLink to="/" style={({ isActive }) => style(isActive, isFiltering)}>
         공개게시판
       </NavLink>
       <NavLink to="/job" style={({ isActive }) => style(isActive)}>

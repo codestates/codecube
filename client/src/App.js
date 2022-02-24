@@ -26,7 +26,7 @@ function App() {
   // const { isLoggedIn } = useSelector((state) => state.loginReducer)
   // const dispatch = useDispatch()
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   // const isAuthenticated = async () => {
   //   await axios

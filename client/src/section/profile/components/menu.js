@@ -10,8 +10,8 @@ const Wrapper = styled.div`
   flex: 3 0 0%;
 `
 const Content = styled.div`
-  background-color: #1458a4;
-  border-radius: 10px;
+  background-color: #0070bb;
+  border-radius: 20px;
   flex: 8 0 0%;
 `
 

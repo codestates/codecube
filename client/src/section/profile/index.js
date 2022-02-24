@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   background-color: white;
   border-radius: 15px;
   margin-right: 1rem;
+  margin-bottom: 1rem;
   padding: 0 1rem 1rem 1rem;
 
   flex: 1.2 0 0%;
