@@ -154,7 +154,6 @@ module.exports = {
           }
           if (!isExist) {
             // 깃헙 로그인 신규 유저면 가입시키기
-            console.log(req.headers.authorization)
             const signUp = await models.users.create({
               username: login,
               email: `${login}@github.com`,
