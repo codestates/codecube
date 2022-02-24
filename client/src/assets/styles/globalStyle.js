@@ -6,7 +6,6 @@ ${reset}
 * {
   box-sizing: border-box;
 }
-
 body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +21,7 @@ body {
 
   display: flex;
   background-color: #f8fbff;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
 }
 
 

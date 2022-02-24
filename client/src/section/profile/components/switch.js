@@ -49,11 +49,11 @@ const Li = styled.li`
 const Back = styled.div`
   position: absolute;
 
-  background-color: #1458a4;
+  background-color: #0070bb;
   width: 3.4rem;
   height: 100%;
   margin: 0 0.3rem;
-  border-radius: 10px 10px 0 0;
+  border-radius: 20px 20px 0 0;
 
   transform: translate(calc(${(props) => props.idx} * (3.4rem + 0.6rem)), 0);
   transition: 0.3s;
@@ -69,7 +69,7 @@ const Back = styled.div`
     background-color: transparent;
     border-radius: 40%;
 
-    box-shadow: 16px 16px #1458a4;
+    box-shadow: 16px 16px #0070bb;
   }
 
   &:after {
@@ -83,7 +83,7 @@ const Back = styled.div`
     background-color: transparent;
     border-radius: 40%;
 
-    box-shadow: -13px 16px #1458a4;
+    box-shadow: -13px 16px #0070bb;
   }
 `
 

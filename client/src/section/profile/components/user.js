@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { IconContext } from 'react-icons/lib'
-import { MdOutlineMail, MdPhoneIphone } from 'react-icons/md'
+import { MdOutlineMail as ICON_mail, MdPhoneIphone as ICON_phone } from 'react-icons/md'
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,13 +47,9 @@ const User = () => {
         <Photo src={require('../../../dummy/spongebob.jpg')}></Photo>
         <UserInfo>
           <P className="name">김 식</P>
-          <MdOutlineMail
-            style={{ position: 'absolute', transform: 'translateY(-25%)' }}
-          />
+          <ICON_mail style={{ position: 'absolute', transform: 'translateY(-25%)' }} />
           <P>abc@code.com</P>
-          <MdPhoneIphone
-            style={{ position: 'absolute', transform: 'translateY(-25%)' }}
-          />
+          <ICON_phone style={{ position: 'absolute', transform: 'translateY(-25%)' }} />
           <P>010-1234-1234</P>
         </UserInfo>
       </Wrapper>
