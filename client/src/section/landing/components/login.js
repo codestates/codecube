@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-
+import axios from 'axios'
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineLogin } from 'react-icons/ai'
 import { handleMainPage } from '../../../actions/start'
+
+const serverUrl = process.env.REACT_APP_API__URL
+axios.defaults.withCredentials = true
 
 const Wrapper = styled.div`
   display: flex;
@@ -75,6 +78,18 @@ const PassWord = styled(Email).attrs({ type: 'password', placeholder: '비밀번
   }
 `
 
+const Indicator = styled.div`
+  position: absolute;
+  top: 110%;
+  left: 0;
+  visibility: ${(props) => (props.isCorrect ? 'hidden' : 'visible')};
+
+  opacity: ${(props) => (props.isCorrect ? '0' : '1')};
+  pointer-events: ${(props) => (props.isCorrect ? 'none' : 'auto')};
+
+  transition: opacity 0.4s;
+`
+
 const ICON_enter2 = styled(ICON_enter)`
   top: 160%;
 `
@@ -83,6 +98,7 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isCorrect, setIsCorrect] = useState(false)
+  const [indicator, setIndicator] = useState('')
   const passwordRef = useRef(null)
   const dispatch = useDispatch()
 
@@ -95,9 +111,17 @@ const Login = () => {
   }
 
   const onNext = (e) => {
-    if (e.code === 'Enter' || e.keyCode === 13) {
-      setIsCorrect(true)
-      if (isCorrect) {
+    if (e.code === 'Enter' || e.keyCode === 13 || e.type === 'click') {
+      let regEmail =
+        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+
+      if (!regEmail.test(email)) {
+        setIndicator('이메일 형식으로 작성해주세요')
+        setIsCorrect(false)
+      }
+      if (regEmail.test(email)) {
+        setIsCorrect(true)
+        setIndicator('')
         passwordRef.current.focus()
       }
     } else {
@@ -116,10 +140,20 @@ const Login = () => {
     }
   }
 
-  const onLogin = (e) => {
+  const onLogin = async (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
-      window.localStorage.setItem('login', true)
-      dispatch(handleMainPage())
+      await axios
+        .post(serverUrl + '/login', {
+          email,
+          password,
+        })
+        .then((res) => {
+          const userInfo = res.data.userInfo
+          window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
+          window.localStorage.setItem('login', true)
+          dispatch(handleMainPage())
+        })
+        .catch((err) => console.log('❗️로그인실패\n', err))
     } else {
       return
     }
@@ -143,7 +177,8 @@ const Login = () => {
             onKeyDown={tabEvent}
             onError={(e) => console.log(e)}
           />
-          <ICON_enter str={email} className="enter1" />
+          <ICON_enter str={email} className="enter1" onClick={onNext} />
+          <Indicator isCorrect={isCorrect}>{indicator}</Indicator>
           <PassWord
             ref={passwordRef}
             isCorrect={isCorrect}
@@ -152,6 +187,7 @@ const Login = () => {
             value={password}
           />
           <ICON_enter2 str={password} className="enter2" />
+          <Indicator isCorrect={isCorrect} />
         </Form>
       </IconContext.Provider>
     </Wrapper>

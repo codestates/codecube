@@ -21,6 +21,10 @@ module.exports = {
     }
   },
   solveToken: (token) => {
+    if (!token) {
+      console.log('\n❗️ solveToken:\n 해독할 토큰이 없습니다. \n')
+      return
+    }
     token = token.split(' ')[1]
     const solveCert = fs.readFileSync(
       path.resolve(__dirname, '../certs/rsa.key.pub')
