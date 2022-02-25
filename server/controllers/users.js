@@ -267,13 +267,18 @@ module.exports = {
       const userInfo = req.body
       const { email, password } = userInfo
       // users테이블에서 유저정보를 확인 후 가져온다.
-      const loginuser = await models.users.findOne({
-        raw: true,
-        where: {
-          email: email,
-          password: password,
-        },
-      })
+      const loginuser = await models.users
+        .findOne({
+          attributes: ['id', 'email', 'description', 'oauth', 'username'],
+          raw: true,
+          where: {
+            email: email,
+            password: password,
+          },
+        })
+        .catch((err) => {
+          console.log('\n❗️ users/login:\n err:', err, '\n')
+        })
       // DB에서 회원정보가 없을경우 null값을 출력
       if (!loginuser) {
         console.log('\n❗️ users/login:\n 회원정보를 찾을 수 없습니다.\n')

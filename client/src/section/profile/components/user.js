@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import axios from 'axios'
 import { IconContext } from 'react-icons/lib'
 import { MdOutlineMail as ICON_mail, MdPhoneIphone as ICON_phone } from 'react-icons/md'
+
+const serverUrl = process.env.REACT_APP_API__URL
+axios.defaults.withCredentials = true
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,17 +43,39 @@ const P = styled.p`
   }
 `
 
+const Logout = styled.button`
+  margin-bottom: 1rem;
+  font-size: 12px;
+  color: gray;
+  padding-left: 2rem;
+`
+
 const User = () => {
+  const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  const { id, username, email, oauth, description } = userInfo
+  const handleClick = async () => {
+    await axios
+      .get(serverUrl + '/logout')
+      .then((res) => {
+        window.localStorage.clear('login')
+        window.localStorage.clear('userInfo')
+        window.location.href = '/'
+      })
+      .catch((err) => {
+        console.log('❗️로그아웃 실패\n', err)
+      })
+  }
   return (
     <IconContext.Provider value={{ color: '00B0FF', size: '1.3rem' }}>
       <Wrapper>
         <Photo src={require('../../../dummy/spongebob.jpg')}></Photo>
         <UserInfo>
-          <P className="name">김 식</P>
+          <P className="name">{username}</P>
           <ICON_mail style={{ position: 'absolute', transform: 'translateY(-25%)' }} />
-          <P>abc@code.com</P>
+          <P>{email}</P>
           <ICON_phone style={{ position: 'absolute', transform: 'translateY(-25%)' }} />
-          <P>010-1234-1234</P>
+          <P>{description}</P>
+          <Logout onClick={handleClick}>로그아웃</Logout>
         </UserInfo>
       </Wrapper>
     </IconContext.Provider>
