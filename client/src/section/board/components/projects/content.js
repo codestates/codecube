@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 } from 'uuid'
 import { getProjects } from '../../../../actions/projects'
 
-import Project from './project'
+import Project from './projectCard'
 
 const Container = styled.div`
   height: 30vh;
@@ -41,12 +42,9 @@ const Floor = styled.div`
 `
 
 const Content = () => {
-  // const [dummyList, _] = useState([0, 0, 0])
   const { projects } = useSelector((state) => state.projectsReducer)
   const dispatch = useDispatch()
-
-  // console.log('Content 컴포넌트상의 projects -> ', projects)
-
+  console.log('여기 렌더링')
   useEffect(() => {
     dispatch(getProjects())
   }, [])
@@ -68,6 +66,7 @@ const Content = () => {
             )
         })}
       </Wrapper>
+      <Outlet />
     </Container>
   )
 }

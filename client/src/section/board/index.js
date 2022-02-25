@@ -8,8 +8,9 @@ import Tab from './components/tap'
 import Job from './components/job'
 import MyPage from './components/mypage'
 import Content from './components/projects/content'
+import ProjectDetail from './components/projects/projectDetail'
 
-const BoardWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -18,21 +19,20 @@ const BoardWrapper = styled.div`
 
 const Board = () => {
   return (
-    <>
-      <BoardWrapper>
-        <Tab />
-        <Routes>
-          <Route path="/" element={<Public />}>
-            <Route path="" element={<Content />}></Route>
-            <Route path="filter/latest" element={<Content />}></Route>
-            <Route path="filter/popular" element={<Content />}></Route>
-            <Route path="project/*" element={<div></div>}></Route>
+    <Wrapper>
+      <Tab />
+      <Routes>
+        <Route path="/" element={<Public />}>
+          <Route path="" element={<Content />}>
+            <Route path="project/*" element={<ProjectDetail />}></Route>
           </Route>
-          <Route path="/job" element={<Job />}></Route>
-          <Route path="/myPage" element={<MyPage />}></Route>
-        </Routes>
-      </BoardWrapper>
-    </>
+          <Route path="filter/latest" element={<Content />}></Route>
+          <Route path="filter/popular" element={<Content />}></Route>
+        </Route>
+        <Route path="/job" element={<Job />}></Route>
+        <Route path="/myPage" element={<MyPage />}></Route>
+      </Routes>
+    </Wrapper>
   )
 }
 

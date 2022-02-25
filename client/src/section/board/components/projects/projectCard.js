@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -8,7 +9,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 15px;
-  /* background-color: white; */
   margin-right: 1.2rem;
 
   transition: 0.4s;
@@ -31,7 +31,6 @@ const Spoiler = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   background-color: white;
   width: 100%;
   padding: 0.5rem;
@@ -51,7 +50,6 @@ const Spoiler = styled.div`
     font-size: 0.7rem;
     line-height: 1rem;
     color: gray;
-    /* height: 20%; */
   }
 `
 
@@ -81,7 +79,8 @@ const Project = ({ idx }) => {
   const { projects } = useSelector((state) => state.projectsReducer)
   const project = projects[idx]
 
-  // console.log('부여받은 idx를 기준으로 보여줘야할 프로젝트 -> ', project)
+  const navigate = useNavigate()
+
   return project ? (
     <Wrapper>
       <Thumbnail src={require('../../../../dummy/뚱이.png')} />
@@ -89,7 +88,9 @@ const Project = ({ idx }) => {
         <h1>{project.title}</h1>
         <p>프로젝트 간단소개가 따로 필요할 수 있음</p>
       </Spoiler>
-      <Detail>자세히 보기</Detail>
+      <Detail onClick={() => navigate(`/project/${project.projectId}`)}>
+        자세히 보기
+      </Detail>
     </Wrapper>
   ) : (
     <Wrapper />
