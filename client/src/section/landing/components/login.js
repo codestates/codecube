@@ -105,6 +105,17 @@ const Login = () => {
     }
   }
 
+  const tabEvent = (e) => {
+    if (e.code === 'Tab' || e.keyCode === 9) {
+      setIsCorrect(true)
+      if (isCorrect) {
+        passwordRef.current.focus()
+      }
+    } else {
+      return
+    }
+  }
+
   const onLogin = (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
       dispatch(handleMainPage())
@@ -121,13 +132,14 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <Greeter>CODE CUBE 로그인 페이지입니다.</Greeter>
+      <Greeter>로그인 페이지입니다</Greeter>
       <IconContext.Provider value={{ size: '1.4rem' }}>
         <Form onSubmit={(e) => e.preventDefault()}>
           <Email
             value={email}
             onChange={onEmail}
             onKeyUp={onNext}
+            onKeyDown={tabEvent}
             onError={(e) => console.log(e)}
           />
           <ICON_enter str={email} className="enter1" />

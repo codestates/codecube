@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `
 
 const Logo = styled.img`
-  width: 40%;
+  width: 35%;
   align-self: center;
 
   flex: 0.3 0 0%;

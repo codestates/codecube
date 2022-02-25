@@ -10,6 +10,7 @@ const Wrapper = styled.div`
 const Logo = styled.img`
   width: 15%;
   align-self: center;
+
   flex: 1 0 0%;
 `
 
@@ -23,6 +24,7 @@ const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateY(-7%);
 
   flex: 1.5 0 0%;
 `
