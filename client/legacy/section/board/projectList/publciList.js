@@ -5,7 +5,7 @@ import { v4 } from 'uuid'
 import axios from 'axios'
 
 import styled from 'styled-components'
-import { getPublicList } from '../../../../src/actions/board'
+import { getPublicList } from '../../../actions/board'
 
 export const PostCardWrapper = styled.div`
   display: flex;
