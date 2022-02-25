@@ -117,9 +117,9 @@ function App() {
   //   getAccessTocken(authorizationCode)
   // }, [authorizationCode])
 
-  const { isLanding } = useSelector((state) => state.startReducer)
+  const { isLoggedIn } = useSelector((state) => state.startReducer)
 
-  return isLanding ? (
+  return !isLoggedIn ? (
     <LandingPage />
   ) : (
     <>
