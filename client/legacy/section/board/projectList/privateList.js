@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import ProjectButton from './projectButton'
-import { getMyProject } from '../../../actions/board'
+import { getMyProject } from '../../../../src/actions/board'
 import styled from 'styled-components'
 
 axios.defaults.withCredentials = true

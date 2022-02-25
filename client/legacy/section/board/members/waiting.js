@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { v4 } from 'uuid'
 
-import { ACCEPT, REJECT } from '../../../extra/hardWord'
+import { ACCEPT, REJECT } from '../../../../src/extra/hardWord'
 import styled from 'styled-components'
 
 axios.defaults.withCredentials = true
