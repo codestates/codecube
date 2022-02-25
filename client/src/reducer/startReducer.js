@@ -9,12 +9,12 @@ export default (state = initialState, action) => {
     case LANDING_PAGE:
       return {
         ...state,
-        isLoggedIn: true,
+        isLoggedIn: false,
       }
     case MAIN_PAGE:
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: true,
       }
     default:
       return state
