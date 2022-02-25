@@ -118,6 +118,7 @@ const Login = () => {
 
   const onLogin = (e) => {
     if (e.code === 'Enter' || e.keyCode === 13) {
+      window.localStorage.setItem('login', true)
       dispatch(handleMainPage())
     } else {
       return

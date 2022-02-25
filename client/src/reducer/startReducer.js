@@ -1,7 +1,7 @@
 import { LANDING_PAGE, MAIN_PAGE } from '../actions/start'
 
 const initialState = {
-  isLanding: true,
+  isLoggedIn: window.localStorage.getItem('login'),
 }
 
 export default (state = initialState, action) => {
@@ -9,12 +9,12 @@ export default (state = initialState, action) => {
     case LANDING_PAGE:
       return {
         ...state,
-        isLanding: true,
+        isLoggedIn: true,
       }
     case MAIN_PAGE:
       return {
         ...state,
-        isLanding: false,
+        isLoggedIn: false,
       }
     default:
       return state
