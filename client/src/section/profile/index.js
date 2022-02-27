@@ -26,13 +26,11 @@ const Logo = styled.img`
 
 const Profile = () => {
   return (
-    <>
-      <Wrapper>
-        <Logo src={require('../../dummy/로고.png')}></Logo>
-        <User />
-        <Menu />
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Logo src={require('../../dummy/로고.png')}></Logo>
+      <User />
+      <Menu />
+    </Wrapper>
   )
 }
 
