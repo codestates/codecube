@@ -16,6 +16,7 @@ body {
 }
 
 #root {
+  /* position: relative; */
   height: 100vh;
   overflow: scroll;
 
