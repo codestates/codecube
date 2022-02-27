@@ -44,7 +44,7 @@ const Floor = styled.div`
 const Content = () => {
   const { projects } = useSelector((state) => state.projectsReducer)
   const dispatch = useDispatch()
-  console.log('여기 렌더링')
+
   useEffect(() => {
     dispatch(getProjects())
   }, [])

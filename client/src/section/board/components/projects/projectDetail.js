@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-const BackDrop = styled.div`
+export const BackDrop = styled.div`
   position: fixed;
   z-index: 10;
   top: 0;
@@ -17,11 +17,14 @@ const BackDrop = styled.div`
   backdrop-filter: blur(2px);
 `
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: white;
   width: 70%;
   height: 90%;
   border-radius: 20px;
+  padding: 2rem 2rem 1rem 2rem;
 
   @keyframes appear {
     0% {
