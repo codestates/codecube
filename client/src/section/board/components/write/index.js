@@ -17,6 +17,7 @@ const Floor = styled.div`
   background-color: #202020;
   width: 20%;
   height: 0.5rem;
+  margin-top: 0.3rem;
   margin-bottom: 3rem;
 `
 
@@ -39,6 +40,7 @@ const Content = styled.textarea.attrs({
   border: none;
   outline: none;
   font-size: 1rem;
+  line-height: 1.5rem;
 `
 
 const Footer = styled.div`

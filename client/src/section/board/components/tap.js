@@ -38,7 +38,7 @@ const Icon = styled(FontAwesomeIcon)`
   &.fa-power-off {
     color: #169b1e;
     &:hover {
-      color: gray;
+      color: lightgray;
       transform: rotate(0.25turn);
     }
   }
