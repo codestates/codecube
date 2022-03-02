@@ -24,9 +24,11 @@ function App() {
   const [gitAccessToken, setGtiAccessToken] = useState()
   const [gitContri, setGitContri] = useState(JSON.parse(Savedcalendar) ?? '')
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
-  // const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const isLoggedIn = useSelector((state) => state.loginReducer)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  console.log('rerender')
 
   // const isAuthenticated = async () => {
   //   await axios
@@ -116,8 +118,6 @@ function App() {
   // useEffect(() => {
   //   getAccessTocken(authorizationCode)
   // }, [authorizationCode])
-
-  const { isLoggedIn } = useSelector((state) => state.startReducer)
 
   return !isLoggedIn ? (
     <LandingPage />

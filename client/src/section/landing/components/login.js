@@ -179,8 +179,8 @@ const Login = () => {
       })
       .then((res) => {
         const userInfo = res.data.userInfo
-        window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
-        window.localStorage.setItem('login', true)
+        window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+        window.sessionStorage.setItem('login', true)
         dispatch(handleMainPage())
       })
       .catch((err) => {

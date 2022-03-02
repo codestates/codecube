@@ -1,7 +1,7 @@
 import { LANDING_PAGE, MAIN_PAGE } from '../actions/start'
 
 const initialState = {
-  isLoggedIn: window.localStorage.getItem('login'),
+  isLoggedIn: window.sessionStorage.getItem('login'),
 }
 
 export default (state = initialState, action) => {
