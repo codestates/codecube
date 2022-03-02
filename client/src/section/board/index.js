@@ -10,7 +10,6 @@ import MyPage from './components/mypage'
 import Content from './components/projects/content'
 import ProjectDetail from './components/projects/projectDetail'
 import Write from './components/write'
-import LandingPage from '../landing'
 
 const Wrapper = styled.div`
   display: flex;

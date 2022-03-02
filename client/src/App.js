@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, Link, Routes, Route } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate, Routes, Route } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
-
-// import { handleLogin, handleLogout } from './actions'
-// import { clearMyProject } from './actions/board'
 
 import Profile from './section/profile'
 import Board from './section/board'

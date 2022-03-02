@@ -12,27 +12,27 @@ const Wrapper = styled.div`
   flex: 12 0 0%;
 `
 
-const FilterWrapper = styled.div`
-  position: absolute;
-  z-index: 3;
-  top: 3%;
-  right: 0;
+// const FilterWrapper = styled.div`
+//   position: absolute;
+//   z-index: 3;
+//   top: 3%;
+//   right: 0;
 
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
 
-  width: 17%;
-`
+//   width: 17%;
+// `
 
-const style = (isActive, isIndex) => {
-  isActive = isActive || isIndex
-  return {
-    fontSize: '0.7rem',
-    textDecoration: 'none',
-    color: isActive ? 'tomato' : 'lightgray',
-  }
-}
+// const style = (isActive, isIndex) => {
+//   isActive = isActive || isIndex
+//   return {
+//     fontSize: '0.7rem',
+//     textDecoration: 'none',
+//     color: isActive ? 'tomato' : 'lightgray',
+//   }
+// }
 
 const Public = () => {
   const location = useLocation()
