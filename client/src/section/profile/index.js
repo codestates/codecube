@@ -14,7 +14,8 @@ const Wrapper = styled.div`
   margin-bottom: 1rem;
   padding: 0 1rem 1rem 1rem;
 
-  flex: 1.2 0 0%;
+  width: 33%;
+  flex: 1 0 0%;
 `
 
 const Logo = styled.img`

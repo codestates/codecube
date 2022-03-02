@@ -9,10 +9,10 @@ const Wrapper = styled.div`
 
   display: flex;
   width: 100%;
-  padding: 2rem;
+
+  padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 20px;
-  overflow: hidden;
 
   flex: 0.5 0 0%;
 `
@@ -20,13 +20,13 @@ const Wrapper = styled.div`
 const Photo = styled.img`
   background-color: lightgray;
   border-radius: 50%;
-  width: 20%;
   margin-right: 2rem;
+
+  width: 33%;
 `
 
 const UserInfo = styled.div`
   width: 100px;
-  padding: 0 1rem;
 
   flex: 1 0 0%;
 `
@@ -55,6 +55,7 @@ const Blind = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
 
@@ -92,7 +93,8 @@ const User = () => {
 
   return (
     <Wrapper>
-      <Photo src={require('../../../dummy/기본프로필.png')}></Photo>
+      <Photo src={require('../../../dummy/spongebob.jpg')}></Photo>
+
       <UserInfo>
         <P className="name">{isLoggedIn ? username : '이름'}</P>
         <ICON_mail style={style} />
