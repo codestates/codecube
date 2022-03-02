@@ -23,13 +23,13 @@ const Board = () => {
     <Wrapper>
       <Tab />
       <Routes>
-        <Route path="/" element={<Public />}>
-          <Route path="" element={<Content />}>
+        <Route path="/*" element={<Public />}>
+          <Route path="*" element={<Content />}>
             <Route path="project/*" element={<ProjectDetail />}></Route>
             <Route path="write" element={<Write />}></Route>
           </Route>
-          <Route path="filter/latest" element={<Content />}></Route>
-          <Route path="filter/popular" element={<Content />}></Route>
+          {/* <Route path="filter/latest" element={<Content />}></Route>
+          <Route path="filter/popular" element={<Content />}></Route> */}
         </Route>
         <Route path="/job" element={<Job />}></Route>
         <Route path="/myPage" element={<MyPage />}></Route>

@@ -40,7 +40,7 @@ const Li = styled.li`
   width: 3.4rem;
   margin: 0 0.3rem;
 
-  cursor: pointer;
+  /* cursor: pointer; */
   svg {
     color: gray;
   }
@@ -109,9 +109,9 @@ const Switch = () => {
           <Li onClick={() => dispatch(handleStateMode())}>
             <ICON_tinder />
           </Li>
-          <Li onClick={() => dispatch(handleChatMode())}>
+          {/* <Li onClick={() => dispatch(handleChatMode())}>
             <ICON_message />
-          </Li>
+          </Li> */}
           <Back idx={state.index} />
         </Ul>
       </Wrapper>

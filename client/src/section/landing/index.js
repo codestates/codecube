@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Login from './components/login'
+import Signup from './components/signup'
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,6 +31,7 @@ const ImageWrapper = styled.div`
 `
 
 const LandingPage = () => {
+  console.log(window.location.pathname)
   return (
     <Wrapper>
       <Logo src={require('../../dummy/로고.png')} />
@@ -40,7 +42,7 @@ const LandingPage = () => {
             style={{ width: '100%' }}
           ></img>
         </ImageWrapper>
-        <Login />
+        {window.location.pathname === '/login' ? <Login /> : <Signup />}
       </Visual>
     </Wrapper>
   )

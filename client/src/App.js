@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate, Routes, Route } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
-
-// import { handleLogin, handleLogout } from './actions'
-// import { clearMyProject } from './actions/board'
 
 import Profile from './section/profile'
 import Board from './section/board'
@@ -24,9 +21,11 @@ function App() {
   const [gitAccessToken, setGtiAccessToken] = useState()
   const [gitContri, setGitContri] = useState(JSON.parse(Savedcalendar) ?? '')
   const [userinfo, setUserinfo] = useState(JSON.parse(savedUserInfo) ?? '')
-  // const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const isLoggedIn = useSelector((state) => state.loginReducer)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  console.log('rerender')
 
   // const isAuthenticated = async () => {
   //   await axios
@@ -117,15 +116,21 @@ function App() {
   //   getAccessTocken(authorizationCode)
   // }, [authorizationCode])
 
-  const { isLoggedIn } = useSelector((state) => state.startReducer)
-
-  return !isLoggedIn ? (
-    <LandingPage />
-  ) : (
-    <>
-      <Profile></Profile>
-      <Board></Board>
-    </>
+  return (
+    <Routes>
+      <Route
+        path="*"
+        element={
+          <>
+            <Profile></Profile>
+            <Board></Board>
+          </>
+        }
+      ></Route>
+      {['/login', '/signup'].map((path, idx) => (
+        <Route path={path} key={idx} element={<LandingPage />}></Route>
+      ))}
+    </Routes>
   )
 }
 

@@ -1,28 +1,34 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { MdOutlineMail as ICON_mail, MdPhoneIphone as ICON_phone } from 'react-icons/md'
+import { MdOutlineMail as ICON_mail } from 'react-icons/md'
+import { HiSpeakerphone as ICON_desc } from 'react-icons/hi'
 
 const Wrapper = styled.div`
   position: relative;
 
   display: flex;
   width: 100%;
+
   padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 20px;
 
   flex: 0.5 0 0%;
 `
 
 const Photo = styled.img`
+  background-color: lightgray;
   border-radius: 50%;
+  margin-right: 2rem;
+
   width: 33%;
-  height: 100%;
-  margin-right: 1rem;
 `
 
 const UserInfo = styled.div`
   width: 100px;
-  padding: 0 1rem;
 
   flex: 1 0 0%;
 `
@@ -41,6 +47,41 @@ const P = styled.p`
   }
 `
 
+export const Blind = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+
+  transition: 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(102%);
+
+    cursor: pointer;
+    & > p:before {
+      color: #00b0ff;
+    }
+  }
+`
+
+export const Indicator = styled.p`
+  font-size: 1.3rem;
+  &:before {
+    transition: 0.3s;
+    content: '로그인';
+  }
+`
+
 const style = {
   color: '00B0FF',
   width: '1.3rem',
@@ -50,18 +91,27 @@ const style = {
 }
 
 const User = () => {
-  const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
-  const { id, username, email, oauth, description } = userInfo
-  console.log('렌더링됨')
+  const { isLoggedIn, username, email, description } = useSelector(
+    (state) => state.loginReducer
+  )
+
+  const navigate = useNavigate()
+
   return (
     <Wrapper>
       <Photo src={require('../../../dummy/spongebob.jpg')}></Photo>
+
       <UserInfo>
-        <P className="name">{username}</P>
+        <P className="name">{isLoggedIn ? username : '이름'}</P>
         <ICON_mail style={style} />
-        <P>{email}</P>
-        <ICON_phone style={style} />
-        <P>{description}</P>
+        <P>{isLoggedIn ? email : 'aa@code.com'}</P>
+        <ICON_desc style={style} />
+        <P>{isLoggedIn ? description : '소개'}</P>
+        {!isLoggedIn ? (
+          <Blind onClick={() => navigate('/login')}>
+            <Indicator> 후 이용가능합니다.</Indicator>
+          </Blind>
+        ) : null}
       </UserInfo>
     </Wrapper>
   )
