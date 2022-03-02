@@ -10,6 +10,7 @@ import MyPage from './components/mypage'
 import Content from './components/projects/content'
 import ProjectDetail from './components/projects/projectDetail'
 import Write from './components/write'
+import LandingPage from '../landing'
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,13 +24,13 @@ const Board = () => {
     <Wrapper>
       <Tab />
       <Routes>
-        <Route path="/" element={<Public />}>
-          <Route path="" element={<Content />}>
+        <Route path="/*" element={<Public />}>
+          <Route path="*" element={<Content />}>
             <Route path="project/*" element={<ProjectDetail />}></Route>
             <Route path="write" element={<Write />}></Route>
           </Route>
-          <Route path="filter/latest" element={<Content />}></Route>
-          <Route path="filter/popular" element={<Content />}></Route>
+          {/* <Route path="filter/latest" element={<Content />}></Route>
+          <Route path="filter/popular" element={<Content />}></Route> */}
         </Route>
         <Route path="/job" element={<Job />}></Route>
         <Route path="/myPage" element={<MyPage />}></Route>

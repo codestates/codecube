@@ -21,6 +21,7 @@ const IconWrapper = styled.div`
   right: 0;
   top: 0;
 
+  display: flex;
   text-align: center;
   height: 100%;
 `
@@ -52,6 +53,30 @@ const Icon = styled(FontAwesomeIcon)`
   }
 `
 
+const LogIn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d7d7d7;
+  border-radius: 10px;
+  width: 6rem;
+  height: 100%;
+  color: darkgray;
+
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    color: inherit;
+  }
+`
+
+const LogOut = styled(LogIn)`
+  background-color: #d1d1d1;
+  &:hover {
+    background-color: #d7d7d7;
+  }
+`
+
 const style = (isActive, isFiltering) => {
   isActive = isActive || isFiltering
 
@@ -67,14 +92,16 @@ const style = (isActive, isFiltering) => {
 const Tab = () => {
   const navigate = useNavigate()
   const location = useLocation()
+
+  // isFiltering은 최신순/좋아요순으로 공개게시판을 새로 보여주기위해 사용되는 'filter/latest', 'filter/popular' url라우팅과정에서
+  // css처리를 위해 사용됩니다. 라우팅코드는 client/src/section/board/index.js 에 현재 주석돼있습니다.
   const isFiltering = location.pathname.split('/')[1] === 'filter'
 
   const handleClick = async () => {
     await axios
       .get(serverUrl + '/logout')
       .then((res) => {
-        window.sessionStorage.clear('login')
-        window.sessionStorage.clear('userInfo')
+        window.localStorage.clear('userInfo')
         window.location.href = '/'
       })
       .catch((err) => {
@@ -95,7 +122,8 @@ const Tab = () => {
       </NavLink>
       <IconWrapper>
         <Icon icon={faSquarePlus} size="2xl" onClick={() => navigate('/write')} />
-        <Icon icon={faPowerOff} size="2xl" onClick={handleClick} />
+        {/* <Icon icon={faPowerOff} size="2xl" onClick={handleClick} /> */}
+        <LogIn onClick={() => navigate('/login')}>로그인</LogIn>
       </IconWrapper>
     </Wrapper>
   )

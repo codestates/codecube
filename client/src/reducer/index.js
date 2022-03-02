@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 import profileReducer from './profileReducer'
-import startReducer from './startReducer'
 import projectsReducer from './projectsReducer'
+import loginReducer from './loginReducer'
 
-export default combineReducers({ profileReducer, startReducer, projectsReducer })
+export default combineReducers({ profileReducer, projectsReducer, loginReducer })

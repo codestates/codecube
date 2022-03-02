@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { MdOutlineMail as ICON_mail, MdPhoneIphone as ICON_phone } from 'react-icons/md'
@@ -8,16 +9,19 @@ const Wrapper = styled.div`
 
   display: flex;
   width: 100%;
-  padding: 1rem;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 20px;
+  overflow: hidden;
 
   flex: 0.5 0 0%;
 `
 
 const Photo = styled.img`
+  background-color: lightgray;
   border-radius: 50%;
-  width: 33%;
-  height: 100%;
-  margin-right: 1rem;
+  width: 20%;
+  margin-right: 2rem;
 `
 
 const UserInfo = styled.div`
@@ -41,6 +45,35 @@ const P = styled.p`
   }
 `
 
+const Blind = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+
+  &:hover {
+    cursor: pointer;
+    & > p:before {
+      color: #00b0ff;
+    }
+  }
+`
+
+const Indicator = styled.p`
+  font-size: 1.3rem;
+  &:before {
+    transition: 0.3s;
+    content: '로그인';
+  }
+`
+
 const style = {
   color: '00B0FF',
   width: '1.3rem',
@@ -50,18 +83,25 @@ const style = {
 }
 
 const User = () => {
-  const userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
-  const { id, username, email, oauth, description } = userInfo
-  console.log('렌더링됨')
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  // 기본적으로 userInfo가 없는 상황이기때문에 주석처리했습니다.
+  // const { id, username, email, oauth, description } = userInfo
+
   return (
     <Wrapper>
-      <Photo src={require('../../../dummy/spongebob.jpg')}></Photo>
+      <Photo src={require('../../../dummy/기본프로필.png')}></Photo>
       <UserInfo>
-        <P className="name">{username}</P>
+        <P className="name">{isLoggedIn ? userInfo.username : '이름'}</P>
         <ICON_mail style={style} />
-        <P>{email}</P>
+        <P>{isLoggedIn ? userInfo.email : 'aa@code.com'}</P>
         <ICON_phone style={style} />
-        <P>{description}</P>
+        <P>{isLoggedIn ? userInfo.description : '소개'}</P>
+        {!isLoggedIn ? (
+          <Blind>
+            <Indicator> 후 이용가능합니다.</Indicator>
+          </Blind>
+        ) : null}
       </UserInfo>
     </Wrapper>
   )

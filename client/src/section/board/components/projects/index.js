@@ -41,14 +41,14 @@ const Public = () => {
   return (
     <Wrapper>
       <Bar />
-      <FilterWrapper>
+      {/* <FilterWrapper>
         <NavLink to="filter/latest" style={({ isActive }) => style(isActive, isIndex)}>
           최신순
         </NavLink>
         <NavLink to="filter/popular" style={({ isActive }) => style(isActive)}>
           좋아요순
         </NavLink>
-      </FilterWrapper>
+      </FilterWrapper> */}
       <Outlet />
     </Wrapper>
   )
