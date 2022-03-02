@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { MdOutlineMail as ICON_mail, MdPhoneIphone as ICON_phone } from 'react-icons/md'
+import { MdOutlineMail as ICON_mail } from 'react-icons/md'
+import { HiSpeakerphone as ICON_desc } from 'react-icons/hi'
 
 const Wrapper = styled.div`
   position: relative;
@@ -104,7 +105,7 @@ const User = () => {
         <P className="name">{isLoggedIn ? username : '이름'}</P>
         <ICON_mail style={style} />
         <P>{isLoggedIn ? email : 'aa@code.com'}</P>
-        <ICON_phone style={style} />
+        <ICON_desc style={style} />
         <P>{isLoggedIn ? description : '소개'}</P>
         {!isLoggedIn ? (
           <Blind onClick={() => navigate('/login')}>

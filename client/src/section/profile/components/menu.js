@@ -26,7 +26,8 @@ const GrassWrapper = styled.div`
   width: 100%;
   height: 170px;
   border-radius: 20px;
-  background-color: #164e22;
+  background-color: rgb(66, 63, 59);
+
   padding: 1rem;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 

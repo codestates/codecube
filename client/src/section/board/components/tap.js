@@ -14,6 +14,7 @@ axios.defaults.withCredentials = true
 const Wrapper = styled.div`
   position: relative;
   padding: 0 1rem;
+  margin-bottom: 1rem;
 
   flex: 0.7 0 0%;
 `
@@ -29,11 +30,11 @@ const IconWrapper = styled.div`
 `
 
 const Icon = styled(FontAwesomeIcon)`
-  & {
-    margin-right: 1rem;
-    transition: 0.4s;
-    cursor: pointer;
-  }
+  margin-right: 1rem;
+  transition: 0.4s;
+  height: 100%;
+  cursor: pointer;
+
   &:last-child {
     /* margin-right: 0; */
   }
@@ -114,6 +115,13 @@ const Tab = () => {
       })
   }
 
+  const onWrite = () => {
+    navigate('/write')
+    // if (isLoggedIn) navigate('/write')
+    // else {
+    // }
+  }
+
   return (
     <Wrapper>
       <NavLink to="/" style={({ isActive }) => style(isActive, isFiltering)}>
@@ -126,7 +134,7 @@ const Tab = () => {
         마이페이지
       </NavLink>
       <IconWrapper>
-        <Icon icon={faSquarePlus} size="2xl" onClick={() => navigate('/write')} />
+        <Icon icon={faSquarePlus} size="2xl" onClick={onWrite} />
         {isLoggedIn ? (
           <LogOut onClick={onLogOut}> 로그아웃</LogOut>
         ) : (

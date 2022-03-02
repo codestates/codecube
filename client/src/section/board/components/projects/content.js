@@ -7,7 +7,7 @@ import { getProjects } from '../../../../actions/projects'
 
 import Project from './projectCard'
 
-const Container = styled.div`
+export const Container = styled.div`
   height: 30vh;
   overflow: scroll;
 
