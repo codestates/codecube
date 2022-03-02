@@ -1,10 +1,12 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPowerOff, faSquarePlus } from '@fortawesome/free-solid-svg-icons'
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons'
+import { handleLoggedOut } from '../../../actions/login'
 
 const serverUrl = process.env.REACT_APP_API__URL
 axios.defaults.withCredentials = true
@@ -36,13 +38,13 @@ const Icon = styled(FontAwesomeIcon)`
     /* margin-right: 0; */
   }
 
-  &.fa-power-off {
+  /* &.fa-power-off {
     color: #169b1e;
     &:hover {
       color: lightgray;
       transform: rotate(0.25turn);
     }
-  }
+  } */
 
   &.fa-square-plus {
     color: gray;
@@ -74,6 +76,7 @@ const LogOut = styled(LogIn)`
   background-color: #d1d1d1;
   &:hover {
     background-color: #d7d7d7;
+    color: darkgray;
   }
 `
 
@@ -92,17 +95,19 @@ const style = (isActive, isFiltering) => {
 const Tab = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch()
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
 
   // isFiltering은 최신순/좋아요순으로 공개게시판을 새로 보여주기위해 사용되는 'filter/latest', 'filter/popular' url라우팅과정에서
   // css처리를 위해 사용됩니다. 라우팅코드는 client/src/section/board/index.js 에 현재 주석돼있습니다.
   const isFiltering = location.pathname.split('/')[1] === 'filter'
 
-  const handleClick = async () => {
+  const onLogOut = async () => {
     await axios
       .get(serverUrl + '/logout')
       .then((res) => {
         window.localStorage.clear('userInfo')
-        window.location.href = '/'
+        dispatch(handleLoggedOut())
       })
       .catch((err) => {
         console.log('❗️로그아웃 실패\n', err)
@@ -122,8 +127,11 @@ const Tab = () => {
       </NavLink>
       <IconWrapper>
         <Icon icon={faSquarePlus} size="2xl" onClick={() => navigate('/write')} />
-        {/* <Icon icon={faPowerOff} size="2xl" onClick={handleClick} /> */}
-        <LogIn onClick={() => navigate('/login')}>로그인</LogIn>
+        {isLoggedIn ? (
+          <LogOut onClick={onLogOut}> 로그아웃</LogOut>
+        ) : (
+          <LogIn onClick={() => navigate('/login')}>로그인</LogIn>
+        )}
       </IconWrapper>
     </Wrapper>
   )

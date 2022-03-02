@@ -2,17 +2,16 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import axios from 'axios'
+
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineLogin } from 'react-icons/ai'
+import { handleLoggedIn } from '../../../actions/login'
 
 // meta
 const NONE = 'NONE'
 const VISIBLE = 'VISIBLE'
 const CORRECT = 'CORRECT'
 const INCORRECT = 'INCORRECT'
-const serverUrl = process.env.REACT_APP_API__URL
-axios.defaults.withCredentials = true
 
 // styled components
 const Wrapper = styled.div`
@@ -172,23 +171,10 @@ const Login = () => {
     } else return
   }
 
-  const onLogin = async () => {
-    await axios
-      .post(serverUrl + '/login', {
-        email,
-        password,
-      })
-      .then((res) => {
-        const userInfo = res.data.userInfo
-        window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
-        navigate('/')
-      })
-      .catch((err) => {
-        console.log('❗️로그인실패\n', err)
-        if (err.response.status === 400) {
-          setIsCorrectP(INCORRECT)
-        }
-      })
+  const onLogin = (e) => {
+    if (e.code === 'Enter' || e.keyCode === 13 || e.type === 'click') {
+      dispatch(handleLoggedIn(dispatch, email, password, navigate, setIsCorrectP))
+    } else return
   }
 
   useEffect(() => {
@@ -217,15 +203,13 @@ const Login = () => {
             ref={passwordRef}
             iscorrect={isCorrectP}
             onChange={onPassword}
-            onKeyUp={(e) => {
-              if (e.code === 'Enter' || e.keyCode === 13) onLogin(e)
-            }}
+            onKeyUp={onLogin}
             value={password}
           />
           <ICON_enter2
             str={password}
             className="enter2"
-            onClick={(e) => onLogin(e)}
+            onClick={onLogin}
             iscorrect={isCorrectP}
           />
           <Indicator2 iscorrect={isCorrectP}>

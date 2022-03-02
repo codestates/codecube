@@ -83,8 +83,10 @@ const style = {
 }
 
 const User = () => {
-  const { isLoggedIn } = useSelector((state) => state.loginReducer)
-  const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  const { isLoggedIn, username, email, description } = useSelector(
+    (state) => state.loginReducer
+  )
+  // const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
   // 기본적으로 userInfo가 없는 상황이기때문에 주석처리했습니다.
   // const { id, username, email, oauth, description } = userInfo
 
@@ -92,11 +94,11 @@ const User = () => {
     <Wrapper>
       <Photo src={require('../../../dummy/기본프로필.png')}></Photo>
       <UserInfo>
-        <P className="name">{isLoggedIn ? userInfo.username : '이름'}</P>
+        <P className="name">{isLoggedIn ? username : '이름'}</P>
         <ICON_mail style={style} />
-        <P>{isLoggedIn ? userInfo.email : 'aa@code.com'}</P>
+        <P>{isLoggedIn ? email : 'aa@code.com'}</P>
         <ICON_phone style={style} />
-        <P>{isLoggedIn ? userInfo.description : '소개'}</P>
+        <P>{isLoggedIn ? description : '소개'}</P>
         {!isLoggedIn ? (
           <Blind>
             <Indicator> 후 이용가능합니다.</Indicator>
