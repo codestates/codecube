@@ -130,7 +130,9 @@ function App() {
           </>
         }
       ></Route>
-      <Route path="login" element={<LandingPage />}></Route>
+      {['/login', '/signup'].map((path, idx) => (
+        <Route path={path} key={idx} element={<LandingPage />}></Route>
+      ))}
     </Routes>
   )
 }

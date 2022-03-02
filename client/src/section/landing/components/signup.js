@@ -24,11 +24,12 @@ const Wrapper = styled.div`
 
   flex: 1 0 0%;
 `
-const Greeter = styled.h1`
+
+const Title = styled.h1`
   font-size: 1.3rem;
   margin-bottom: 20%;
 
-  @keyframes appear-greeter {
+  @keyframes appear-title {
     from {
       opacity: 0;
       transform: translateX(-10%);
@@ -39,15 +40,16 @@ const Greeter = styled.h1`
     }
   }
 
-  animation: appear-greeter 3s;
+  animation: appear-title 3s;
 `
+
 const Form = styled.form`
   position: relative;
   width: 50%;
   margin-bottom: 20%;
 `
 
-const Email = styled.input.attrs({ type: 'text', placeholder: '이메일' })`
+const Email = styled.input.attrs({ type: 'text', placeholder: '이메일', id: 'email' })`
   width: 100%;
   height: 3rem;
   font-size: 1rem;
@@ -76,7 +78,11 @@ const Email = styled.input.attrs({ type: 'text', placeholder: '이메일' })`
   animation: appear-input 1s;
 `
 
-const PassWord = styled(Email).attrs({ type: 'password', placeholder: '비밀번호' })`
+const PassWord = styled(Email).attrs({
+  type: 'password',
+  placeholder: '비밀번호',
+  id: 'password',
+})`
   position: absolute;
   top: 150%;
   left: 0;
@@ -133,45 +139,41 @@ const Indicator2 = styled(Indicator)`
   top: 265%;
 `
 
-const MenuWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 5%;
-`
-
-const Menu = styled.p`
-  font-size: 0.7rem;
-  padding-bottom: 5%;
-`
-
-const MenuLink = styled(Menu)`
-  color: #439dff;
-  cursor: pointer;
-`
-
 //React
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isCorrectE, setIsCorrectE] = useState(NONE)
   const [isCorrectP, setIsCorrectP] = useState(NONE)
+  const [indiAlarm, setIndiAlarm] = useState('')
   const passwordRef = useRef(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const emailValidator = () => {
-    let regEmail =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+  const validator = (type) => {
+    if (type === 'email') {
+      let regEmail =
+        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
 
-    if (!regEmail.test(email)) {
-      setIsCorrectE(INCORRECT)
+      if (!regEmail.test(email)) {
+        setIndiAlarm('이메일 형식으로 작성해주세요')
+        setIsCorrectE(INCORRECT)
+      } else if (email.length > 30) {
+        setIndiAlarm('아이디는 30자 이내의 이메일입니다')
+        setIsCorrectE(INCORRECT)
+      } else {
+        setIndiAlarm('')
+        setIsCorrectE(CORRECT)
+        if (isCorrectP === NONE) setIsCorrectP(VISIBLE)
+        passwordRef.current.focus()
+      }
     }
-    if (regEmail.test(email)) {
-      setIsCorrectE(CORRECT)
-      if (isCorrectP === NONE) setIsCorrectP(VISIBLE)
-      passwordRef.current.focus()
+    if (type === 'password') {
+      let regPw = /^(?=.*[A-Za-z])(?=.*\d)[A-Z|a-z|\d|@$!%*#?&|]{6,40}$/
+
+      if (!regPw.test(password)) {
+        setIndiAlarm('6-40글자의 영문/숫자 조합으로 구성해주세요')
+      }
     }
   }
 
@@ -180,47 +182,19 @@ const Login = () => {
 
   const onNext = (e) => {
     if (e.code === 'Enter' || e.keyCode === 13 || e.type === 'click') {
-      emailValidator()
+      validator(e.target.id)
     } else return
   }
 
   const tabEvent = (e) => {
     if (e.code === 'Tab' || e.keyCode === 9) {
       e.preventDefault()
-      emailValidator()
+      validator(e.target.id)
     } else return
   }
-
-  const onLogin = async () => {
-    await axios
-      .post(serverUrl + '/login', {
-        email,
-        password,
-      })
-      .then((res) => {
-        const userInfo = res.data.userInfo
-        window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
-        navigate('/')
-      })
-      .catch((err) => {
-        console.log('❗️로그인실패\n', err)
-        if (err.response.status === 400) {
-          setIsCorrectP(INCORRECT)
-        }
-      })
-  }
-
-  useEffect(() => {
-    if (isCorrectP !== NONE && email !== '') {
-      setTimeout(() => {
-        passwordRef.current.focus()
-      }, 100)
-    }
-  }, [isCorrectE, isCorrectP])
-
   return (
     <Wrapper>
-      <Greeter>함께 성장할 동료를 찾으세요!</Greeter>
+      <Title>아이디와 비밀번호를 입력해 주세요</Title>
       <IconContext.Provider value={{ size: '1.4rem' }}>
         <Form onSubmit={(e) => e.preventDefault()}>
           <Email
@@ -230,8 +204,8 @@ const Login = () => {
             onKeyDown={tabEvent}
             onError={(e) => console.log(e)}
           />
-          <ICON_enter str={email} className="enter1" onClick={onNext} />
-          <Indicator iscorrect={isCorrectE}>이메일 형식으로 작성해주세요</Indicator>
+          <ICON_enter str={email} className="enter1" id="email" onClick={onNext} />
+          <Indicator iscorrect={isCorrectE}>{indiAlarm}</Indicator>
           <PassWord
             ref={passwordRef}
             iscorrect={isCorrectP}
@@ -252,17 +226,7 @@ const Login = () => {
           </Indicator2>
         </Form>
       </IconContext.Provider>
-      <MenuWrapper>
-        <Menu>계정이 없으신가요? </Menu>
-        <MenuLink
-          onClick={() => {
-            navigate('/signup')
-          }}
-        >
-          지금 시작하세요!
-        </MenuLink>
-      </MenuWrapper>
     </Wrapper>
   )
 }
-export default Login
+export default Signup
