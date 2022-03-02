@@ -58,14 +58,12 @@ const ICON_search = styled(MdSearch)`
 
 const Bar = () => {
   return (
-    <>
-      <Wrapper>
-        <Form>
-          <SearchBar />
-          <ICON_search />
-        </Form>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Form>
+        <SearchBar />
+        <ICON_search />
+      </Form>
+    </Wrapper>
   )
 }
 

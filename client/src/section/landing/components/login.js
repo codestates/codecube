@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineLogin } from 'react-icons/ai'
-import { handleMainPage } from '../../../actions/start'
 
 // meta
 const NONE = 'NONE'
@@ -140,6 +140,7 @@ const Login = () => {
   const [isCorrectP, setIsCorrectP] = useState(NONE)
   const passwordRef = useRef(null)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const emailValidator = () => {
     let regEmail =
@@ -180,8 +181,7 @@ const Login = () => {
       .then((res) => {
         const userInfo = res.data.userInfo
         window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
-        window.localStorage.setItem('login', true)
-        dispatch(handleMainPage())
+        navigate('/')
       })
       .catch((err) => {
         console.log('❗️로그인실패\n', err)

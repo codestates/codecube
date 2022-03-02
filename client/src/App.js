@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, Routes, Route } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
@@ -117,15 +117,19 @@ function App() {
   //   getAccessTocken(authorizationCode)
   // }, [authorizationCode])
 
-  const { isLoggedIn } = useSelector((state) => state.startReducer)
-
-  return !isLoggedIn ? (
-    <LandingPage />
-  ) : (
-    <>
-      <Profile></Profile>
-      <Board></Board>
-    </>
+  return (
+    <Routes>
+      <Route
+        path="*"
+        element={
+          <>
+            <Profile></Profile>
+            <Board></Board>
+          </>
+        }
+      ></Route>
+      <Route path="login" element={<LandingPage />}></Route>
+    </Routes>
   )
 }
 

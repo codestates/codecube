@@ -1,17 +1,17 @@
-import { LANDING_PAGE, MAIN_PAGE } from '../actions/start'
+import { LOGGED_OUT, LOGGED_IN } from '../actions/login'
 
 const initialState = {
-  isLoggedIn: window.localStorage.getItem('login'),
+  isLoggedIn: window.localStorage.getItem('userInfo') ? true : false,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case LANDING_PAGE:
+    case LOGGED_OUT:
       return {
         ...state,
         isLoggedIn: false,
       }
-    case MAIN_PAGE:
+    case LOGGED_IN:
       return {
         ...state,
         isLoggedIn: true,
