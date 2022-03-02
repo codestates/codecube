@@ -11,7 +11,9 @@ const Mypage = (props) => {
   const [checkedStacks, setCheckedStacks] = useState([])
   const [editProfileBtn, setEditProfileBtn] = useState(false)
   const [file, setFile] = useState('')
-  const [getURL,setImageURL] = useState(`https://codecube-image.s3.ap-northeast-2.amazonaws.com/${id}`)
+  const [getURL, setImageURL] = useState(
+    `https://codecube-image.s3.ap-northeast-2.amazonaws.com/${id}`
+  )
   const [userInfoEdited, setUserInfoEdited] = useState({
     id,
     image,

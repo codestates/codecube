@@ -50,7 +50,7 @@ const style = {
 }
 
 const User = () => {
-  const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  const userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
   const { id, username, email, oauth, description } = userInfo
   console.log('렌더링됨')
   return (

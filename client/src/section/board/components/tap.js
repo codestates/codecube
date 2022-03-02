@@ -73,8 +73,8 @@ const Tab = () => {
     await axios
       .get(serverUrl + '/logout')
       .then((res) => {
-        window.localStorage.clear('login')
-        window.localStorage.clear('userInfo')
+        window.sessionStorage.clear('login')
+        window.sessionStorage.clear('userInfo')
         window.location.href = '/'
       })
       .catch((err) => {
