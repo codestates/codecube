@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { MdOutlineMail as ICON_mail, MdPhoneIphone as ICON_phone } from 'react-icons/md'
@@ -45,7 +46,7 @@ const P = styled.p`
   }
 `
 
-const Blind = styled.div`
+export const Blind = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -59,7 +60,12 @@ const Blind = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
 
+  transition: 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(102%);
+
     cursor: pointer;
     & > p:before {
       color: #00b0ff;
@@ -67,7 +73,7 @@ const Blind = styled.div`
   }
 `
 
-const Indicator = styled.p`
+export const Indicator = styled.p`
   font-size: 1.3rem;
   &:before {
     transition: 0.3s;
@@ -87,9 +93,8 @@ const User = () => {
   const { isLoggedIn, username, email, description } = useSelector(
     (state) => state.loginReducer
   )
-  // const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
-  // 기본적으로 userInfo가 없는 상황이기때문에 주석처리했습니다.
-  // const { id, username, email, oauth, description } = userInfo
+
+  const navigate = useNavigate()
 
   return (
     <Wrapper>
@@ -102,7 +107,7 @@ const User = () => {
         <ICON_phone style={style} />
         <P>{isLoggedIn ? description : '소개'}</P>
         {!isLoggedIn ? (
-          <Blind>
+          <Blind onClick={() => navigate('/login')}>
             <Indicator> 후 이용가능합니다.</Indicator>
           </Blind>
         ) : null}

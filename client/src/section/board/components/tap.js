@@ -59,11 +59,11 @@ const LogIn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #d7d7d7;
+  background-color: #eeeeee;
   border-radius: 10px;
   width: 6rem;
   height: 100%;
-  color: darkgray;
+  color: gray;
 
   cursor: pointer;
   transition: 0.2s;
