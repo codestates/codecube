@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineLogin } from 'react-icons/ai'
-import { handleMainPage } from '../../../actions/start'
 
 // meta
 const NONE = 'NONE'
@@ -81,11 +81,11 @@ const PassWord = styled(Email).attrs({ type: 'password', placeholder: '비밀번
   top: 150%;
   left: 0;
 
-  visibility: ${(props) => (props.isCorrect === NONE ? 'hidden' : 'visible')};
-  opacity: ${(props) => (props.isCorrect === NONE ? '0' : '1')};
+  visibility: ${(props) => (props.iscorrect === NONE ? 'hidden' : 'visible')};
+  opacity: ${(props) => (props.iscorrect === NONE ? '0' : '1')};
   transform: ${(props) =>
-    props.isCorrect === NONE ? 'translateY(-40%)' : 'translateY(0%)'};
-  pointer-events: ${(props) => (props.isCorrect === NONE ? 'none' : 'auto')};
+    props.iscorrect === NONE ? 'translateY(-40%)' : 'translateY(0%)'};
+  pointer-events: ${(props) => (props.iscorrect === NONE ? 'none' : 'auto')};
 
   transition: 1s;
   &:focus {
@@ -111,7 +111,7 @@ const ICON_enter2 = styled(ICON_enter)`
   top: 200%;
 
   transform: ${(props) =>
-    props.isCorrect === NONE ? 'translateY(-90%)' : 'translateY(-50%)'};
+    props.iscorrect === NONE ? 'translateY(-90%)' : 'translateY(-50%)'};
 `
 
 const Indicator = styled.div`
@@ -119,8 +119,8 @@ const Indicator = styled.div`
   top: 115%;
   right: 2%;
 
-  display: ${(props) => (props.isCorrect === INCORRECT ? 'block' : 'none')};
-  opacity: ${(props) => (props.isCorrect === INCORRECT ? '1' : '0')};
+  display: ${(props) => (props.iscorrect === INCORRECT ? 'block' : 'none')};
+  opacity: ${(props) => (props.iscorrect === INCORRECT ? '1' : '0')};
   font-size: 0.5rem;
   color: tomato;
 
@@ -140,6 +140,7 @@ const Login = () => {
   const [isCorrectP, setIsCorrectP] = useState(NONE)
   const passwordRef = useRef(null)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const emailValidator = () => {
     let regEmail =
@@ -179,9 +180,8 @@ const Login = () => {
       })
       .then((res) => {
         const userInfo = res.data.userInfo
-        window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
-        window.sessionStorage.setItem('login', true)
-        dispatch(handleMainPage())
+        window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
+        navigate('/')
       })
       .catch((err) => {
         console.log('❗️로그인실패\n', err)
@@ -212,10 +212,10 @@ const Login = () => {
             onError={(e) => console.log(e)}
           />
           <ICON_enter str={email} className="enter1" onClick={onNext} />
-          <Indicator isCorrect={isCorrectE}>이메일 형식으로 작성해주세요</Indicator>
+          <Indicator iscorrect={isCorrectE}>이메일 형식으로 작성해주세요</Indicator>
           <PassWord
             ref={passwordRef}
-            isCorrect={isCorrectP}
+            iscorrect={isCorrectP}
             onChange={onPassword}
             onKeyUp={(e) => {
               if (e.code === 'Enter' || e.keyCode === 13) onLogin(e)
@@ -226,9 +226,9 @@ const Login = () => {
             str={password}
             className="enter2"
             onClick={(e) => onLogin(e)}
-            isCorrect={isCorrectP}
+            iscorrect={isCorrectP}
           />
-          <Indicator2 isCorrect={isCorrectP}>
+          <Indicator2 iscorrect={isCorrectP}>
             이메일 또는 비밀번호를 확인해주세요
           </Indicator2>
         </Form>
