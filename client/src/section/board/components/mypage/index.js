@@ -1,7 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Wrapper, ICON_cog } from '../job'
+import { FaCog } from 'react-icons/fa'
+import { Wrapper } from '../job'
+const ICON_cog = styled(FaCog)`
+  width: 17%;
+  height: 17%;
+  color: #00b0ff;
+
+  @keyframes spin {
+    to {
+      transform: rotate(0turn);
+    }
+    from {
+      transform: rotate(1turn);
+    }
+  }
+  animation: spin 4s infinite;
+`
 
 const MyPage = () => {
   return (

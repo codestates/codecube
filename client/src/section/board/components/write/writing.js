@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Wrapper } from '../projects/projectDetail'
+import { Wrapper } from '../../../projectDetail/components/content.js'
 import { handleAutoSaving, handlePosting } from '../../../../actions/writing'
 import Posting from './posting'
 

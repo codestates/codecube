@@ -1,7 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { handleProjectDetail } from '../../../../actions/projectDetial'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -29,7 +30,7 @@ const Thumbnail = styled.img`
 `
 
 export const Intro = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap'); */
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;
   flex-direction: column;
@@ -78,13 +79,18 @@ const Detail = styled.div`
 `
 
 const Project = ({ idx }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { projects } = useSelector((state) => state.projectsReducer)
   const project = projects[idx]
 
-  const navigate = useNavigate()
+  const onDetail = () => {
+    dispatch(handleProjectDetail(project.projectId))
+    navigate(`/project/${project.projectId}`)
+  }
 
   return project ? (
-    <Wrapper onClick={() => navigate(`/project/${project.projectId}`)}>
+    <Wrapper onClick={onDetail}>
       <Thumbnail src={require('../../../../dummy/뚱이.png')} />
       <Intro onClick={(e) => e.stopPropagation()}>
         <h1>{project.title}</h1>

@@ -10,4 +10,5 @@ export default createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
+  
 `
