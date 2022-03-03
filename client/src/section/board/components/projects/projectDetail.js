@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
   height: 90%;
   border-radius: 20px;
   padding: 2rem 2rem 1rem 2rem;
+  overflow: hidden;
 
   @keyframes appear {
     0% {
@@ -39,6 +40,11 @@ export const Wrapper = styled.div`
   }
 
   animation: appear 0.5s;
+
+  &.write {
+    position: relative;
+    padding: 0;
+  }
 `
 
 const ProjectDetail = () => {
