@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineLogin } from 'react-icons/ai'
+import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from 'react-icons/io'
 
 // meta
 const NONE = 'NONE'
@@ -44,10 +45,29 @@ const Title = styled.h1`
 `
 
 const Form = styled.form`
+  /* test */
+  /* background-color: gray; */
+  margin-bottom: 5%;
+
+  & input {
+    /* position: relative; */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  text-align: end;
+  /* test */
+
   position: relative;
   width: 50%;
-  margin-bottom: 20%;
 `
+
+const ArrowWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const DownArrow = styled(IoMdArrowDropdownCircle)``
+const UpArrow = styled(IoMdArrowDropupCircle)``
 
 const Email = styled.input.attrs({ type: 'text', placeholder: '이메일', id: 'email' })`
   width: 100%;
@@ -83,9 +103,11 @@ const PassWord = styled(Email).attrs({
   placeholder: '비밀번호',
   id: 'password',
 })`
-  position: absolute;
+  /* test */
+  /* position: absolute;
   top: 150%;
-  left: 0;
+  left: 0; */
+  /* test */
 
   visibility: ${(props) => (props.iscorrect === NONE ? 'hidden' : 'visible')};
   opacity: ${(props) => (props.iscorrect === NONE ? '0' : '1')};
@@ -96,6 +118,31 @@ const PassWord = styled(Email).attrs({
   transition: 1s;
   &:focus {
     & + .enter2 {
+      opacity: 1;
+    }
+  }
+`
+
+const PWConfirm = styled(Email).attrs({
+  type: 'password',
+  placeholder: '비밀번호확인',
+  id: 'pwConfirm',
+})`
+  /* test */
+  /* position: absolute;
+  top: 300%;
+  left: 0; */
+  /* test */
+
+  visibility: ${(props) => (props.iscorrect === NONE ? 'hidden' : 'visible')};
+  opacity: ${(props) => (props.iscorrect === NONE ? '0' : '1')};
+  transform: ${(props) =>
+    props.iscorrect === NONE ? 'translateY(-40%)' : 'translateY(0%)'};
+  pointer-events: ${(props) => (props.iscorrect === NONE ? 'none' : 'auto')};
+
+  transition: 1s;
+  &:focus {
+    & + .enter3 {
       opacity: 1;
     }
   }
@@ -120,10 +167,17 @@ const ICON_enter2 = styled(ICON_enter)`
     props.iscorrect === NONE ? 'translateY(-90%)' : 'translateY(-50%)'};
 `
 
+const ICON_enter3 = styled(ICON_enter)`
+  top: 350%;
+
+  transform: ${(props) =>
+    props.iscorrect === NONE ? 'translateY(-90%)' : 'translateY(-50%)'};
+`
+
 const Indicator = styled.div`
-  position: absolute;
-  top: 115%;
-  right: 2%;
+  /* position: absolute;
+  bottom: 5%;
+  right: 2%; */
 
   display: ${(props) => (props.iscorrect === INCORRECT ? 'block' : 'none')};
   opacity: ${(props) => (props.iscorrect === INCORRECT ? '1' : '0')};
@@ -139,18 +193,26 @@ const Indicator2 = styled(Indicator)`
   top: 265%;
 `
 
+const Indicator3 = styled(Indicator)`
+  top: 415%;
+`
+
 //React
 const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [pwConfirm, setPwConfirm] = useState('')
   const [isCorrectE, setIsCorrectE] = useState(NONE)
   const [isCorrectP, setIsCorrectP] = useState(NONE)
+  const [isCorrectPwc, setIsCorrectPwc] = useState(NONE)
   const [indiAlarm, setIndiAlarm] = useState('')
+  const [indiPwcAlarm, setIndiPwcAlarm] = useState('')
   const passwordRef = useRef(null)
+  const pwcRef = useRef(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const validator = (type) => {
+  const validator = async (type) => {
     if (type === 'email') {
       let regEmail =
         /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
@@ -170,15 +232,39 @@ const Signup = () => {
     }
     if (type === 'password') {
       let regPw = /^(?=.*[A-Za-z])(?=.*\d)[A-Z|a-z|\d|@$!%*#?&|]{6,40}$/
-
       if (!regPw.test(password)) {
         setIndiAlarm('6-40글자의 영문/숫자 조합으로 구성해주세요')
+        setIsCorrectP(INCORRECT)
+      } else {
+        setIndiAlarm('')
+        setIsCorrectP(CORRECT)
+        pwcRef.current.focus()
+      }
+    }
+    if (type === 'pwConfirm') {
+      if (password !== pwConfirm) {
+        setIndiPwcAlarm('비밀번호가 일치하지 않습니다')
+        setIsCorrectPwc(INCORRECT)
+      } else {
+        setIsCorrectPwc(CORRECT)
       }
     }
   }
 
+  useEffect(() => {
+    if (isCorrectE === CORRECT && isCorrectP === CORRECT && isCorrectPwc === CORRECT) {
+      console.log('이제야 다맞췃네 하.')
+    } else {
+      console.log('엔터인식?')
+      console.log('E', isCorrectE)
+      console.log('P', isCorrectP)
+      console.log('Pwc', isCorrectPwc)
+    }
+  }, [isCorrectPwc])
+
   const onEmail = (e) => setEmail(e.target.value)
   const onPassword = (e) => setPassword(e.target.value)
+  const onPwConfirm = (e) => setPwConfirm(e.target.value)
 
   const onNext = (e) => {
     if (e.code === 'Enter' || e.keyCode === 13 || e.type === 'click') {
@@ -192,6 +278,7 @@ const Signup = () => {
       validator(e.target.id)
     } else return
   }
+
   return (
     <Wrapper>
       <Title>아이디와 비밀번호를 입력해 주세요</Title>
@@ -210,21 +297,35 @@ const Signup = () => {
             ref={passwordRef}
             iscorrect={isCorrectP}
             onChange={onPassword}
-            onKeyUp={(e) => {
-              if (e.code === 'Enter' || e.keyCode === 13) onLogin(e)
-            }}
+            onKeyUp={onNext}
             value={password}
           />
           <ICON_enter2
             str={password}
             className="enter2"
-            onClick={(e) => onLogin(e)}
+            onClick={onNext}
             iscorrect={isCorrectP}
           />
-          <Indicator2 iscorrect={isCorrectP}>
-            이메일 또는 비밀번호를 확인해주세요
-          </Indicator2>
+          <Indicator2 iscorrect={isCorrectP}>{indiAlarm}</Indicator2>
+          <PWConfirm
+            ref={pwcRef}
+            iscorrect={isCorrectP}
+            onChange={onPwConfirm}
+            onKeyUp={onNext}
+            value={pwConfirm}
+          />
+          <ICON_enter3
+            str={pwConfirm}
+            className="enter3"
+            onClick={onNext}
+            iscorrect={isCorrectPwc}
+          />
+          <Indicator3 iscorrect={isCorrectPwc}>{indiPwcAlarm}</Indicator3>
         </Form>
+        <ArrowWrapper>
+          <UpArrow />
+          <DownArrow />
+        </ArrowWrapper>
       </IconContext.Provider>
     </Wrapper>
   )

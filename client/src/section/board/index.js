@@ -8,7 +8,7 @@ import Tab from './components/tap'
 import Job from './components/job'
 import MyPage from './components/mypage'
 import Content from './components/projects/content'
-import ProjectDetail from './components/projects/projectDetail'
+import ProjectDetail from '../projectDetail/index'
 import Write from './components/write'
 
 const Wrapper = styled.div`

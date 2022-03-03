@@ -1,9 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { handleProjectDetail } from '../../../../actions/projectDetial'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: relative;
 
   display: flex;
@@ -23,19 +24,21 @@ const Wrapper = styled.div`
 
 const Thumbnail = styled.img`
   width: 100%;
+  cursor: pointer;
+
   flex: 1 0 0%;
 `
 
-const Spoiler = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+export const Intro = styled.div`
+  /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap'); */
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;
   flex-direction: column;
   background-color: white;
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 
-  flex: 1.3 0 0%;
+  flex: 1 0 0%;
   overflow: visible;
   h1 {
     font-weight: bold;
@@ -76,21 +79,24 @@ const Detail = styled.div`
 `
 
 const Project = ({ idx }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { projects } = useSelector((state) => state.projectsReducer)
   const project = projects[idx]
 
-  const navigate = useNavigate()
+  const onDetail = () => {
+    dispatch(handleProjectDetail(project.projectId))
+    navigate(`/project/${project.projectId}`)
+  }
 
   return project ? (
-    <Wrapper>
+    <Wrapper onClick={onDetail}>
       <Thumbnail src={require('../../../../dummy/뚱이.png')} />
-      <Spoiler>
+      <Intro onClick={(e) => e.stopPropagation()}>
         <h1>{project.title}</h1>
         <p>프로젝트 간단소개가 따로 필요할 수 있음</p>
-      </Spoiler>
-      <Detail onClick={() => navigate(`/project/${project.projectId}`)}>
-        자세히 보기
-      </Detail>
+      </Intro>
+      <Detail>자세히 보기</Detail>
     </Wrapper>
   ) : (
     <Wrapper />
