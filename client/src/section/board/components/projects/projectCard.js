@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: relative;
 
   display: flex;
@@ -21,12 +21,12 @@ const Wrapper = styled.div`
   flex: 1 0 0%;
 `
 
-const Thumbnail = styled.img`
+export const Thumbnail = styled.img`
   width: 100%;
   flex: 1 0 0%;
 `
 
-const Spoiler = styled.div`
+export const Spoiler = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;

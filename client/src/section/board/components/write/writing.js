@@ -57,32 +57,35 @@ const Footer = styled.div`
   padding: 2rem;
   background-color: #f8fbff;
 
-  & > div {
-    display: flex;
-    width: 6.5rem;
-    height: 3.5rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-
-    cursor: pointer;
-    transition: 0.4s;
+  & > .next {
+    position: absolute;
+    right: 2rem;
   }
 `
 
-const Exit = styled.div`
-  background-color: #f7f7f7;
-  &:hover {
+export const Button = styled.input.attrs({
+  type: 'button',
+})`
+  width: 6.5rem;
+  height: 3.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: 0.4s;
+  &.exit {
+    background-color: #f4f4f4;
+  }
+  &.exit:hover {
     background-color: #f1f1f1;
   }
-`
-const Create = styled.div`
-  position: absolute;
-  right: 2rem;
-
-  background-color: #00b0ff;
-  color: white;
-  &:hover {
+  &.next {
+    background-color: #00b0ff;
+    color: white;
+  }
+  &.next:hover {
     transform: scale(103%);
   }
 `
@@ -106,8 +109,8 @@ const Writing = () => {
       <Content />
       <Floor2 />
       <Footer>
-        <Exit onClick={onExit}>나가기</Exit>
-        <Create onClick={onNext}>작성하기</Create>
+        <Button className="exit" value="나가기" onClick={onExit} />
+        <Button className="next" value="작성하기" onClick={onNext} />
       </Footer>
       <Posting />
     </Wrapper>
