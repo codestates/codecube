@@ -45,9 +45,20 @@ const Title = styled.h1`
 `
 
 const Form = styled.form`
+  /* test */
+  /* background-color: gray; */
+  margin-bottom: 5%;
+
+  & input {
+    /* position: relative; */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  text-align: end;
+  /* test */
+
   position: relative;
   width: 50%;
-  margin-bottom: 20%;
 `
 
 const ArrowWrapper = styled.div`
@@ -92,9 +103,11 @@ const PassWord = styled(Email).attrs({
   placeholder: '비밀번호',
   id: 'password',
 })`
-  position: absolute;
+  /* test */
+  /* position: absolute;
   top: 150%;
-  left: 0;
+  left: 0; */
+  /* test */
 
   visibility: ${(props) => (props.iscorrect === NONE ? 'hidden' : 'visible')};
   opacity: ${(props) => (props.iscorrect === NONE ? '0' : '1')};
@@ -115,9 +128,11 @@ const PWConfirm = styled(Email).attrs({
   placeholder: '비밀번호확인',
   id: 'pwConfirm',
 })`
-  position: absolute;
+  /* test */
+  /* position: absolute;
   top: 300%;
-  left: 0;
+  left: 0; */
+  /* test */
 
   visibility: ${(props) => (props.iscorrect === NONE ? 'hidden' : 'visible')};
   opacity: ${(props) => (props.iscorrect === NONE ? '0' : '1')};
@@ -160,9 +175,9 @@ const ICON_enter3 = styled(ICON_enter)`
 `
 
 const Indicator = styled.div`
-  position: absolute;
-  top: 115%;
-  right: 2%;
+  /* position: absolute;
+  bottom: 5%;
+  right: 2%; */
 
   display: ${(props) => (props.iscorrect === INCORRECT ? 'block' : 'none')};
   opacity: ${(props) => (props.iscorrect === INCORRECT ? '1' : '0')};
