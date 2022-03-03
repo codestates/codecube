@@ -5,6 +5,7 @@ import projectsReducer from './projectsReducer'
 import loginReducer from './loginReducer'
 import jobReducer from './jobReducer'
 import writingReducer from './writingReducer'
+import projectDetailReducer from './projectDetailReducer'
 
 export default combineReducers({
   profileReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   loginReducer,
   jobReducer,
   writingReducer,
+  projectDetailReducer,
 })

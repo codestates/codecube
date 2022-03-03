@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Wrapper } from '../projects/projectDetail'
-import { handlePosting } from '../../../../actions/writing'
+import { Wrapper } from '../../../projectDetail/components/content.js'
+import { handleAutoSaving, handlePosting } from '../../../../actions/writing'
 import Posting from './posting'
 
 const Title = styled.input.attrs({
@@ -100,27 +100,23 @@ const Writing = () => {
   const [contentState, setContentState] = useState('')
   const autoSaver = useRef(null)
 
-  // useEffect(() => {
-  //   if (autoSaver.current !== null) {
-  //     clearTimeout(autoSaver.current)
-  //     autoSaver.current = setTimeout(() => console.log('hello'), 2000)
-  //   }
-  //   return () => {
-  //     clearTimeout(autoSaver.current)
-  //     // autoSaver.current = null
-  //   }
-  // }, [titleState, contentState])
+  useEffect(() => {
+    // 리덕스 자동저장
+    clearTimeout(autoSaver.current)
+    autoSaver.current = null
 
-  // console.log('자동저장 ID: ', autoSaver.current)
-  // console.log('타이틀: ', titleState)
-  // console.log('내용: ', contentState)
+    autoSaver.current = setTimeout(() => {
+      dispatch(handleAutoSaving(titleState, contentState))
+    }, 1000)
+
+    return () => {
+      clearTimeout(autoSaver.current)
+    }
+  }, [titleState, contentState])
 
   const onTyping = (e, type) => {
-    if (type === TITLE) {
-      setTitleState(e.target.value)
-    } else if (type === CONTENT) {
-      setContentState(e.target.value)
-    }
+    if (type === TITLE) setTitleState(e.target.value)
+    else if (type === CONTENT) setContentState(e.target.value)
   }
 
   const onExit = () => {

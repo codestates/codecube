@@ -77,6 +77,9 @@ const ThumbnailWrapper = styled.div`
     .clicktoupload {
       background-color: #d9d9d9;
     }
+    .clicktoupload p:before {
+      color: #00b0ff;
+    }
   }
 `
 
@@ -96,6 +99,7 @@ const ClickToUpload = styled.div`
 
   transition: 0.4s;
   p:before {
+    transition: 0.4s;
     content: '클릭';
   }
 `
