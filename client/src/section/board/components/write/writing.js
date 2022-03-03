@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
@@ -90,9 +90,38 @@ export const Button = styled.input.attrs({
   }
 `
 
+const TITLE = 'TITLE'
+const CONTENT = 'CONTENT'
+
 const Writing = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [titleState, setTitleState] = useState('')
+  const [contentState, setContentState] = useState('')
+  const autoSaver = useRef(null)
+
+  // useEffect(() => {
+  //   if (autoSaver.current !== null) {
+  //     clearTimeout(autoSaver.current)
+  //     autoSaver.current = setTimeout(() => console.log('hello'), 2000)
+  //   }
+  //   return () => {
+  //     clearTimeout(autoSaver.current)
+  //     // autoSaver.current = null
+  //   }
+  // }, [titleState, contentState])
+
+  // console.log('자동저장 ID: ', autoSaver.current)
+  // console.log('타이틀: ', titleState)
+  // console.log('내용: ', contentState)
+
+  const onTyping = (e, type) => {
+    if (type === TITLE) {
+      setTitleState(e.target.value)
+    } else if (type === CONTENT) {
+      setContentState(e.target.value)
+    }
+  }
 
   const onExit = () => {
     navigate('/')
@@ -104,9 +133,9 @@ const Writing = () => {
 
   return (
     <Wrapper className="write">
-      <Title />
+      <Title onChange={(e) => onTyping(e, TITLE)} value={titleState} />
       <Floor />
-      <Content />
+      <Content onChange={(e) => onTyping(e, CONTENT)} value={contentState} />
       <Floor2 />
       <Footer>
         <Button className="exit" value="나가기" onClick={onExit} />

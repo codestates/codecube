@@ -21,21 +21,23 @@ export const Wrapper = styled.div`
   flex: 1 0 0%;
 `
 
-export const Thumbnail = styled.img`
+const Thumbnail = styled.img`
   width: 100%;
+  cursor: pointer;
+
   flex: 1 0 0%;
 `
 
-export const Spoiler = styled.div`
+export const Intro = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;
   flex-direction: column;
   background-color: white;
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 
-  flex: 1.3 0 0%;
+  flex: 1 0 0%;
   overflow: visible;
   h1 {
     font-weight: bold;
@@ -82,15 +84,13 @@ const Project = ({ idx }) => {
   const navigate = useNavigate()
 
   return project ? (
-    <Wrapper>
+    <Wrapper onClick={() => navigate(`/project/${project.projectId}`)}>
       <Thumbnail src={require('../../../../dummy/뚱이.png')} />
-      <Spoiler>
+      <Intro onClick={(e) => e.stopPropagation()}>
         <h1>{project.title}</h1>
         <p>프로젝트 간단소개가 따로 필요할 수 있음</p>
-      </Spoiler>
-      <Detail onClick={() => navigate(`/project/${project.projectId}`)}>
-        자세히 보기
-      </Detail>
+      </Intro>
+      <Detail>자세히 보기</Detail>
     </Wrapper>
   ) : (
     <Wrapper />

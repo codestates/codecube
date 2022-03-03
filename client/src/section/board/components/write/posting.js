@@ -1,8 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleWriting, POSTING } from '../../../../actions/writing'
 import styled from 'styled-components'
-import { Thumbnail, Spoiler } from '../projects/projectCard'
 import { Button } from './writing'
 
 const Wrapper = styled.div`
@@ -16,7 +15,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 2rem;
-  background-color: rgba(248, 249, 250);
+  background-color: #f8fbff;
 
   @keyframes appear-posting {
     from {
@@ -44,21 +43,99 @@ const Wrapper = styled.div`
 `
 
 const CardWrapper = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: center;
-  height: 450px;
-  border-radius: 15px;
+  padding-bottom: 60%;
   margin-right: 1%;
 
   flex: 4 0 0%;
 `
 
 const Card = styled.div`
-  width: 350px;
-  height: 450px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  height: 100%;
   border-radius: 15px;
-  background-color: lightgray;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+`
+
+const ThumbnailWrapper = styled.div`
+  position: relative;
+
+  padding-top: 70%;
+  &:hover {
+    .clicktoupload {
+      background-color: #d9d9d9;
+    }
+  }
+`
+
+const ClickToUpload = styled.div`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+
+  display: ${(props) => (props.image === '' ? 'flex' : 'none')};
+  background-color: #d1d1d1;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  transition: 0.4s;
+  p:before {
+    content: '클릭';
+  }
+`
+
+const Thumbnail = styled.img`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: ${(props) => (props.src === '' ? '0' : '1')};
+`
+
+const Uploader = styled.input.attrs({ type: 'file' })`
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+`
+
+const Intro = styled.textarea.attrs({
+  placeholder: '간단한 한줄 소개 또는 전하고싶은말을 적어주세요(최대 80자)',
+  maxLength: '80',
+})`
+  resize: none;
+  margin: 1rem;
+  padding: 1rem;
+  border: none;
+  outline: none;
+
+  flex: 1 0 0%;
 `
 
 const ButtonWrapper = styled.div`
@@ -73,8 +150,10 @@ const ButtonWrapper = styled.div`
 
 const Posting = () => {
   const ref = useRef(null)
+  const thumbnailRef = useRef(null)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.writingReducer)
+  const [image, setImage] = useState('')
 
   const onPrev = () => {
     ref.current.classList.add('disappear')
@@ -83,10 +162,24 @@ const Posting = () => {
     }, 300)
   }
 
+  const onUpload = (e) => {
+    const img = URL.createObjectURL(e.target.files[0])
+    setImage(img)
+  }
+
   return step === POSTING ? (
     <Wrapper ref={ref}>
       <CardWrapper>
-        <Card></Card>
+        <Card>
+          <ThumbnailWrapper>
+            <ClickToUpload className="clicktoupload" image={image}>
+              <p>으로 썸네일 업로드</p>
+            </ClickToUpload>
+            <Uploader accept="image/*" type="file" onChange={onUpload}></Uploader>
+            <Thumbnail src={image} ref={thumbnailRef}></Thumbnail>
+          </ThumbnailWrapper>
+          <Intro></Intro>
+        </Card>
       </CardWrapper>
       <ButtonWrapper>
         <Button

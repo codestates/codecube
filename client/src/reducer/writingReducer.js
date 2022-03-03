@@ -1,7 +1,11 @@
-import { WRITING, POSTING } from '../actions/writing'
+import { WRITING, POSTING, AUTO_SAVING } from '../actions/writing'
 
 const initialState = {
   step: WRITING,
+  save: {
+    title: '',
+    content: '',
+  },
 }
 
 export default (state = initialState, action) => {
@@ -15,6 +19,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         step: POSTING,
+      }
+    case AUTO_SAVING:
+      return {
+        ...state,
+        save: {
+          title: action.payload.title,
+          content: action.payload.content,
+        },
       }
     default:
       return state
