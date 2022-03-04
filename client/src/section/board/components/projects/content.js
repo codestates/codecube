@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 } from 'uuid'
 import { getProjects } from '../../../../actions/projects'
@@ -44,6 +44,7 @@ const Floor = styled.div`
 const Content = () => {
   const { projects } = useSelector((state) => state.projectsReducer)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(getProjects())
@@ -52,7 +53,7 @@ const Content = () => {
   return (
     <Container>
       <Wrapper>
-        {projects.map((project, idx, projects) => {
+        {projects.reverse().map((project, idx, projects) => {
           if (idx % 3 !== 0) return
           else
             return (

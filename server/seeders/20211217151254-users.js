@@ -87,6 +87,13 @@ module.exports = {
         password: '1',
         description: '암온더 넥스트 레벨',
       },
+      {
+        username: '준혁',
+        email: '13@code.com',
+        oauth: 0,
+        password: '1',
+        description: '깡통유저',
+      },
     ])
   },
 

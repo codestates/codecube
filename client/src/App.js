@@ -25,8 +25,6 @@ function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  console.log('rerender')
-
   // const isAuthenticated = async () => {
   //   await axios
   //     .get(process.env.REACT_APP_API__URL + '/users', {

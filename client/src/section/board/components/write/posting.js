@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleWriting, POSTING } from '../../../../actions/writing'
+import {
+  handleWriting,
+  handleFinish,
+  handleAutoSaving,
+  POSTING_STEP,
+} from '../../../../actions/writing'
+import axios from 'axios'
 import styled from 'styled-components'
 import { Button } from './writing'
 
@@ -155,9 +162,27 @@ const ButtonWrapper = styled.div`
 const Posting = () => {
   const ref = useRef(null)
   const thumbnailRef = useRef(null)
+  const autoSaver = useRef(null)
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { step } = useSelector((state) => state.writingReducer)
+  const { step, save } = useSelector((state) => state.writingReducer)
+
   const [image, setImage] = useState('')
+  const [intro, setIntro] = useState('')
+
+  useEffect(() => {
+    clearTimeout(autoSaver.current)
+    autoSaver.current = null
+
+    autoSaver.current = setTimeout(() => {
+      dispatch(handleAutoSaving(save.title, save.content, intro, ''))
+    }, 1000)
+
+    return () => {
+      clearTimeout(autoSaver.current)
+    }
+  }, [intro])
 
   const onPrev = () => {
     ref.current.classList.add('disappear')
@@ -171,7 +196,13 @@ const Posting = () => {
     setImage(img)
   }
 
-  return step === POSTING ? (
+  const onFinish = () => {
+    dispatch(handleFinish(save))
+    navigate('/')
+    // console.log(save)
+  }
+
+  return step === POSTING_STEP ? (
     <Wrapper ref={ref}>
       <CardWrapper>
         <Card>
@@ -182,7 +213,7 @@ const Posting = () => {
             <Uploader accept="image/*" type="file" onChange={onUpload}></Uploader>
             <Thumbnail src={image} ref={thumbnailRef}></Thumbnail>
           </ThumbnailWrapper>
-          <Intro></Intro>
+          <Intro onChange={(e) => setIntro(e.target.value)}></Intro>
         </Card>
       </CardWrapper>
       <ButtonWrapper>
@@ -192,7 +223,7 @@ const Posting = () => {
           value="이전"
           onClick={onPrev}
         />
-        <Button className="next" value="완료" />
+        <Button className="next" value="완료" onClick={onFinish} />
       </ButtonWrapper>
     </Wrapper>
   ) : null
