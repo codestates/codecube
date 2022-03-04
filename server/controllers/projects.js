@@ -258,7 +258,7 @@ module.exports = {
         return res.status(401).json({ message: 'invalid authorization' })
       }
       const isValid = await models.projects.findOne({
-        where: { id: userId },
+        where: { userId },
         raw: true,
       })
       if (isValid) {
@@ -270,13 +270,14 @@ module.exports = {
         )
         return res.status(400).json({ message: 'post already exists' })
       }
-      const { title, content, image } = req.body
+      const { title, content, image, intro } = req.body
       await models.projects
         .create(
           {
             userId: userId,
             title: title,
             content: content,
+            intro: intro,
             image: image,
             start: 0,
             done: 0,
