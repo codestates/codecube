@@ -94,7 +94,7 @@ const Project = ({ idx }) => {
       <Thumbnail src={require('../../../../dummy/뚱이.png')} />
       <Intro onClick={(e) => e.stopPropagation()}>
         <h1>{project.title}</h1>
-        <p>프로젝트 간단소개가 따로 필요할 수 있음</p>
+        <p>{project.intro}</p>
       </Intro>
       <Detail>자세히 보기</Detail>
     </Wrapper>
