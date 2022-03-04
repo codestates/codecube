@@ -38,6 +38,7 @@ module.exports = {
         const obj = {}
         obj.title = el.title
         obj.projectId = el.id
+        obj.intro = el.intro
         confirmedProjectIds.push(el.id)
         let element = lodash.cloneDeep(obj)
         finalList.push(element)
