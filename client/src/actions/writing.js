@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getProjects } from './projects'
 axios.defaults.withCredentials = true
 const serverUrl = process.env.REACT_APP_API__URL
 
@@ -40,6 +41,7 @@ const setInitial = () => {
 export const handleFinish = (data) => (dispatch) => {
   axios
     .post(serverUrl + '/projects', data)
+    .then((res) => dispatch(getProjects()))
     .catch((err) => console.log('게시글 작성실패: ', err))
 
   dispatch(setInitial())

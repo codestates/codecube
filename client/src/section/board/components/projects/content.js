@@ -42,20 +42,18 @@ const Floor = styled.div`
 `
 
 const Content = () => {
-  const { projects, step } = useSelector((state) => state.projectsReducer)
+  const { projects } = useSelector((state) => state.projectsReducer)
   const dispatch = useDispatch()
   const location = useLocation()
-  const url = location.pathname
 
   useEffect(() => {
     dispatch(getProjects())
-    console.log('잘보이나요??')
-  }, [url])
+  }, [])
 
   return (
     <Container>
       <Wrapper>
-        {projects.map((project, idx, projects) => {
+        {projects.reverse().map((project, idx, projects) => {
           if (idx % 3 !== 0) return
           else
             return (
