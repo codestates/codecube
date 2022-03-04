@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { v4 } from 'uuid'
 import { getProjects } from '../../../../actions/projects'
@@ -42,12 +42,15 @@ const Floor = styled.div`
 `
 
 const Content = () => {
-  const { projects } = useSelector((state) => state.projectsReducer)
+  const { projects, step } = useSelector((state) => state.projectsReducer)
   const dispatch = useDispatch()
+  const location = useLocation()
+  const url = location.pathname
 
   useEffect(() => {
     dispatch(getProjects())
-  }, [])
+    console.log('잘보이나요??')
+  }, [url])
 
   return (
     <Container>

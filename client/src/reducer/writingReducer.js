@@ -1,4 +1,4 @@
-import { WRITING_STEP, POSTING_STEP, AUTO_SAVING } from '../actions/writing'
+import { WRITING_STEP, POSTING_STEP, AUTO_SAVING, FINISH } from '../actions/writing'
 
 const initialState = {
   step: WRITING_STEP,
@@ -31,6 +31,10 @@ export default (state = initialState, action) => {
           intro: action.payload.intro,
           image: action.payload.image,
         },
+      }
+    case FINISH:
+      return {
+        ...initialState,
       }
     default:
       return state
