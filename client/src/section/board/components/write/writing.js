@@ -106,7 +106,7 @@ const Writing = () => {
     autoSaver.current = null
 
     autoSaver.current = setTimeout(() => {
-      dispatch(handleAutoSaving(titleState, contentState))
+      dispatch(handleAutoSaving(titleState, contentState, '', ''))
     }, 1000)
 
     return () => {

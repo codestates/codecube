@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleWriting, POSTING } from '../../../../actions/writing'
+import { handleWriting, POSTING_STEP } from '../../../../actions/writing'
 import styled from 'styled-components'
 import { Button } from './writing'
 
@@ -171,7 +171,7 @@ const Posting = () => {
     setImage(img)
   }
 
-  return step === POSTING ? (
+  return step === POSTING_STEP ? (
     <Wrapper ref={ref}>
       <CardWrapper>
         <Card>
