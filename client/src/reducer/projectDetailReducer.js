@@ -2,7 +2,6 @@ import { PROJECT_DETAIL } from '../actions/projectDetial'
 
 const projectDetailLoc = window.localStorage.getItem(PROJECT_DETAIL)
 const projectDetail = projectDetailLoc ? JSON.parse(projectDetailLoc) : null
-console.log(projectDetail)
 
 const initialState = {
   title: projectDetail ? projectDetail.title : '',

@@ -10,7 +10,11 @@ module.exports = {
       //쿠키로 받은 Token을 함수를 사용해 디코딩한다.
       if (!req.cookies.jwt) {
         console.log('\n❗️ users(userInfo):\n 토큰정보를 확인할 수 없습니다.\n')
-        return res.status(401).json({ message: 'invailid authorization' })
+        // return res.status(401).json({ message: 'invailid authorization' })
+        // ! 기존엔 로그인 로직에 사용됐었고 401코드를 주게돼있었지만,
+        // ! 현재는 새로고침시 유저정보를 불러오게 할 때 사용돼서 클라이언트에서 오류메세지를 별도로 보여주지않기위해 200으로 일시 수정했습니다.
+        // ! 2022.3.5 최재하
+        return res.status(200).json({ message: 'invailid authorization' })
       }
       const token = req.cookies.jwt
       const decoded = solveToken(token)
@@ -92,6 +96,7 @@ module.exports = {
             domain: process.env.DOMAIN,
             secure: true,
             sameSite: 'none',
+            httpOnly: true,
           })
           .json({ message: 'byebye' })
       }
@@ -176,6 +181,7 @@ module.exports = {
           domain: process.env.DOMAIN,
           secure: true,
           sameSite: 'none',
+          httpOnly: true,
         })
         .send('Logged out successfully')
     },
@@ -250,6 +256,7 @@ module.exports = {
             domain: process.env.DOMAIN,
             secure: true,
             sameSite: 'none',
+            httpOnly: true,
           })
           .status(201)
           .json({
@@ -298,6 +305,7 @@ module.exports = {
             domain: process.env.DOMAIN,
             secure: true,
             sameSite: 'none',
+            httpOnly: true,
           })
           .status(200)
           .json({
