@@ -38,11 +38,22 @@ const setInitial = () => {
   }
 }
 
-export const handleFinish = (data) => (dispatch) => {
-  axios
-    .post(serverUrl + '/projects', data)
-    .then((res) => dispatch(getProjects()))
-    .catch((err) => console.log('게시글 작성실패: ', err))
+export const handleFinish =
+  ({ title, content, intro, image }) =>
+  (dispatch) => {
+    // 게시글작성에 대한 정보들을 formData형태로 변경
+    const data = new FormData()
+    data.append('data', JSON.stringify({ title, content, intro }))
+    data.append('thumbnail', image)
 
-  dispatch(setInitial())
-}
+    axios
+      .post(serverUrl + '/projects', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => dispatch(getProjects()))
+      .catch((err) => console.log('게시글 작성실패: ', err))
+
+    dispatch(setInitial())
+  }
