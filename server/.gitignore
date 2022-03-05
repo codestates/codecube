@@ -2,6 +2,7 @@
 
 certs/
 s3.json
+jhs3.json
 
 # dependencies
 /node_modules
