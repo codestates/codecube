@@ -43,17 +43,11 @@ const Floor = styled.div`
 
 const Content = () => {
   const { projects } = useSelector((state) => state.projectsReducer)
-  const dispatch = useDispatch()
-  const location = useLocation()
-
-  useEffect(() => {
-    dispatch(getProjects())
-  }, [])
 
   return (
     <Container>
       <Wrapper>
-        {projects.reverse().map((project, idx, projects) => {
+        {projects.map((project, idx, projects) => {
           if (idx % 3 !== 0) return
           else
             return (
