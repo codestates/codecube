@@ -168,7 +168,8 @@ const Posting = () => {
   const dispatch = useDispatch()
   const { step, save } = useSelector((state) => state.writingReducer)
 
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState('') // 미리보기용 상태
+  const [imageData, setImageData] = useState('') // 서버 전송용 상태
   const [intro, setIntro] = useState('')
 
   useEffect(() => {
@@ -176,13 +177,13 @@ const Posting = () => {
     autoSaver.current = null
 
     autoSaver.current = setTimeout(() => {
-      dispatch(handleAutoSaving(save.title, save.content, intro, ''))
-    }, 1000)
+      dispatch(handleAutoSaving(save.title, save.content, intro, imageData))
+    }, 500)
 
     return () => {
       clearTimeout(autoSaver.current)
     }
-  }, [intro])
+  }, [intro, imageData])
 
   const onPrev = () => {
     ref.current.classList.add('disappear')
@@ -193,13 +194,15 @@ const Posting = () => {
 
   const onUpload = (e) => {
     const img = URL.createObjectURL(e.target.files[0])
-    setImage(img)
+    setImage(img) // 이미지 미리보기
+
+    setImageData(e.target.files[0])
+    dispatch(handleAutoSaving(save.title, save.content, intro, e.target.files[0]))
   }
 
   const onFinish = () => {
     dispatch(handleFinish(save))
     navigate('/')
-    // console.log(save)
   }
 
   return step === POSTING_STEP ? (

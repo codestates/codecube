@@ -19,7 +19,7 @@ export const handleLoggedOut = () => {
   }
 }
 
-const login = (userInfo) => {
+export const login = (userInfo) => {
   return {
     type: LOGGED_IN,
     payload: { ...userInfo },

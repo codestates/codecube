@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Routes, Route } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
@@ -6,6 +6,7 @@ import axios from 'axios'
 import Profile from './section/profile'
 import Board from './section/board'
 import LandingPage from './section/landing'
+import { getProjects } from './actions/projects'
 
 const savedUserInfo = window.localStorage.getItem('userinfo')
 const url = new URL(window.location.href)
@@ -15,6 +16,11 @@ const stateCode = url.searchParams.get('state')
 const gitcode = window.localStorage.getItem('gitcode')
 
 axios.defaults.withCredentials = true
+
+// App.js 가 unload될 때 호출할 이벤트입니다.
+window.addEventListener('beforeunload', (e) => {
+  localStorage.removeItem('userInfo')
+})
 
 function App() {
   const [isSignup, setIsSignup] = useState(false)
@@ -110,9 +116,9 @@ function App() {
   //     })
   // }
 
-  // useEffect(() => {
-  //   getAccessTocken(authorizationCode)
-  // }, [authorizationCode])
+  useEffect(() => {
+    dispatch(getProjects())
+  }, [])
 
   return (
     <Routes>
