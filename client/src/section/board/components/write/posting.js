@@ -7,7 +7,6 @@ import {
   handleAutoSaving,
   POSTING_STEP,
 } from '../../../../actions/writing'
-import axios from 'axios'
 import styled from 'styled-components'
 import { Button } from './writing'
 
@@ -159,7 +158,7 @@ const ButtonWrapper = styled.div`
   flex: 1 0 0%;
 `
 
-const Posting = () => {
+const Posting = ({ setAlert }) => {
   const ref = useRef(null)
   const thumbnailRef = useRef(null)
   const autoSaver = useRef(null)
@@ -167,15 +166,15 @@ const Posting = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { step, save } = useSelector((state) => state.writingReducer)
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
 
   const [image, setImage] = useState('') // 미리보기용 상태
-  const [imageData, setImageData] = useState('') // 서버 전송용 상태
   const [intro, setIntro] = useState('')
+  const [imageData, setImageData] = useState('') // 서버 전송용 상태
 
   useEffect(() => {
     clearTimeout(autoSaver.current)
     autoSaver.current = null
-
     autoSaver.current = setTimeout(() => {
       dispatch(handleAutoSaving(save.title, save.content, intro, imageData))
     }, 500)
@@ -184,6 +183,14 @@ const Posting = () => {
       clearTimeout(autoSaver.current)
     }
   }, [intro, imageData])
+
+  // posting단계에서 UI라우팅만으로 다른페이지에 다녀온 후 글쓰기 시 writing단계를 무시하고 바로 posting단계로 넘어감을 방지하기위한 코드입니다.
+  // 예를 들어, 이부분을 지우고 로그인하지않을 채로 posting단계까지 진입후 '완료'버튼을 누르고 로그인화면에서 로그인 후 다시 글쓰기 하면 바로 posting 단계가 나옵니다.
+  useEffect(() => {
+    return () => {
+      dispatch(handleWriting())
+    }
+  }, [])
 
   const onPrev = () => {
     ref.current.classList.add('disappear')
@@ -196,13 +203,18 @@ const Posting = () => {
     const img = URL.createObjectURL(e.target.files[0])
     setImage(img) // 이미지 미리보기
 
+    console.log('이미지 파일: ', e.target.files[0])
     setImageData(e.target.files[0])
     dispatch(handleAutoSaving(save.title, save.content, intro, e.target.files[0]))
   }
 
   const onFinish = () => {
-    dispatch(handleFinish(save))
-    navigate('/')
+    if (isLoggedIn) {
+      dispatch(handleFinish(save))
+      navigate('/')
+    } else {
+      setAlert(true)
+    }
   }
 
   return step === POSTING_STEP ? (
