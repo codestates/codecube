@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { handleProjectDetail } from '../../../../actions/projectDetial'
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   position: relative;
 
   display: flex;
@@ -22,15 +22,27 @@ export const Wrapper = styled.div`
   flex: 1 0 0%;
 `
 
-const Thumbnail = styled.img`
-  width: 100%;
-  cursor: pointer;
+const ThumbnailWrapper = styled.div`
+  position: relative;
 
   flex: 1 0 0%;
 `
 
-export const Intro = styled.div`
-  /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap'); */
+const Thumbnail = styled.img`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+`
+
+const Intro = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;
   flex-direction: column;
@@ -92,7 +104,9 @@ const Project = ({ idx }) => {
   return project ? (
     <Wrapper onClick={onDetail}>
       {/* DB의 SEED게시글은 image를 null로 보내줌*/}
-      <Thumbnail src={project.image ?? require('../../../../dummy/뚱이.png')} />
+      <ThumbnailWrapper>
+        <Thumbnail src={project.image ?? require('../../../../dummy/뚱이.png')} />
+      </ThumbnailWrapper>
       <Intro onClick={(e) => e.stopPropagation()}>
         <h1>{project.title}</h1>
         <p>{project.intro}</p>
