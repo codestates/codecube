@@ -103,16 +103,6 @@ const Intro = styled.textarea.attrs({
   flex: 1 0 0%;
 `
 
-const ButtonWrapper = styled.div`
-  display: flex;
-
-  flex-direction: column;
-  justify-content: center;
-  height: 400px;
-
-  flex: 1 0 0%;
-`
-
 const PreviewCard = () => {
   const autoSaver = useRef(null)
   const thumbnailRef = useRef(null)
