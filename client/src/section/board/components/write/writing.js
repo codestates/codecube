@@ -104,13 +104,17 @@ const Writing = () => {
   // 아래는 로그인 하지않고 글쓰기를 시도했을 때 보여줄 경고메세지를 위한 상태 처리
   // writing과 posting 두 단계에서만 사용될 상태이기때문에 리덕스 스토어에 포함시키지않고 props로 처리했습니다.
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
-  const [alert, setAlert] = useState(!isLoggedIn)
+  const [alert, setAlert] = useState(false)
+
+  useEffect(() => {
+    // 새로고침 시 isLoggedIn이 반드시 한번 변화하고 변화 후 상태가 진짜 상태이기때문에 최종적으론 alert가 useEffect로 설정됩니다.
+    setAlert(!isLoggedIn)
+  }, [isLoggedIn])
 
   useEffect(() => {
     // 리덕스 자동저장
     clearTimeout(autoSaver.current)
     autoSaver.current = null
-
     autoSaver.current = setTimeout(() => {
       dispatch(handleAutoSaving(titleState, contentState, '', ''))
     }, 1000)
