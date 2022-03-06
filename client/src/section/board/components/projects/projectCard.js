@@ -91,7 +91,8 @@ const Project = ({ idx }) => {
 
   return project ? (
     <Wrapper onClick={onDetail}>
-      <Thumbnail src={require('../../../../dummy/뚱이.png')} />
+      {/* DB의 SEED게시글은 image를 null로 보내줌*/}
+      <Thumbnail src={project.image ?? require('../../../../dummy/뚱이.png')} />
       <Intro onClick={(e) => e.stopPropagation()}>
         <h1>{project.title}</h1>
         <p>{project.intro}</p>
