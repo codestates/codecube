@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Wrapper } from '../../../projectDetail/components/content.js'
+import { Wrapper } from '../../../projectDetail/components/modal.js'
 import { handleAutoSaving, handlePosting } from '../../../../actions/writing'
 import Posting from './posting'
+import BlockingBox from './blockingBox.js'
 
 const Title = styled.input.attrs({
   type: 'text',
@@ -100,6 +101,11 @@ const Writing = () => {
   const [contentState, setContentState] = useState('')
   const autoSaver = useRef(null)
 
+  // 아래는 로그인 하지않고 글쓰기를 시도했을 때 보여줄 경고메세지를 위한 상태 처리
+  // writing과 posting 두 단계에서만 사용될 상태이기때문에 리덕스 스토어에 포함시키지않고 props로 처리했습니다.
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const [alert, setAlert] = useState(!isLoggedIn)
+
   useEffect(() => {
     // 리덕스 자동저장
     clearTimeout(autoSaver.current)
@@ -137,7 +143,8 @@ const Writing = () => {
         <Button className="exit" value="나가기" onClick={onExit} />
         <Button className="next" value="작성하기" onClick={onNext} />
       </Footer>
-      <Posting />
+      <Posting setAlert={setAlert} />
+      <BlockingBox alert={alert} setAlert={setAlert} />
     </Wrapper>
   )
 }
