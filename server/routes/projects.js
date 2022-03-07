@@ -3,7 +3,7 @@ const controller = require('../controllers')
 const thumbnailUploader = require('../controllers/thumbnailUploader')
 
 //게시글 삭제
-router.delete('/:projectId', controller.projects.project.delete)
+router.delete('/', controller.projects.project.delete)
 //게시글 수정
 router.put('/:projectId', controller.projects.project.put.changeContent)
 //프로젝트 스타트 요청

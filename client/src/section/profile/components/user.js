@@ -2,9 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-
+import axios from 'axios'
 import { MdOutlineMail as ICON_mail } from 'react-icons/md'
 import { HiSpeakerphone as ICON_desc } from 'react-icons/hi'
+
+const serverUrl = process.env.REACT_APP_API__URL
+axios.defaults.withCredentials = true
 
 const Wrapper = styled.div`
   position: relative;
@@ -95,6 +98,13 @@ const User = () => {
     (state) => state.loginReducer
   )
 
+  const handleDelete = () => {
+    axios
+      .delete(serverUrl + '/projects')
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.response.status))
+  }
+
   const navigate = useNavigate()
 
   return (
@@ -107,6 +117,7 @@ const User = () => {
         <P>{isLoggedIn ? email : 'aa@code.com'}</P>
         <ICON_desc style={style} />
         <P>{isLoggedIn ? description : '소개'}</P>
+        <button onClick={handleDelete}>내글삭제(테스트중)</button>
         {!isLoggedIn ? (
           <Blind onClick={() => navigate('/login')}>
             <Indicator> 후 이용가능합니다.</Indicator>
