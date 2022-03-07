@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { login } from './login'
+import { handleLoggedOut, login } from './login'
 
 const serverUrl = process.env.REACT_APP_API__URL
 export const PROJECTS = 'PROJECTS'
@@ -26,11 +26,13 @@ export const getProjects = () => async (dispatch) => {
   // 유저가 로그인 상태인지 확인합니다.
   axios.get(serverUrl + '/users').then(({ data }) => {
     // 로그인한 상태가 아니더라도 서버에서는 200코드를 주기때문에 응답메세지로 조건분기합니다.
-    if (data.message === 'invailid authorization') return
-    else {
-      // App.js에서 새로고침 직후 삭제된 로컬스토리지 'userInfo'를 새로 채워넣습니다.
+    if (data.message === 'invailid authorization') {
+      // 로그인하지않은 상태라면 loginReducer의 상태를 logout인 상태로 만듭니다.
+      dispatch(handleLoggedOut())
+      localStorage.removeItem('userInfo')
+    } else {
       window.localStorage.setItem('userInfo', JSON.stringify(data.data))
-      // 리덕스 loginReducer에 유저정보를 입력합니다.
+      // 리덕스 loginReducer에 유저정보를 입력합니다. login상태로 만듭니다.
       dispatch(login(data.data))
     }
   })

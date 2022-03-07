@@ -8,7 +8,7 @@ import {
   PROJECT_DETAIL,
   setProjectInfo,
 } from '../../actions/projectDetial'
-import Content from './components/content'
+import Modal from './components/modal.js'
 
 export const BackDrop = styled.div`
   position: fixed;
@@ -37,7 +37,7 @@ const ProjectDetail = () => {
 
   return (
     <BackDrop onClick={onIndexPage}>
-      <Content />
+      <Modal />
     </BackDrop>
   )
 }

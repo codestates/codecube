@@ -39,6 +39,7 @@ module.exports = {
         obj.title = el.title
         obj.projectId = el.id
         obj.intro = el.intro
+        obj.image = el.image // ! 테스트중
         confirmedProjectIds.push(el.id)
         let element = lodash.cloneDeep(obj)
         finalList.push(element)
@@ -250,7 +251,7 @@ module.exports = {
       // 제목, 내용등은 req.body.data로 받게됩니다.
       const data = JSON.parse(req.body.data)
       console.log('파일', req.files)
-      const imageAdress = req.files.thumbnail[0].path // DB의 image칼럼에 들어갈 내용을 잠시 imageAddress로 때우고있습니다. *수정예정
+      const imageAddress = req.files.thumbnail[0].location // DB의 image칼럼에 들어갈 내용을 잠시 imageAddress로 때우고있습니다. *수정예정
 
       const { id: userId, username } = solveToken(req.cookies.jwt)
       if (!userId) {
@@ -274,7 +275,7 @@ module.exports = {
         )
         return res.status(400).json({ message: 'post already exists' })
       }
-      const { title, content, image, intro } = data // 기존엔 req.body였는데 콜백시작지점의 data로 바꿨습니다. -2022.03.05최재하
+      const { title, content, intro } = data // 기존엔 req.body였는데 콜백시작지점의 data로 바꿨습니다. -2022.03.05최재하
       await models.projects
         .create(
           {
@@ -282,7 +283,7 @@ module.exports = {
             title: title,
             content: content,
             intro: intro,
-            image: imageAdress,
+            image: imageAddress,
             start: 0,
             done: 0,
           },

@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  handleWriting,
-  handleFinish,
-  handleAutoSaving,
-  POSTING_STEP,
-} from '../../../../actions/writing'
-import axios from 'axios'
+import { handleWriting, handleFinish, POSTING_STEP } from '../../../../actions/writing'
 import styled from 'styled-components'
 import { Button } from './writing'
+import PreviewCard from './previewCard'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -49,106 +44,6 @@ const Wrapper = styled.div`
   }
 `
 
-const CardWrapper = styled.div`
-  position: relative;
-
-  display: flex;
-  justify-content: center;
-  padding-bottom: 60%;
-  margin-right: 1%;
-
-  flex: 4 0 0%;
-`
-
-const Card = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-
-  display: flex;
-  flex-direction: column;
-  width: 55%;
-  height: 100%;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-`
-
-const ThumbnailWrapper = styled.div`
-  position: relative;
-
-  padding-top: 70%;
-  &:hover {
-    .clicktoupload {
-      background-color: #d9d9d9;
-    }
-    .clicktoupload p:before {
-      color: #00b0ff;
-    }
-  }
-`
-
-const ClickToUpload = styled.div`
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-
-  display: ${(props) => (props.image === '' ? 'flex' : 'none')};
-  background-color: #d1d1d1;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  color: white;
-
-  transition: 0.4s;
-  p:before {
-    transition: 0.4s;
-    content: '클릭';
-  }
-`
-
-const Thumbnail = styled.img`
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-
-  display: block;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: ${(props) => (props.src === '' ? '0' : '1')};
-`
-
-const Uploader = styled.input.attrs({ type: 'file' })`
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-`
-
-const Intro = styled.textarea.attrs({
-  placeholder: '간단한 한줄 소개 또는 전하고싶은말을 적어주세요(최대 80자)',
-  maxLength: '80',
-})`
-  resize: none;
-  margin: 1rem;
-  padding: 1rem;
-  border: none;
-  outline: none;
-
-  flex: 1 0 0%;
-`
-
 const ButtonWrapper = styled.div`
   display: flex;
 
@@ -159,31 +54,20 @@ const ButtonWrapper = styled.div`
   flex: 1 0 0%;
 `
 
-const Posting = () => {
+const Posting = ({ setAlert }) => {
   const ref = useRef(null)
-  const thumbnailRef = useRef(null)
-  const autoSaver = useRef(null)
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { step, save } = useSelector((state) => state.writingReducer)
+  const { isLoggedIn } = useSelector((state) => state.loginReducer)
 
-  const [image, setImage] = useState('') // 미리보기용 상태
-  const [imageData, setImageData] = useState('') // 서버 전송용 상태
-  const [intro, setIntro] = useState('')
-
+  // posting단계에서 UI라우팅만으로 다른페이지에 다녀온 후 글쓰기 시 writing단계를 무시하고 바로 posting단계로 넘어감을 방지하기위한 코드입니다.
+  // 예를 들어, 이부분을 지우고 로그인하지않을 채로 posting단계까지 진입후 '완료'버튼을 누르고 로그인화면에서 로그인 후 다시 글쓰기 하면 바로 posting 단계가 나옵니다.
   useEffect(() => {
-    clearTimeout(autoSaver.current)
-    autoSaver.current = null
-
-    autoSaver.current = setTimeout(() => {
-      dispatch(handleAutoSaving(save.title, save.content, intro, imageData))
-    }, 500)
-
     return () => {
-      clearTimeout(autoSaver.current)
+      dispatch(handleWriting())
     }
-  }, [intro, imageData])
+  }, [])
 
   const onPrev = () => {
     ref.current.classList.add('disappear')
@@ -192,33 +76,18 @@ const Posting = () => {
     }, 300)
   }
 
-  const onUpload = (e) => {
-    const img = URL.createObjectURL(e.target.files[0])
-    setImage(img) // 이미지 미리보기
-
-    setImageData(e.target.files[0])
-    dispatch(handleAutoSaving(save.title, save.content, intro, e.target.files[0]))
-  }
-
   const onFinish = () => {
-    dispatch(handleFinish(save))
-    navigate('/')
+    if (isLoggedIn) {
+      dispatch(handleFinish(save))
+      navigate('/')
+    } else {
+      setAlert(true)
+    }
   }
 
   return step === POSTING_STEP ? (
     <Wrapper ref={ref}>
-      <CardWrapper>
-        <Card>
-          <ThumbnailWrapper>
-            <ClickToUpload className="clicktoupload" image={image}>
-              <p>으로 썸네일 업로드</p>
-            </ClickToUpload>
-            <Uploader accept="image/*" type="file" onChange={onUpload}></Uploader>
-            <Thumbnail src={image} ref={thumbnailRef}></Thumbnail>
-          </ThumbnailWrapper>
-          <Intro onChange={(e) => setIntro(e.target.value)}></Intro>
-        </Card>
-      </CardWrapper>
+      <PreviewCard />
       <ButtonWrapper>
         <Button
           style={{ marginBottom: '1rem' }}

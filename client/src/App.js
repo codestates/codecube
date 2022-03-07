@@ -17,10 +17,10 @@ const gitcode = window.localStorage.getItem('gitcode')
 
 axios.defaults.withCredentials = true
 
-// App.js 가 unload될 때 호출할 이벤트입니다.
-window.addEventListener('beforeunload', (e) => {
-  localStorage.removeItem('userInfo')
-})
+// App.js 가 unload될 때 호출할 이벤트입니다. 일단 지우지말아주세요.
+// window.addEventListener('beforeunload', (e) => {
+//   localStorage.removeItem('userInfo')
+// })
 
 function App() {
   const [isSignup, setIsSignup] = useState(false)
