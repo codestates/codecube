@@ -68,10 +68,10 @@ module.exports = {
     },
     delete: async (req, res) => {
       //1. 일단 게시글 지우기
-      const projectId = req.params.projectId
+      const userInfo = solveToken(req.cookies.jwt)
+
       const target = await models.projects.findOne({
-        where: { id: projectId },
-        raw: true,
+        where: { userId: userInfo.id },
       })
       if (!target) {
         console.log(
@@ -80,32 +80,10 @@ module.exports = {
         return res.status(404).json({ message: 'Not Found' })
       }
       target.destroy()
-      //❗️❗️ 실제로 클라이언트에서 기능 만들고 테스트해볼것
       console.log(
         '\n👍  projects/delete:\n projectId:',
         target.id,
         target.title,
-        '게시글을 삭제하였습니다.\n'
-      )
-      //❗️❗️
-      //2. project_users에서 해당 게시글 id 다찾아서 지우기
-      const removeList = await models.project_users.findAll({
-        where: { projectId: projectId },
-      })
-      for (let i = 0; i < removeList.length; i++) {
-        const target = removeList[i]
-        target.destroy()
-        if (!target) {
-          console.log(
-            '\n❗️ projects/delete:\n project_users에서 projectId:',
-            projectId,
-            '게시글을 조회 할 수 없습니다.\n'
-          )
-        }
-      }
-      console.log(
-        '\n👍  projects/delete:\n project_users에서 projectId:',
-        projectId,
         '게시글을 삭제하였습니다.\n'
       )
       return res.status(200).json({ message: 'successfully deleted' })
