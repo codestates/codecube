@@ -75,10 +75,10 @@ const Posting = ({ setAlert }) => {
       dispatch(handleWriting())
     }, 300)
   }
-
+  const grass = localStorage.getItem('grass')
   const onFinish = () => {
     if (isLoggedIn) {
-      dispatch(handleFinish(save))
+      dispatch(handleFinish(save, grass ?? ''))
       navigate('/')
     } else {
       setAlert(true)

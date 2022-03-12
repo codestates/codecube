@@ -55,7 +55,6 @@ module.exports = {
         console.log(
           `\n👍 users(userInfo):\n userId: ${solve.id} ${solve.username}님의 정보를 전송하였습니다.\n`
         )
-        console.log(solve)
         return res.status(200).json({ data: solve })
       }
     },

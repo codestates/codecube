@@ -200,7 +200,7 @@ const Login = () => {
 
   const onLogin = (e) => {
     if (e.code === 'Enter' || e.keyCode === 13 || e.type === 'click') {
-      dispatch(handleLoggedIn(dispatch, email, password, navigate, setIsCorrectP))
+      dispatch(handleLoggedIn(email, password, navigate, setIsCorrectP))
     } else return
   }
 
