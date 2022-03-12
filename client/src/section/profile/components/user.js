@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import { MdOutlineMail as ICON_mail } from 'react-icons/md'
 import { HiSpeakerphone as ICON_desc } from 'react-icons/hi'
+import { getProjects } from '../../../actions/projects'
 
 const serverUrl = process.env.REACT_APP_API__URL
 axios.defaults.withCredentials = true
@@ -97,6 +98,7 @@ const User = () => {
   const { isLoggedIn, username, email, description } = useSelector(
     (state) => state.loginReducer
   )
+  const dispatch = useDispatch()
 
   const handleDelete = () => {
     axios
@@ -124,7 +126,10 @@ const User = () => {
                 authorization: accessToken,
               },
             })
-            .then((response) => console.log('@@@@@@@', response.data.userInfo))
+            .then((response) => {
+              navigate('/')
+              dispatch(getProjects(response.data.userInfo.calendar))
+            })
         })
 
       // console.log('제발 나와라ㅠㅠ', authorizationCode)
