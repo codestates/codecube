@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineLogin } from 'react-icons/ai'
 import { handleLoggedIn } from '../../../actions/login'
+import axios from 'axios'
 
 // meta
 const NONE = 'NONE'
@@ -150,6 +151,13 @@ const MenuLink = styled(Menu)`
   cursor: pointer;
 `
 
+const GithubLogo = styled.img.attrs({
+  src: `${'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg'}`,
+})`
+  width: 10%;
+  cursor: pointer;
+`
+
 //React
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -194,6 +202,12 @@ const Login = () => {
     if (e.code === 'Enter' || e.keyCode === 13 || e.type === 'click') {
       dispatch(handleLoggedIn(dispatch, email, password, navigate, setIsCorrectP))
     } else return
+  }
+
+  const socialClick = () => {
+    window.location.replace(
+      `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`
+    )
   }
 
   useEffect(() => {
@@ -245,6 +259,8 @@ const Login = () => {
         >
           지금 시작하세요!
         </MenuLink>
+        <Menu>간편 소셜로그인</Menu>
+        <GithubLogo onClick={socialClick} />
       </MenuWrapper>
     </Wrapper>
   )

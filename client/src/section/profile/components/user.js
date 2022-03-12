@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -104,6 +104,33 @@ const User = () => {
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err.response.status))
   }
+
+  //sns 로그인
+  useEffect(() => {
+    const url = new URL(document.location)
+    const authorizationCode = url.searchParams.get('code')
+    if (authorizationCode) {
+      axios
+        .post(serverUrl + '/github/callback', {
+          gitcode: 'git',
+          authorizationCode,
+        })
+        .then((res) => {
+          const accessToken = res.data.accessToken
+          axios
+            .get(serverUrl + '/github/userInfo', {
+              headers: {
+                gitcode: 'git',
+                authorization: accessToken,
+              },
+            })
+            .then((response) => console.log('@@@@@@@', response.data.userInfo))
+        })
+
+      // console.log('제발 나와라ㅠㅠ', authorizationCode)
+    }
+  }, [window.location.href])
+  //sns 로그인
 
   const navigate = useNavigate()
 
