@@ -7,6 +7,7 @@ const { makejwt, solveToken } = require('./function')
 // axios.defaults.withCredentials = true
 module.exports = {
   callback: async (req, res) => {
+    console.log(req.body)
     if (!req.body.authorizationCode) {
       console.log('\n❗️ github/callback:\n 깃헙 auth code가 없습니다.\n')
       return res.status(302).json({ message: 'no auth code' }).location('/')

@@ -54,6 +54,7 @@ const GrassIndicator = styled(Indicator)`
 
 const Menu = () => {
   const { isLoggedIn } = useSelector((state) => state.loginReducer)
+  const grass = window.localStorage.getItem('grass')
 
   return (
     <Wrapper>
@@ -61,12 +62,16 @@ const Menu = () => {
       <Content>
         <GrassWrapper>
           <p>github contribution</p>
-          <Grass src="https://ghchart.rshah.org/219138/codestate"></Grass>
-          {isLoggedIn ? (
+          <Grass src={grass ?? 'https://ghchart.rshah.org/219138/codestate'}></Grass>
+          {/* {isLoggedIn ? (
             <GrassBlind>
-              <GrassIndicator>으로 깃허브 연동</GrassIndicator>
+              <GrassIndicator>
+                으로 깃허브 연동
+                <br />
+                <br /> (준비중입니다){' '}
+              </GrassIndicator>
             </GrassBlind>
-          ) : null}
+          ) : null} */}
         </GrassWrapper>
       </Content>
     </Wrapper>

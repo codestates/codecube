@@ -39,7 +39,7 @@ const setInitial = () => {
 }
 
 export const handleFinish =
-  ({ title, content, intro, image }) =>
+  ({ title, content, intro, image }, grass = '') =>
   (dispatch) => {
     // 게시글작성에 대한 정보들을 formData형태로 변경
     const data = new FormData()
@@ -52,7 +52,7 @@ export const handleFinish =
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => dispatch(getProjects()))
+      .then((res) => dispatch(getProjects(grass)))
       .catch((err) => console.log('게시글 작성실패: ', err))
 
     dispatch(setInitial())

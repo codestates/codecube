@@ -27,7 +27,7 @@ export const login = (userInfo) => {
 }
 
 export const handleLoggedIn =
-  (dispatch, email, password, navigate, setIsCorrectP) => async () => {
+  (email, password, navigate, setIsCorrectP) => async (dispatch) => {
     try {
       const res = await axios.post(serverUrl + '/login', { email, password })
       const userInfo = res.data.userInfo

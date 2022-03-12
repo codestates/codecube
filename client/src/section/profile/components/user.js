@@ -1,10 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import { MdOutlineMail as ICON_mail } from 'react-icons/md'
 import { HiSpeakerphone as ICON_desc } from 'react-icons/hi'
+import { getProjects } from '../../../actions/projects'
 
 const serverUrl = process.env.REACT_APP_API__URL
 axios.defaults.withCredentials = true
@@ -97,6 +98,7 @@ const User = () => {
   const { isLoggedIn, username, email, description } = useSelector(
     (state) => state.loginReducer
   )
+  const dispatch = useDispatch()
 
   const handleDelete = () => {
     axios
@@ -104,6 +106,36 @@ const User = () => {
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err.response.status))
   }
+
+  //sns 로그인
+  useEffect(() => {
+    const url = new URL(document.location)
+    const authorizationCode = url.searchParams.get('code')
+    if (authorizationCode) {
+      axios
+        .post(serverUrl + '/github/callback', {
+          gitcode: 'git',
+          authorizationCode,
+        })
+        .then((res) => {
+          const accessToken = res.data.accessToken
+          axios
+            .get(serverUrl + '/github/userInfo', {
+              headers: {
+                gitcode: 'git',
+                authorization: accessToken,
+              },
+            })
+            .then((response) => {
+              navigate('/')
+              dispatch(getProjects(response.data.userInfo.calendar))
+            })
+        })
+
+      // console.log('제발 나와라ㅠㅠ', authorizationCode)
+    }
+  }, [window.location.href])
+  //sns 로그인
 
   const navigate = useNavigate()
 
